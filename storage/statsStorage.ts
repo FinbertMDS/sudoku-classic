@@ -1,4 +1,3 @@
-import { deleteItem, getItem, saveItem } from '.';
 import { DailyStats, GameLogEntry, GameStatsCache } from '../types';
 import {
   STORAGE_KEY_DAILY_STATS,
@@ -7,6 +6,7 @@ import {
   STORAGE_KEY_LAST_STATS_CACHE_UPDATE,
 } from '../utils/constants';
 import { getTodayDateString } from '../utils/dateUtil';
+import { deleteItem, getItem, saveItem } from './storage';
 
 const saveGameLogs = async (logs: GameLogEntry[]) =>
   await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));

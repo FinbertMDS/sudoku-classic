@@ -1,17 +1,16 @@
-import {AppSettings, Level} from '../types';
+import { AppSettings, Level } from '../types';
 
 export const LEVELS = ['easy', 'medium', 'hard', 'expert'] as Level[];
 
 export const SCREENS = {
-  HOME_TABS: 'HomeTabs',
-  MAIN: 'Main',
-  STATISTICS: 'Statistics',
-  BOARD: 'Board',
-  OPTIONS: 'Options',
-  SETTINGS: 'Settings',
-  HOW_TO_PLAY: 'HowToPlay',
-  ABOUT_GAME: 'AboutGame',
-  LICENSES: 'Licenses',
+  HOME_TABS: '(tabs)',
+  BOARD: 'BoardScreen',
+  OPTIONS: 'OptionsScreen/index',
+  SETTINGS: 'SettingsScreen/index',
+  HOW_TO_PLAY: 'HowToPlayScreen/index',
+  ABOUT_GAME: 'AboutGame/index',
+  LICENSES: 'LicensesScreen/index',
+  NOT_FOUND: '+not-found',
 } as const;
 
 export const BOARD_SIZE = 9;
@@ -47,9 +46,9 @@ export const CHART_WIDTH = 60;
 export const CHART2_WIDTH = 70;
 
 export const LANGUAGES = [
-  {code: 'en', label: 'English'},
-  {code: 'vi', label: 'Tiếng Việt'},
-  {code: 'ja', label: '日本語'},
+  { code: 'en', label: 'English' },
+  { code: 'vi', label: 'Tiếng Việt' },
+  { code: 'ja', label: '日本語' },
 ];
 
 export const DEFAULT_SETTINGS: AppSettings = {

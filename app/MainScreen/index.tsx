@@ -1,8 +1,8 @@
 // src/screens/MainScreen/index.tsx
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useCallback, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import { useFocusEffect } from '@react-navigation/native';
+import { router } from 'expo-router';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ImageBackground,
   StyleSheet,
@@ -10,25 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import Header from '../../components/commons/Header';
 import NewGameMenu from '../../components/Main/NewGameMenu';
-import {useTheme} from '../../context/ThemeContext';
-import {CORE_EVENTS} from '../../events';
+import { useTheme } from '../../context/ThemeContext';
+import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
-import {useDailyBackground} from '../../hooks/useDailyBackground';
-import {BoardService} from '../../services/BoardService';
-import {Level, RootStackParamList} from '../../types/index';
-import {SCREENS} from '../../utils/constants';
+import { useDailyBackground } from '../../hooks/useDailyBackground';
+import { BoardService } from '../../services/BoardService';
+import { Level } from '../../types/index';
+import { SCREENS } from '../../utils/constants';
 
 const MainScreen = () => {
-  const {mode, theme} = useTheme();
-  const {t} = useTranslation();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { mode, theme } = useTheme();
+  const { t } = useTranslation();
   const [hasSavedGame, setHasSavedGame] = useState(false);
-  const {backgroundUrl, loadBackgrounds} = useDailyBackground(mode);
+  const { backgroundUrl, loadBackgrounds } = useDailyBackground(mode);
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
@@ -47,21 +45,28 @@ const MainScreen = () => {
   const handleNewGame = async (level: Level) => {
     await BoardService.clear();
     const id = uuid.v4().toString();
-    eventBus.emit(CORE_EVENTS.initGame, {level, id});
-    navigation.navigate(SCREENS.BOARD, {
-      id,
-      level,
-      type: 'init',
+    eventBus.emit(CORE_EVENTS.initGame, { level, id });
+    // navigation.navigate(SCREENS.BOARD, {
+    //   id,
+    //   level,
+    //   type: 'init',
+    // });
+    router.push({
+      pathname: SCREENS.BOARD as any,
+      params: { id, level, type: 'init' },
     });
   };
 
   const handleContinueGame = async () => {
     const savedGame = await BoardService.loadSaved();
     if (savedGame) {
-      navigation.navigate(SCREENS.BOARD, {
-        id: savedGame.savedId,
-        level: savedGame.savedLevel,
-        type: 'saved',
+      router.push({
+        pathname: SCREENS.BOARD as any,
+        params: {
+          id: savedGame.savedId,
+          level: savedGame.savedLevel,
+          type: 'saved',
+        },
       });
     }
   };
@@ -75,7 +80,7 @@ const MainScreen = () => {
     <SafeAreaView edges={['top']} style={[styles.container]}>
       {backgroundUrl && (
         <ImageBackground
-          source={{uri: backgroundUrl}}
+          source={{ uri: backgroundUrl }}
           style={StyleSheet.absoluteFillObject}
           resizeMode="cover"
           blurRadius={2}
@@ -100,7 +105,7 @@ const MainScreen = () => {
               },
             ]}
             onPress={handleContinueGame}>
-            <Text style={[styles.buttonText, {color: theme.buttonText}]}>
+            <Text style={[styles.buttonText, { color: theme.buttonText }]}>
               {t('continueGame')}
             </Text>
           </TouchableOpacity>
@@ -118,7 +123,7 @@ const MainScreen = () => {
               },
             ]}
             onPress={handleClearStorage}>
-            <Text style={[styles.buttonText, {color: theme.buttonText}]}>
+            <Text style={[styles.buttonText, { color: theme.buttonText }]}>
               {t('clearStorage')}
             </Text>
           </TouchableOpacity>

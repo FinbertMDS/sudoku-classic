@@ -1,9 +1,17 @@
-// storage.ts
 import { Storage } from 'expo-storage';
+import { Platform } from 'react-native';
+
+const isWeb = Platform.OS === 'web';
+
+const localStorageAvailable = typeof localStorage !== 'undefined';
 
 export const saveItem = async (key: string, value: any) => {
   try {
-    await Storage.setItem({ key, value: value });
+    if (isWeb && localStorageAvailable) {
+      localStorage.setItem(key, value);
+    } else {
+      await Storage.setItem({ key, value });
+    }
   } catch (error) {
     console.error(`Error saving ${key}`, error);
   }
@@ -11,7 +19,12 @@ export const saveItem = async (key: string, value: any) => {
 
 export const getItem = async <T>(key: string): Promise<T | null> => {
   try {
-    const value = await Storage.getItem({ key });
+    let value;
+    if (isWeb && localStorageAvailable) {
+      value = localStorage.getItem(key);
+    } else {
+      value = await Storage.getItem({ key });
+    }
     // If T is string type, return value directly
     if (value) {
       try {
@@ -32,7 +45,11 @@ export const getItem = async <T>(key: string): Promise<T | null> => {
 
 export const deleteItem = async (key: string) => {
   try {
-    await Storage.removeItem({ key });
+    if (isWeb && localStorageAvailable) {
+      localStorage.removeItem(key);
+    } else {
+      await Storage.removeItem({ key });
+    }
   } catch (error) {
     console.error(`Error deleting ${key}`, error);
   }

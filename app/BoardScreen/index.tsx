@@ -1,36 +1,33 @@
+import { useSafeGoBack } from '@/hooks/useSafeGoBack';
 import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
+  useFocusEffect
 } from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {ActivityIndicator, Alert, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { router, useLocalSearchParams } from 'expo-router';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, Alert, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import ActionButtons from '../../components/Board/ActionButtons';
 import Grid from '../../components/Board/Grid';
 import InfoPanel from '../../components/Board/InfoPanel';
 import NumberPad from '../../components/Board/NumberPad';
 import PauseModal from '../../components/Board/PauseModal';
 import Header from '../../components/commons/Header';
-import {useTheme} from '../../context/ThemeContext';
-import {CORE_EVENTS} from '../../events';
+import { useTheme } from '../../context/ThemeContext';
+import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
-import {useAppPause} from '../../hooks/useAppPause';
-import {useGameTimer} from '../../hooks/useGameTimer';
-import {useMistakeCounter} from '../../hooks/useMistakeCounter';
-import {BoardService} from '../../services/BoardService';
-import {SettingsService} from '../../services/SettingsService';
+import { useAppPause } from '../../hooks/useAppPause';
+import { useGameTimer } from '../../hooks/useGameTimer';
+import { useMistakeCounter } from '../../hooks/useMistakeCounter';
+import { BoardService } from '../../services/BoardService';
+import { SettingsService } from '../../services/SettingsService';
 import {
   AppSettings,
   BoardParamProps,
-  BoardScreenRouteProp,
   Cage,
   Cell,
   CellValue,
-  RootStackParamList,
-  SavedGame,
+  SavedGame
 } from '../../types';
 import {
   checkBoardIsSolved,
@@ -48,18 +45,25 @@ import {
   BOARD_SIZE,
   DEFAULT_SETTINGS,
   MAX_MISTAKES,
-  MAX_TIMEPLAYED,
-  SCREENS,
+  MAX_TIMEPLAYED
 } from '../../utils/constants';
-import {formatTime} from '../../utils/dateUtil';
+import { formatTime } from '../../utils/dateUtil';
 
 const BoardScreen = () => {
-  const {theme} = useTheme();
-  const {t} = useTranslation();
-  const route = useRoute<BoardScreenRouteProp>();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const {id, level, type} = route.params as BoardParamProps;
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const rawParams = useLocalSearchParams();
+  const { id, level, type } = useMemo(() => {
+    return {
+      id: rawParams.id,
+      level: rawParams.level,
+      type: rawParams.type,
+    } as BoardParamProps;
+  }, [rawParams]);
+
+  const goBack = useSafeGoBack();
+
+
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -78,7 +82,7 @@ const BoardScreen = () => {
     setSelectedCell(cell);
   }, []);
   // Xử lý animation khi nhập xong 1 hàng/cột
-  const [animatedCells, setAnimatedCells] = useState<{[key: string]: number}>(
+  const [animatedCells, setAnimatedCells] = useState<{ [key: string]: number }>(
     {},
   );
 
@@ -157,7 +161,7 @@ const BoardScreen = () => {
 
   // Hiển thị số lần sai
   // ===========================================================
-  const {mistakes, incrementMistake, resetMistakes} = useMistakeCounter({
+  const { mistakes, incrementMistake, resetMistakes } = useMistakeCounter({
     maxMistakes: MAX_MISTAKES,
     onLimitReached: async () => {
       // Gọi khi người chơi đã sai quá nhiều lần
@@ -165,13 +169,13 @@ const BoardScreen = () => {
       // Bạn có thể show modal thua hoặc reset game
       Alert.alert(
         t('mistakeWarning'),
-        t('tooManyMistakes', {max: MAX_MISTAKES}),
+        t('tooManyMistakes', { max: MAX_MISTAKES }),
         [
           {
             text: t('ok'),
             onPress: () => {
               // setIsPlaying(true);
-              navigation.goBack();
+              goBack();
             },
           },
         ],
@@ -185,19 +189,19 @@ const BoardScreen = () => {
 
   // Hiển thị thời gian đã chơi
   // ===========================================================
-  const {seconds, resetTimer} = useGameTimer(isPlaying, {
+  const { seconds, resetTimer } = useGameTimer(isPlaying, {
     maxTimePlayed: MAX_TIMEPLAYED,
     onLimitReached: async () => {
       await handleResetGame();
       Alert.alert(
         t('timeWarning'),
-        t('playedLimit', {limit: formatTime(MAX_TIMEPLAYED)}),
+        t('playedLimit', { limit: formatTime(MAX_TIMEPLAYED) }),
         [
           {
             text: t('ok'),
             onPress: () => {
               // setIsPlaying(true);
-              navigation.goBack();
+              goBack();
             },
           },
         ],
@@ -236,7 +240,7 @@ const BoardScreen = () => {
       lastSaved: new Date(),
     } as SavedGame);
     setIsPlaying(false);
-    navigation.goBack();
+    goBack();
   };
 
   const handleGoToSettings = async () => {
@@ -252,8 +256,9 @@ const BoardScreen = () => {
     } as SavedGame);
     setIsPlaying(false);
     setIsPaused(true);
-    navigation.navigate(SCREENS.SETTINGS, {
-      showAdvancedSettings: false,
+    router.push({
+      pathname: '/SettingsScreen',
+      params: { showAdvancedSettings: '0' },
     });
   };
 
@@ -303,7 +308,7 @@ const BoardScreen = () => {
     if (!selectedCell) {
       return;
     }
-    const {row, col} = selectedCell;
+    const { row, col } = selectedCell;
     if (initialBoard[row][col]) {
       return;
     }
@@ -318,14 +323,14 @@ const BoardScreen = () => {
     newNotes[row][col] = [];
     setNotes(newNotes);
     saveHistory(newBoard);
-    setSelectedCell({...selectedCell, value: null});
+    setSelectedCell({ ...selectedCell, value: null });
   };
 
   const handleHint = () => {
     if (!selectedCell) {
       return;
     }
-    const {row, col} = selectedCell;
+    const { row, col } = selectedCell;
     if (initialBoard[row][col] != null) {
       return;
     }
@@ -342,7 +347,7 @@ const BoardScreen = () => {
    * Kiểm tra board đã được giải quyết chưa
    */
   const handleSolve = () => {
-    Alert.alert(t('solution'), t('allDone'), [{text: t('ok')}], {
+    Alert.alert(t('solution'), t('allDone'), [{ text: t('ok') }], {
       cancelable: false,
     });
 
@@ -362,7 +367,7 @@ const BoardScreen = () => {
     if (!selectedCell) {
       return;
     }
-    const {row, col} = selectedCell;
+    const { row, col } = selectedCell;
     if (initialBoard[row][col] != null) {
       return;
     }
@@ -382,7 +387,7 @@ const BoardScreen = () => {
       newBoard[row][col] = num;
       setBoard(newBoard);
       saveHistory(newBoard);
-      setSelectedCell({...selectedCell, value: num});
+      setSelectedCell({ ...selectedCell, value: num });
 
       if (settings.autoRemoveNotes) {
         setNotes(prevNotes => removeNoteFromPeers(prevNotes, row, col, num));
@@ -419,7 +424,7 @@ const BoardScreen = () => {
     return true; // Nếu tất cả ô trong cột đều khác 0, coi như đã filled
   };
 
-  const timeoutRefs = useRef<{[key: string]: NodeJS.Timeout}>({});
+  const timeoutRefs = useRef<{ [key: string]: NodeJS.Timeout }>({});
   useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -450,11 +455,11 @@ const BoardScreen = () => {
       clearTimeout(timeoutRefs.current[key]);
     }
     // Set lại animation
-    setAnimatedCells(prev => ({...prev, [key]: animationType}));
+    setAnimatedCells(prev => ({ ...prev, [key]: animationType }));
     // Tạo timeout mới
     timeoutRefs.current[key] = setTimeout(() => {
       setAnimatedCells(prev => {
-        const updated = {...prev};
+        const updated = { ...prev };
         delete updated[key];
         return updated;
       });
@@ -481,11 +486,11 @@ const BoardScreen = () => {
                 mistakes: mistakes,
               });
               await BoardService.clear();
-              navigation.goBack();
+              goBack();
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     }
   };
@@ -522,7 +527,7 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top']}
-        style={[styles.loadingContainer, {backgroundColor: theme.background}]}>
+        style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
         <ActivityIndicator size="large" color={theme.primary} />
       </SafeAreaView>
     );
@@ -531,7 +536,7 @@ const BoardScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, {backgroundColor: theme.background}]}>
+      style={[styles.container, { backgroundColor: theme.background }]}>
       <Header
         title={t('appName')}
         showBack={true}
@@ -586,7 +591,6 @@ const BoardScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
   },
   loadingContainer: {
     flex: 1,

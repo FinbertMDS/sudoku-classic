@@ -1,4 +1,3 @@
-import { deleteItem, getItem, saveItem } from '.';
 import { AppSettings, DailyBackgrounds } from '../types';
 import {
   STORAGE_KEY_BACKGROUNDS,
@@ -6,6 +5,7 @@ import {
   STORAGE_KEY_LANG_KEY_PREFERRED,
   STORAGE_KEY_SETTINGS,
 } from '../utils/constants';
+import { deleteItem, getItem, saveItem } from './storage';
 
 // STORAGE_KEY_LANG_KEY_DEFAULT
 const getLangKeyDefault = async (): Promise<string | null> => {

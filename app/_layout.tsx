@@ -4,10 +4,14 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { ThemeProvider } from '@/context/ThemeContext';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { setupEventListeners } from '@/events/setupEventListeners';
+import { SCREENS } from '@/utils/constants';
+import { useEffect } from 'react';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    setupEventListeners();
+  }, []);
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -19,9 +23,18 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name={SCREENS.HOME_TABS} />
+        <Stack.Screen name={SCREENS.NOT_FOUND} />
+        <Stack.Screen name={SCREENS.BOARD} />
+        <Stack.Screen name={SCREENS.OPTIONS} />
+        <Stack.Screen name={SCREENS.SETTINGS} />
+        <Stack.Screen name={SCREENS.HOW_TO_PLAY} />
+        <Stack.Screen name={SCREENS.ABOUT_GAME} />
+        <Stack.Screen name={SCREENS.LICENSES} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

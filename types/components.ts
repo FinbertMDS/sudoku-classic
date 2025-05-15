@@ -1,5 +1,5 @@
-import {RouteProp} from '@react-navigation/native';
-import {Level} from '.';
+import { RouteProp } from '@react-navigation/native';
+import { Level } from '.';
 
 export type RootStackParamList = {
   HomeTabs: undefined;
@@ -21,7 +21,7 @@ export type BoardParamProps = {
 };
 
 export type SettingsParamProps = {
-  showAdvancedSettings?: boolean;
+  showAdvancedSettings: boolean;
 };
 
 export type OptionMenuItem = {

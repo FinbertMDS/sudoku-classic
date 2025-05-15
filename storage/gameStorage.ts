@@ -1,9 +1,9 @@
-import { deleteItem, getItem, saveItem } from '.';
 import { InitGame, SavedGame } from '../types';
 import {
   STORAGE_KEY_INIT_GAME,
   STORAGE_KEY_SAVED_GAME,
 } from '../utils/constants';
+import { deleteItem, getItem, saveItem } from './storage';
 
 const saveInitGame = async (game: InitGame) =>
   await saveItem(STORAGE_KEY_INIT_GAME, JSON.stringify(game));

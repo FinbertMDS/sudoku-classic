@@ -1,6 +1,5 @@
+import { useSafeGoBack } from '@/hooks/useSafeGoBack';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,17 +14,15 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
 import { useTheme } from '../../context/ThemeContext';
-import { RootStackParamList } from '../../types';
 import { getTutorialImage } from '../../utils/tutorialImages';
 
-export const HowToPlayScreen = () => {
+const HowToPlayScreen = () => {
   const { width } = useWindowDimensions();
   const flatListRef = useRef<FlatList>(null);
   const [index, setIndex] = useState(0);
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { mode, theme } = useTheme();
   const { t } = useTranslation();
+  const goBack = useSafeGoBack();
 
   const slides = [
     {
@@ -49,7 +46,7 @@ export const HowToPlayScreen = () => {
     if (index < slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: index + 1 });
     } else {
-      navigation.goBack();
+      goBack();
     }
   };
 
@@ -185,3 +182,5 @@ const styles = StyleSheet.create({
     alignItems: 'center' as const,
   },
 });
+
+export default HowToPlayScreen;

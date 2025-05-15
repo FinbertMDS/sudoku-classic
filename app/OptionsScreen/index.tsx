@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { router } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,15 +20,16 @@ import { useTheme } from '../../context/ThemeContext';
 import { OptionMenuItem, RootStackParamList } from '../../types';
 import { SCREENS } from '../../utils/constants';
 
-export const OptionsScreen = () => {
+const OptionsScreen = () => {
   const { theme } = useTheme();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
 
   const handleGoToSettings = () => {
-    navigation.navigate(SCREENS.SETTINGS, {
-      showAdvancedSettings: true,
+    router.push({
+      pathname: '/SettingsScreen',
+      params: { showAdvancedSettings: '1' },
     });
   };
 
@@ -69,7 +71,7 @@ export const OptionsScreen = () => {
 
   const menuItems: OptionMenuItem[] = [
     { icon: 'cog', label: t('settings'), onPress: handleGoToSettings },
-    { icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY },
+    { icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY as any },
     { icon: 'star-outline', label: t('rateApp'), onPress: handleRateApp },
     { icon: 'share-variant', label: t('shareApp'), onPress: handleShareApp },
     {
@@ -154,3 +156,5 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
 });
+
+export default OptionsScreen;

@@ -1,8 +1,10 @@
 // SettingsService.ts
-import {UNSPLASH_ACCESS_KEY} from '@env';
 import axios from 'axios';
-import {appStorage} from '../storage';
-import {DailyBackgrounds} from '../types';
+import Constants from 'expo-constants';
+import { appStorage } from '../storage';
+import { DailyBackgrounds } from '../types';
+
+const { UNSPLASH_ACCESS_KEY } = Constants.expoConfig?.extra ?? {};
 
 export const BackgroundService = {
   async load(): Promise<DailyBackgrounds | null> {

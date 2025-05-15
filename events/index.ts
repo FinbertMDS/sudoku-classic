@@ -1,6 +1,3 @@
-export * from './eventBus';
-export * from './setupEventListeners';
-
 export const CORE_EVENTS = {
   initGame: 'initGame',
   gameStarted: 'gameStarted',

@@ -1,15 +1,15 @@
-import React, {useCallback, useEffect, useRef} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-import Svg, {Line} from 'react-native-svg';
-import {useTheme} from '../../context/ThemeContext';
-import {AppSettings, Cell, CellValue} from '../../types';
-import {getAdjacentCellsInSameCage} from '../../utils/boardUtil';
+import Svg, { Line } from 'react-native-svg';
+import { useTheme } from '../../context/ThemeContext';
+import { AppSettings, Cell, CellValue } from '../../types';
+import { getAdjacentCellsInSameCage } from '../../utils/boardUtil';
 import {
   ANIMATION_CELL_KEY_SEPARATOR,
   ANIMATION_DURATION,
@@ -23,11 +23,11 @@ import {
 
 type GridProps = {
   board: CellValue[][];
-  cages: {cells: [number, number][]; sum: number}[];
+  cages: { cells: [number, number][]; sum: number }[];
   notes: string[][][];
   solvedBoard: number[][];
   selectedCell: Cell | null;
-  animatedCells: {[key: string]: number};
+  animatedCells: { [key: string]: number };
   settings: AppSettings;
   onPress: (cell: Cell | null) => void;
 };
@@ -42,19 +42,19 @@ const Grid = ({
   settings,
   onPress,
 }: GridProps) => {
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const rowScales = Array.from({length: BOARD_SIZE}, () => useSharedValue(1));
+  const rowScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const colScales = Array.from({length: BOARD_SIZE}, () => useSharedValue(1));
+  const colScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
 
   const animatedStyles = useRef(
-    Array.from({length: BOARD_SIZE}, (_, row) =>
-      Array.from({length: BOARD_SIZE}, (__, col) =>
+    Array.from({ length: BOARD_SIZE }, (_, row) =>
+      Array.from({ length: BOARD_SIZE }, (__, col) =>
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useAnimatedStyle(() => ({
-          transform: [{scale: rowScales[row].value * colScales[col].value}],
+          transform: [{ scale: rowScales[row].value * colScales[col].value }],
         })),
       ),
     ),
@@ -79,8 +79,8 @@ const Grid = ({
         animatedCells[key] === ANIMATION_TYPE.ROW_COL
       ) {
         rowScales[row].value = withSequence(
-          withTiming(0.9, {duration: ANIMATION_DURATION / 3}),
-          withTiming(1, {duration: ANIMATION_DURATION / 3}),
+          withTiming(0.9, { duration: ANIMATION_DURATION / 3 }),
+          withTiming(1, { duration: ANIMATION_DURATION / 3 }),
         );
       }
       if (
@@ -88,8 +88,8 @@ const Grid = ({
         animatedCells[key] === ANIMATION_TYPE.ROW_COL
       ) {
         colScales[col].value = withSequence(
-          withTiming(0.9, {duration: ANIMATION_DURATION / 3}),
-          withTiming(1, {duration: ANIMATION_DURATION / 3}),
+          withTiming(0.9, { duration: ANIMATION_DURATION / 3 }),
+          withTiming(1, { duration: ANIMATION_DURATION / 3 }),
         );
       }
     });
@@ -413,8 +413,8 @@ const Grid = ({
       const overlayColor = isSelected
         ? theme.selectedOverlayColor
         : isSameValueConflict
-        ? theme.conflictOverlayColor
-        : theme.sameValueOverlayColor;
+          ? theme.conflictOverlayColor
+          : theme.sameValueOverlayColor;
 
       const showValue = cellValue !== 0;
       const showMistake = settings.autoCheckMistake && isMistake;
@@ -433,37 +433,37 @@ const Grid = ({
       return (
         <View
           key={`cell-${row}-${col}`}
-          style={[styles.cellWrapper, {backgroundColor: theme.background}]}>
+          style={[styles.cellWrapper, { backgroundColor: theme.background }]}>
           {showRelatedOverlay && (
             <View
               style={[
                 styles.relatedOverlay,
-                {backgroundColor: theme.overlayColor},
+                { backgroundColor: theme.overlayColor },
               ]}
             />
           )}
 
           {showOverlay && (
             <View
-              style={[styles.selectedOverlay, {backgroundColor: overlayColor}]}
+              style={[styles.selectedOverlay, { backgroundColor: overlayColor }]}
             />
           )}
 
           <TouchableOpacity
             style={[styles.cell, borderStyle]}
-            onPress={() => onPress({row, col, value: cellValue})}
+            onPress={() => onPress({ row, col, value: cellValue })}
             activeOpacity={0.8}>
             {isCageFirst && (
-              <Text style={[styles.cageText, {color: theme.secondary}]}>
+              <Text style={[styles.cageText, { color: theme.secondary }]}>
                 {cage?.sum}
               </Text>
             )}
 
             <View style={styles.notesContainerTop}>
-              {Array.from({length: BOARD_SIZE}, (_, i) => {
+              {Array.from({ length: BOARD_SIZE }, (_, i) => {
                 const noteValue = (i + 1).toString();
                 return (
-                  <Text key={i} style={[styles.noteText, {color: theme.text}]}>
+                  <Text key={i} style={[styles.noteText, { color: theme.text }]}>
                     {cellNotes.includes(noteValue) ? i + 1 : ' '}
                   </Text>
                 );
@@ -475,8 +475,8 @@ const Grid = ({
                 <Text
                   style={[
                     styles.cellText,
-                    {color: theme.text},
-                    showMistake && {color: theme.danger},
+                    { color: theme.text },
+                    showMistake && { color: theme.danger },
                   ]}>
                   {cellValue}
                 </Text>
@@ -509,8 +509,7 @@ const Grid = ({
           <Svg
             width={CELL_SIZE * BOARD_SIZE}
             height={CELL_SIZE * BOARD_SIZE}
-            style={styles.cageBordersSvg}
-            pointerEvents="none">
+            style={[styles.cageBordersSvg, { pointerEvents: 'none' }]}>
             {renderCageBorders()}
           </Svg>
         </View>

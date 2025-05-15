@@ -1,11 +1,9 @@
+import { useSafeGoBack } from '@/hooks/useSafeGoBack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { router } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { RootStackParamList } from '../../types';
-import { SCREENS } from '../../utils/constants';
 
 type HeaderProps = {
   title?: string;
@@ -28,16 +26,17 @@ const Header = ({
   onBack = undefined,
   onSettings = undefined,
 }: HeaderProps) => {
-  const {theme, toggleTheme, mode} = useTheme();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { theme, toggleTheme, mode } = useTheme();
+  const goBack = useSafeGoBack();
 
   const defaultOnSettings = () => {
-    navigation.navigate(SCREENS.OPTIONS);
+    router.push({
+      pathname: '/OptionsScreen',
+    });
   };
 
   const defaultOnBack = () => {
-    navigation.goBack();
+    goBack();
   };
 
   return (
@@ -53,7 +52,7 @@ const Header = ({
         )}
         {title && title.length > 0 && (
           <View style={styles.center}>
-            <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
+            <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
           </View>
         )}
         {/* Right side */}
