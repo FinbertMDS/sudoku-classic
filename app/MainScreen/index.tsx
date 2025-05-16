@@ -77,7 +77,12 @@ const MainScreen = () => {
   };
 
   return (
-    <SafeAreaView edges={['top']} style={[styles.container]}>
+    <SafeAreaView
+      edges={['top']}
+      style={[
+        styles.container,
+        backgroundUrl === null && { backgroundColor: theme.background },
+      ]}>
       {backgroundUrl && (
         <ImageBackground
           source={{ uri: backgroundUrl }}

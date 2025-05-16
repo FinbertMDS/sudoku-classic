@@ -29,8 +29,6 @@ const SettingsScreen = () => {
   const rawParams = useLocalSearchParams();
 
   const { showAdvancedSettings } = useMemo(() => {
-    console.log('rawParams', rawParams);
-
     return {
       showAdvancedSettings:
         typeof rawParams.showAdvancedSettings === 'string'
@@ -163,6 +161,7 @@ const SettingsScreen = () => {
             </Text>
           </TouchableOpacity>
         )}
+        <View style={styles.bottomSpacer} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 16,
   },
   labelContainer: {
     flex: 1,
@@ -200,6 +199,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: 'bold' as const,
+  },
+  bottomSpacer: {
+    height: 16,
   },
 });
 

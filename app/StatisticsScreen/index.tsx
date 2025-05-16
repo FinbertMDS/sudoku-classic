@@ -17,8 +17,8 @@ import { GameStatsManager } from '../../services/GameStatsManager';
 import { GameLogEntry, GameStats, Level, TimeFilter } from '../../types';
 
 const StatisticsScreen = () => {
-  const {theme} = useTheme();
-  const {t} = useTranslation();
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const [stats, setStats] = useState<Record<Level, GameStats> | null>(null);
   const [logs, setLogs] = useState<GameLogEntry[]>([]);
   const [activeTab, setActiveTab] = useState<'level' | 'chart'>('level');
@@ -26,7 +26,7 @@ const StatisticsScreen = () => {
   const [filter, setFilter] = useState<TimeFilter>('all');
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const {updateStatsCache} = useEnsureStatsCache();
+  const { updateStatsCache } = useEnsureStatsCache();
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
@@ -39,7 +39,7 @@ const StatisticsScreen = () => {
   );
 
   useAppPause(
-    () => {},
+    () => { },
     () => {
       updateStatsCache().then(_ => {
         loadData();
@@ -65,7 +65,7 @@ const StatisticsScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, {backgroundColor: theme.background}]}>
+      style={[styles.container, { backgroundColor: theme.background }]}>
       <Header
         title={t('statistics')}
         showBack={false}
@@ -96,7 +96,7 @@ const StatisticsScreen = () => {
           <Text
             style={[
               styles.chipText,
-              {color: activeTab === 'level' ? theme.text : theme.secondary},
+              { color: activeTab === 'level' ? theme.text : theme.secondary },
             ]}>
             {t('levelStats')}
           </Text>
@@ -116,7 +116,7 @@ const StatisticsScreen = () => {
           <Text
             style={[
               styles.chipText,
-              {color: activeTab === 'chart' ? theme.text : theme.secondary},
+              { color: activeTab === 'chart' ? theme.text : theme.secondary },
             ]}>
             {t('chartsStats')}
           </Text>
@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    marginTop: 16,
   },
 });
 

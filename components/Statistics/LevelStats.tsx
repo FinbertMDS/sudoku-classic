@@ -5,11 +5,10 @@ import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   Dimensions,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { GameStats, Level } from '../../types';
@@ -97,7 +96,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
-    marginTop: 16,
   },
   title: {
     fontSize: 28,
@@ -108,7 +106,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
-    marginTop: 16,
   },
   card: {
     width: SCREEN_WIDTH - 100,
@@ -117,14 +114,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderLeftWidth: 6,
     elevation: 2,
-    ...(Platform.OS === 'web'
-      ? { boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)' }
-      : {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-      }),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
   },
   level: {
     fontSize: 20 as const,
