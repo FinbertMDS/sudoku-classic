@@ -1,5 +1,6 @@
-import {gameStorage} from '../storage';
-import {InitGame, SavedGame} from '../types';
+import { gameStorage } from '../storage';
+import { InitGame, SavedGame, SavedHintCount, SavedMistake } from '../types';
+import { MAX_HINTS } from '../utils/constants';
 
 export const BoardService = {
   async save(state: SavedGame | InitGame) {
@@ -50,16 +51,47 @@ export const BoardService = {
       return 0;
     }
   },
-  async loadSavedMistake(): Promise<number> {
+  async loadSavedMistake(): Promise<SavedMistake> {
     try {
       const savedGame = await this.loadSaved();
       if (savedGame) {
-        return savedGame.savedMistake;
+        return {
+          savedMistake: savedGame.savedMistake,
+          savedTotalMistake: savedGame.savedTotalMistake,
+        };
       }
-      return 0;
+      return {
+        savedMistake: 0,
+        savedTotalMistake: 0,
+      };
     } catch (e) {
       console.error('Failed to load saved mistake count:', e);
-      return 0;
+      return {
+        savedMistake: 0,
+        savedTotalMistake: 0,
+      };
+    }
+  },
+
+  async loadSavedHintCount(): Promise<SavedHintCount> {
+    try {
+      const savedGame = await this.loadSaved();
+      if (savedGame) {
+        return {
+          savedHintCount: savedGame.savedHintCount ?? MAX_HINTS,
+          savedTotalHintCountUsed: savedGame.savedTotalHintCountUsed ?? 0,
+        };
+      }
+      return {
+        savedHintCount: MAX_HINTS,
+        savedTotalHintCountUsed: 0,
+      };
+    } catch (e) {
+      console.error('Failed to load saved hint count:', e);
+      return {
+        savedHintCount: MAX_HINTS,
+        savedTotalHintCountUsed: 0,
+      };
     }
   },
 

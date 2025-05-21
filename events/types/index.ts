@@ -1,4 +1,4 @@
-import {AppSettings, GameLogEntry, Level} from '../../types';
+import { AppSettings, GameLogEntry, Level } from '../../types';
 
 export type DynamicEvents = Record<string, any>;
 export type AppEvents = CoreEvents & DynamicEvents;
@@ -13,6 +13,7 @@ export type GameEndedCoreEvent = {
   level: Level;
   timePlayed: number;
   mistakes: number;
+  hintCount: number;
 };
 
 export type StatisticsUpdatedCoreEvent = {

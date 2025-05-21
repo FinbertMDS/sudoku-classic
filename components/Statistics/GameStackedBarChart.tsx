@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 16,
     marginBottom: 6,
+    fontWeight: '600' as const,
   },
   chart: {
     borderRadius: 12,

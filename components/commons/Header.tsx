@@ -42,7 +42,7 @@ const Header = ({
   return (
     <>
       {/* Header */}
-      <View style={[styles.header]}>
+      <View style={[styles.header, { backgroundColor: theme.background }]}>
         {showBack && (
           <View style={styles.side}>
             <TouchableOpacity onPress={onBack ? onBack : defaultOnBack}>

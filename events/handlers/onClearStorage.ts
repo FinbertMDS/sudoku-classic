@@ -7,5 +7,7 @@ export const handleClearStorage = async () => {
   BoardService.clear();
   GameStatsManager.resetStatistics();
   SettingsService.clear();
-  BackgroundService.clear();
+  if (!__DEV__) {
+    BackgroundService.clear();
+  }
 };

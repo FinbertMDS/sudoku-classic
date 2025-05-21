@@ -1,9 +1,9 @@
 // boardUtil.ts
 
-import {generateKillerSudoku} from 'killer-sudoku-generator';
-import {Difficulty} from 'sudoku-gen/dist/types/difficulty.type';
-import {Cage, CellValue, InitGame, Level} from '../types';
-import {BOARD_SIZE, LEVELS} from './constants';
+import { generateKillerSudoku } from 'killer-sudoku-generator';
+import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
+import { Cage, CellValue, InitGame, Level } from '../types';
+import { BOARD_SIZE, LEVELS } from './constants';
 
 /**
  * Chuyển string thành mảng 2 chiều theo số cột nhất định (thường là 9 với Sudoku).
@@ -25,14 +25,14 @@ export function stringToGrid(input: string, columns = 9): CellValue[][] {
 
 // Tạo mảng 9x9 cho mỗi ô trong Sudoku
 export function createEmptyGrid<T>(): (T | null)[][] {
-  return Array.from({length: BOARD_SIZE}, () =>
-    Array.from({length: BOARD_SIZE}, () => null),
+  return Array.from({ length: BOARD_SIZE }, () =>
+    Array.from({ length: BOARD_SIZE }, () => null),
   );
 }
 
 export function createEmptyGridNumber(): number[][] {
-  return Array.from({length: BOARD_SIZE}, () =>
-    Array.from({length: BOARD_SIZE}, () => 0),
+  return Array.from({ length: BOARD_SIZE }, () =>
+    Array.from({ length: BOARD_SIZE }, () => 0),
   );
 }
 
@@ -41,8 +41,8 @@ export function createEmptyGridNumber(): number[][] {
  * @returns Mảng 9x9x9
  */
 export function createEmptyGridNotes<T>(): T[][][] {
-  return Array.from({length: BOARD_SIZE}, () =>
-    Array.from({length: BOARD_SIZE}, () => []),
+  return Array.from({ length: BOARD_SIZE }, () =>
+    Array.from({ length: BOARD_SIZE }, () => []),
   );
 }
 
@@ -102,10 +102,10 @@ export function getAdjacentCellsInSameCage(
 ) {
   // Danh sách các vị trí xung quanh: trên, dưới, trái, phải
   const adjacentCells = [
-    {direction: 'top', row: row - 1, col: col},
-    {direction: 'bottom', row: row + 1, col: col},
-    {direction: 'left', row: row, col: col - 1},
-    {direction: 'right', row: row, col: col + 1},
+    { direction: 'top', row: row - 1, col: col },
+    { direction: 'bottom', row: row + 1, col: col },
+    { direction: 'left', row: row, col: col - 1 },
+    { direction: 'right', row: row, col: col + 1 },
   ];
 
   const result = {
@@ -261,4 +261,33 @@ export const generateBoard = (level: Level, id: string) => {
   } as InitGame;
 
   return initGame;
+};
+
+export const isRowFilled = (
+  row: number,
+  newBoard: CellValue[][],
+  solvedBoard: number[][],
+): boolean => {
+  if (!newBoard[row]) {
+    return false;
+  } // Nếu dòng không tồn tại, coi như chưa filled
+  for (let col = 0; col < BOARD_SIZE; col++) {
+    if (!newBoard[row][col] || newBoard[row][col] !== solvedBoard[row][col]) {
+      return false; // Nếu có ô nào trong dòng là 0, coi như chưa filled
+    }
+  }
+  return true; // Nếu tất cả ô trong dòng đều khác 0, coi như đã filled
+};
+
+export const isColFilled = (
+  col: number,
+  newBoard: CellValue[][],
+  solvedBoard: number[][],
+): boolean => {
+  for (let row = 0; row < BOARD_SIZE; row++) {
+    if (!newBoard[row][col] || newBoard[row][col] !== solvedBoard[row][col]) {
+      return false; // Nếu có ô nào trong cột là 0, coi như chưa filled
+    }
+  }
+  return true; // Nếu tất cả ô trong cột đều khác 0, coi như đã filled
 };

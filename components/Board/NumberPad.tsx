@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useTheme} from '../../context/ThemeContext';
-import {useNumberCounts} from '../../hooks/useNumberCounts';
-import {AppSettings, CellValue} from '../../types';
-import {BOARD_SIZE} from '../../utils/constants';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTheme } from '../../context/ThemeContext';
+import { useNumberCounts } from '../../hooks/useNumberCounts';
+import { AppSettings, CellValue } from '../../types';
+import { BOARD_SIZE } from '../../utils/constants';
 
 type NumberPadProps = {
   board: CellValue[][];
@@ -11,19 +11,19 @@ type NumberPadProps = {
   onSelectNumber: (num: number) => void;
 };
 
-const NumberPad = ({board, settings, onSelectNumber}: NumberPadProps) => {
-  const {theme} = useTheme();
+const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
+  const { theme } = useTheme();
   const counts = useNumberCounts(board, settings);
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
-      {Array.from({length: BOARD_SIZE}, (_, i) => i + 1).map(num => (
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {Array.from({ length: BOARD_SIZE }, (_, i) => i + 1).map(num => (
         <TouchableOpacity
           key={num}
           style={[styles.button]}
           onPress={() => onSelectNumber(num)}
           disabled={counts[num] === BOARD_SIZE}>
-          <Text style={[styles.text, {color: theme.text}]}>
+          <Text style={[styles.text, { color: theme.text }]}>
             {counts[num] === BOARD_SIZE ? ' ' : num}
           </Text>
         </TouchableOpacity>
@@ -37,7 +37,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     flexWrap: 'wrap' as const,
     justifyContent: 'center' as const,
-    marginTop: 10,
+    width: '100%' as const,
+    alignItems: 'center' as const,
+    marginTop: 40,
   },
   button: {
     width: 40,
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: 'center' as const,
   },
   text: {
-    fontSize: 24,
+    fontSize: 32,
   },
 });
 

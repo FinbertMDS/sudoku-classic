@@ -1,47 +1,80 @@
+import { useAlert } from '@/hooks/useAlert';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
+import { useGameTimer } from '../../hooks/useGameTimer';
 import { AppSettings } from '../../types';
-import { MAX_MISTAKES } from '../../utils/constants';
+import { MAX_MISTAKES, MAX_TIMEPLAYED } from '../../utils/constants';
 import { formatTime } from '../../utils/dateUtil';
 
 type InfoPanelProps = {
+  isPlaying: boolean;
   level: string;
   mistakes: number;
-  time: number;
+  secondsRef: React.RefObject<number>;
   isPaused: boolean;
   settings: AppSettings;
   onPause: () => void;
+  onLimitTimeReached: () => Promise<void>;
 };
 
 const InfoPanel = ({
+  isPlaying,
   level,
   mistakes,
-  time,
+  secondsRef,
   isPaused,
   settings,
   onPause,
+  onLimitTimeReached,
 }: InfoPanelProps) => {
-  const {theme} = useTheme();
-  const {t} = useTranslation();
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const { alert } = useAlert();
+  const { seconds, stopTimer } = useGameTimer(isPlaying, {
+    maxTimePlayed: MAX_TIMEPLAYED,
+    onLimitReached: async () => {
+      stopTimer();
+      alert(
+        t('timeWarning'),
+        t('playedLimit', { limit: formatTime(MAX_TIMEPLAYED) }),
+        [
+          {
+            text: t('ok'),
+            onPress: () => {
+              onLimitTimeReached();
+            },
+          },
+        ],
+        {
+          cancelable: false,
+        },
+      );
+    },
+  });
+
+  useEffect(() => {
+    secondsRef.current = seconds;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seconds]);
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.infoBlock}>
-        <Text style={[styles.title, {color: theme.text}]}>{t('level')}</Text>
-        <Text style={[styles.value, {color: theme.text}]}>
+        <Text style={[styles.title, { color: theme.text }]}>{t('level')}</Text>
+        <Text style={[styles.value, { color: theme.text }]}>
           {t(`level.${level}`)}
         </Text>
       </View>
 
       {settings.mistakeLimit && (
         <View style={styles.infoBlock}>
-          <Text style={[styles.title, {color: theme.text}]}>
+          <Text style={[styles.title, { color: theme.text }]}>
             {t('mistakes')}
           </Text>
-          <Text style={[styles.value, {color: theme.text}]}>
+          <Text style={[styles.value, { color: theme.text }]}>
             {mistakes}/{MAX_MISTAKES}
           </Text>
         </View>
@@ -49,9 +82,9 @@ const InfoPanel = ({
 
       {settings.timer && (
         <View style={styles.infoBlock}>
-          <Text style={[styles.title, {color: theme.text}]}>{t('time')}</Text>
-          <Text style={[styles.value, styles.timeValue, {color: theme.text}]}>
-            {formatTime(time)}
+          <Text style={[styles.title, { color: theme.text }]}>{t('time')}</Text>
+          <Text style={[styles.value, styles.timeValue, { color: theme.text }]}>
+            {formatTime(seconds)}
           </Text>
         </View>
       )}
@@ -73,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     alignItems: 'center' as const,
-    paddingVertical: 20,
+    marginTop: 30,
   },
   infoBlock: {
     alignItems: 'center' as const,

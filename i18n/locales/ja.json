@@ -122,5 +122,13 @@
   "filter.today": "今日",
   "filter.thisWeek": "今週",
   "filter.thisMonth": "今月",
-  "filter.thisYear": "今年"
+  "filter.thisYear": "今年",
+
+  "ad.cancel": "キャンセル",
+  "ad.confirm": "広告を見る",
+
+  "mistakeWarning.title": "ミスの上限に達しました",
+  "mistakeWarning.message": "{{max}}回以上のミスがあります！\n広告を見てゲームを続けましょう。",
+  "hintWarning.title": "ヒントがありません",
+  "hintWarning.message": "すべてのヒントを使い切りました。\n広告を見るとヒントがリセットされ、続けてプレイできます。"
 }

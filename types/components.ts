@@ -21,7 +21,7 @@ export type BoardParamProps = {
 };
 
 export type SettingsParamProps = {
-  showAdvancedSettings: boolean;
+  showAdvancedSettings?: boolean;
 };
 
 export type OptionMenuItem = {
@@ -37,4 +37,14 @@ export type DailyBackgrounds = {
   light: string | null;
   dark: string | null;
   date?: string;
+};
+
+export type ActionButtonProps = {
+  id: string;
+  label: string;
+  icon: string[];
+  iconChangeFlag?: boolean;
+  showBadge?: boolean;
+  badgeCount?: number;
+  onPress?: () => void;
 };

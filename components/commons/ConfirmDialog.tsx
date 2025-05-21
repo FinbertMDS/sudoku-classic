@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {useTheme} from '../../context/ThemeContext';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { useTheme } from '../../context/ThemeContext';
 
 type ConfirmDialogProps = {
   title: string;
@@ -26,49 +20,50 @@ const ConfirmDialog = ({
   onCancel,
   onConfirm,
 }: ConfirmDialogProps) => {
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
   return (
-    <Modal transparent animationType="fade" onRequestClose={onCancel}>
-      <Pressable style={styles.overlay} onPress={onCancel}>
+    <View style={StyleSheet.absoluteFillObject}>
+      <Modal
+        isVisible={true}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        backdropOpacity={0.5}
+        useNativeDriver
+        onBackButtonPress={() => onCancel()}
+        onBackdropPress={() => onCancel()}
+        onDismiss={() => onCancel()}>
         <View
-          style={[styles.dialogWrapper, {backgroundColor: theme.background}]}>
+          style={[styles.dialogWrapper, { backgroundColor: theme.background }]}>
           <View style={styles.dialog}>
-            <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
-            <Text style={[styles.message, {color: theme.secondary}]}>
+            <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
+            <Text style={[styles.message, { color: theme.secondary }]}>
               {message}
             </Text>
           </View>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={onCancel}
+              onPress={() => onCancel()}
               style={[styles.button, styles.borderRight]}>
-              <Text style={[styles.cancelText, {color: theme.text}]}>
+              <Text style={[styles.cancelText, { color: theme.text }]}>
                 {cancelText}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onConfirm} style={styles.button}>
-              <Text style={[styles.confirmText, {color: theme.danger}]}>
+            <TouchableOpacity onPress={() => onConfirm()} style={styles.button}>
+              <Text style={[styles.confirmText, { color: theme.danger }]}>
                 {confirmText}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Pressable>
-    </Modal>
+      </Modal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
   dialogWrapper: {
-    width: 270,
     borderRadius: 13,
     overflow: 'hidden' as const,
     elevation: 5,

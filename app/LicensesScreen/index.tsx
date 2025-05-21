@@ -1,13 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { WebView } from 'react-native-webview';
 import Header from '../../components/commons/Header';
 import { useTheme } from '../../context/ThemeContext';
 
-export default function Licenses() {
+const LicensesScreen = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+
+  const licensesSource =
+    Platform.OS === 'android'
+      ? { uri: 'file:///android_asset/licenses.html' }
+      : require('../../assets/htmls/licenses.html');
+
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
@@ -18,10 +25,7 @@ export default function Licenses() {
         showSettings={false}
         showTheme={false}
       />
-      {/* <WebView
-        originWhitelist={['*']}
-        source={require('../../../assets/htmls/licenses.html')}
-      /> */}
+      <WebView originWhitelist={['*']} source={licensesSource} />
     </SafeAreaView>
   );
 }
@@ -31,3 +35,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default LicensesScreen;

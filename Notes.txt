@@ -1,3 +1,6 @@
+1. Màn LicensesScreen không vào được.
+
+------------
 Remove library not need
     "expo-web-browser": "~14.1.6",
     "expo-font": "~13.3.1",

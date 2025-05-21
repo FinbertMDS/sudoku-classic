@@ -1,3 +1,4 @@
+import { useAlert } from '@/hooks/useAlert';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -5,13 +6,12 @@ import { router } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Alert,
   Linking,
   ScrollView,
   Share,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { appConfig } from '../../appConfig';
@@ -25,6 +25,7 @@ const OptionsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { t } = useTranslation();
+  const { alert } = useAlert();
 
   const handleGoToSettings = () => {
     router.push({
@@ -58,7 +59,7 @@ const OptionsScreen = () => {
     if (supported) {
       Linking.openURL(url);
     } else {
-      Alert.alert(
+      alert(
         t('mailNotSupported'),
         t('mailNotSupportedMsg', { mail: appConfig.developerMail }),
       );
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+    marginTop: 16,
     paddingHorizontal: 16,
   },
   item: {
