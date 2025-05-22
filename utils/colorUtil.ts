@@ -1,10 +1,10 @@
 // getLevelColor.ts
 
-import {ColorSchemeName} from 'react-native';
-import {Level} from '../types';
-import {LEVELS} from './constants';
+import { ColorSchemeName } from 'react-native';
+import { Level } from '../types';
+import { LEVELS } from './constants';
 
-export const levelColors: Record<Level, {light: string; dark: string}> = {
+export const levelColors: Record<Level, { light: string; dark: string }> = {
   easy: {
     light: '#4ade80', // green-400
     dark: '#22c55e', // green-500
@@ -20,6 +20,10 @@ export const levelColors: Record<Level, {light: string; dark: string}> = {
   expert: {
     light: '#f87171', // red-400
     dark: '#ef4444', // red-500
+  },
+  master: {
+    light: '#f472b6', // rose-400
+    dark: '#ec4899',  // rose-500
   },
 };
 

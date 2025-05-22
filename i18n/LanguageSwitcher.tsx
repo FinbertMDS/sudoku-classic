@@ -1,17 +1,17 @@
 // LanguageSwitcher.tsx
 
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useTheme} from '../context/ThemeContext';
-import {appStorage} from '../storage';
-import {LANGUAGES} from '../utils/constants';
-import i18n, {autoDetectLanguage} from './i18n';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTheme } from '../context/ThemeContext';
+import { appStorage } from '../storage';
+import { LANGUAGES } from '../utils/constants';
+import i18n, { autoDetectLanguage } from './i18n';
 
 export default function LanguageSwitcher() {
-  const {theme} = useTheme();
-  const {t} = useTranslation();
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const [selectedLang, setSelectedLang] = useState(i18n.language);
 
   useFocusEffect(
@@ -34,27 +34,27 @@ export default function LanguageSwitcher() {
 
   const changeLanguage = async (code: string) => {
     await i18n.changeLanguage(code);
-    appStorage.saveLangKeyPreferred(code);
+    await appStorage.saveLangKeyPreferred(code);
     setSelectedLang(code);
   };
 
   return (
     <View
-      style={[styles.container, {backgroundColor: theme.backgroundSecondary}]}>
-      <Text style={[styles.label, {color: theme.text}]}>{t('language')}</Text>
+      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}>
+      <Text style={[styles.label, { color: theme.text }]}>{t('language')}</Text>
       <View style={styles.buttons}>
         {LANGUAGES.map(lang => (
           <TouchableOpacity
             key={lang.code}
             style={[
               styles.button,
-              selectedLang === lang.code && {backgroundColor: theme.buttonBlue},
+              selectedLang === lang.code && { backgroundColor: theme.buttonBlue },
             ]}
             onPress={() => changeLanguage(lang.code)}>
             <Text
               style={[
                 selectedLang === lang.code ? styles.selectedText : styles.text,
-                {color: theme.text},
+                { color: theme.text },
               ]}>
               {lang.label}
             </Text>

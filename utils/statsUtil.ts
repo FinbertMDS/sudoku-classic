@@ -1,10 +1,10 @@
-import {format, parseISO} from 'date-fns';
-import {TFunction} from 'i18next';
-import {ColorSchemeName} from 'react-native';
-import {DailyStats, GameLogEntry, GameStats, Level, TimeRange} from '../types';
-import {getLevelColor, levelColors} from './colorUtil';
-import {DAILY_STATS_DATE_FORMAT, LEVELS} from './constants';
-import {formatShortChartDate, isInTimeRange} from './dateUtil';
+import { format, parseISO } from 'date-fns';
+import { TFunction } from 'i18next';
+import { ColorSchemeName } from 'react-native';
+import { DailyStats, GameLogEntry, GameStats, Level, TimeRange } from '../types';
+import { getLevelColor, levelColors } from './colorUtil';
+import { DAILY_STATS_DATE_FORMAT, LEVELS } from './constants';
+import { formatShortChartDate, isInTimeRange } from './dateUtil';
 
 export function createEmptyStats(): GameStats {
   return {
@@ -25,6 +25,7 @@ export function getStatsFromLogs(
     medium: createEmptyStats(),
     hard: createEmptyStats(),
     expert: createEmptyStats(),
+    master: createEmptyStats(),
   };
 
   const filtered = logs.filter(log => isInTimeRange(log.date, filter));
@@ -67,7 +68,7 @@ export function getDailyStatsFromLogs(
     return [];
   }
 
-  const map = new Map<string, {games: number; totalTimeSeconds: number}>();
+  const map = new Map<string, { games: number; totalTimeSeconds: number }>();
   const filtered = logs.filter(
     log => log.completed && isInTimeRange(log.date, filter),
   );
@@ -76,7 +77,7 @@ export function getDailyStatsFromLogs(
     const durationSeconds = log.durationSeconds;
 
     if (!map.has(date)) {
-      map.set(date, {games: 1, totalTimeSeconds: durationSeconds});
+      map.set(date, { games: 1, totalTimeSeconds: durationSeconds });
     } else {
       const current = map.get(date)!;
       current.games += 1;
@@ -88,7 +89,7 @@ export function getDailyStatsFromLogs(
     a.localeCompare(b),
   );
 
-  return sorted.map(([date, {games, totalTimeSeconds}]) => ({
+  return sorted.map(([date, { games, totalTimeSeconds }]) => ({
     date,
     games,
     totalTimeSeconds,
@@ -110,6 +111,7 @@ export function convertToPieData(
     medium: 0,
     hard: 0,
     expert: 0,
+    master: 0,
   };
 
   const filtered = logs.filter(
@@ -147,7 +149,13 @@ export function convertToStackedData(
   filtered.forEach(log => {
     const date = format(parseISO(log.date), DAILY_STATS_DATE_FORMAT);
     if (!dateMap.has(date)) {
-      dateMap.set(date, {easy: 0, medium: 0, hard: 0, expert: 0});
+      dateMap.set(date, {
+        easy: 0,
+        medium: 0,
+        hard: 0,
+        expert: 0,
+        master: 0,
+      });
     }
     dateMap.get(date)![log.level]++;
   });

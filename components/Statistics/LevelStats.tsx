@@ -26,6 +26,9 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
   const { mode, theme } = useTheme();
   const { t } = useTranslation();
 
+  console.log('stats', stats);
+
+
   if (!stats) {
     return (
       <View

@@ -32,7 +32,6 @@ import { SettingsService } from '../../services/SettingsService';
 import {
   AppSettings,
   BoardParamProps,
-  Cage,
   Cell,
   CellValue,
   SavedGame
@@ -74,7 +73,6 @@ const BoardScreen = () => {
   const [initialBoard, setInitialBoard] = useState<CellValue[][]>(
     createEmptyGrid<CellValue>(),
   );
-  const [cages, setCages] = useState<Cage[]>([]);
   const [solvedBoard, setSolvedBoard] = useState<number[][]>(
     createEmptyGridNumber(),
   );
@@ -109,7 +107,6 @@ const BoardScreen = () => {
       setBoard(deepCloneBoard(initGame.initialBoard));
       setHistory([deepCloneBoard(initGame.initialBoard)]);
       setNotes(createEmptyGridNotes<string>());
-      setCages(initGame.cages);
       setSolvedBoard(initGame.solvedBoard);
       setIsPlaying(true);
     } else {
@@ -122,7 +119,6 @@ const BoardScreen = () => {
         setBoard(deepCloneBoard(savedGame.savedBoard));
         setHistory(savedGame.savedHistory);
         setNotes(savedGame.savedNotes);
-        setCages(initGame.cages);
         setSolvedBoard(initGame.solvedBoard);
         setIsPlaying(true);
       }
@@ -562,7 +558,6 @@ const BoardScreen = () => {
         />
         <Grid
           board={board}
-          cages={cages}
           notes={notes}
           solvedBoard={solvedBoard}
           selectedCell={selectedCell}

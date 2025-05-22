@@ -6,17 +6,11 @@ export type Cell = {
 
 export type CellValue = number | null;
 
-export interface Cage {
-  sum: number;
-  cells: [number, number][];
-}
-
-export type Level = 'easy' | 'medium' | 'hard' | 'expert';
+export type Level = 'easy' | 'medium' | 'hard' | 'expert' | 'master';
 export type GameInfo = {
   id: string;
   initialBoard: CellValue[][];
   solvedBoard: number[][];
-  cages: Cage[];
 };
 
 export type InitGame = GameInfo & {
