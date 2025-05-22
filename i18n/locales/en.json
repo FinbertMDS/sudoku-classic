@@ -1,5 +1,5 @@
 {
-  "appName": "Killer Sudoku",
+  "appName": "Sudoku",
   "author": "FinbertNgo",
   "language": "Language",
   "level.easy": "Easy",
@@ -95,7 +95,7 @@
 
   "rateApp": "Rate this app",
   "shareApp": "Share this app",
-  "shareAppMsg": "Check out this awesome Killer Sudoku game! It's a fun and challenging puzzle game that will keep you entertained for hours. Download it now and start solving puzzles!",
+  "shareAppMsg": "Check out this awesome Sudoku game! It's a fun and challenging puzzle game that will keep you entertained for hours. Download it now and start solving puzzles!",
   "sendFeedback": "Send Feedback",
   "sendFeedbackTitle": "We'd love to hear from you!",
   "sendFeedbackMsg": "If you have any questions, suggestions, or feedback about the game, please don't hesitate to reach out. Your input is valuable to us and helps us make the game even better!",

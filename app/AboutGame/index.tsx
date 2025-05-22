@@ -1,4 +1,6 @@
-import { router } from 'expo-router';
+import { RootStackParamList } from '@/types';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -18,6 +20,8 @@ import { SCREENS } from '../../utils/constants';
 export default function AboutGame() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const openURL = (url: string) => {
@@ -71,7 +75,7 @@ export default function AboutGame() {
           <Item
             theme={theme}
             label={t('licenses')}
-            onPress={() => router.push(SCREENS.LICENSES as any)}
+            onPress={() => navigation.navigate(SCREENS.LICENSES as any)}
             isLast={true}
           />
         </View>

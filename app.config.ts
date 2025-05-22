@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#ffffff"
     },
     edgeToEdgeEnabled: true,
-    package: "com.anonymous.sudokuclassic"
+    package: "com.finbertngo.sudokuclassic"
   },
   web: {
     bundler: "metro",

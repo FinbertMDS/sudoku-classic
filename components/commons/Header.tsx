@@ -76,7 +76,7 @@ const Header = ({
               </TouchableOpacity>
             )}
           </View>
-        ) : null}
+        ) : showBack ? <View style={styles.side} /> : null}
       </View>
     </>
   );

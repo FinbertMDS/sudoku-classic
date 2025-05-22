@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Dimensions,
   FlatList,
   Image,
   StyleSheet,
@@ -15,6 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
 import { useTheme } from '../../context/ThemeContext';
 import { getTutorialImage } from '../../utils/tutorialImages';
+
+const SLIDE_WIDTH = Dimensions.get('window').width;
 
 const HowToPlayScreen = () => {
   const { width } = useWindowDimensions();
@@ -97,6 +100,11 @@ const HowToPlayScreen = () => {
               </Text>
             </View>
           )}
+          getItemLayout={(_, i) => ({
+            length: SLIDE_WIDTH,
+            offset: SLIDE_WIDTH * i,
+            index: i,
+          })}
         />
 
         <View style={styles.pagination}>

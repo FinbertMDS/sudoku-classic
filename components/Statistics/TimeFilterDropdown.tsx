@@ -50,6 +50,7 @@ const TimeFilterDropdown: React.FC<Props> = ({ selected, onSelect, onClose }) =>
                         : theme.itemBorderColor,
                   },
                   index === 0 && styles.firstOption,
+                  index === options.length - 1 && styles.lastOption,
                 ]}
                 onPress={() => {
                   onSelect(option.value);
@@ -81,6 +82,10 @@ const styles = StyleSheet.create({
   firstOption: {
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+  },
+  lastOption: {
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
   },
   option: {
     padding: 16,

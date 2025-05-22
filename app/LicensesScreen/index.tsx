@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import Header from '../../components/commons/Header';
@@ -15,6 +15,8 @@ const LicensesScreen = () => {
       ? { uri: 'file:///android_asset/licenses.html' }
       : require('../../assets/htmls/licenses.html');
 
+  // access to file assets/licenses.html
+  const webSource = '/assets/assets/htmls/licenses.html';
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
@@ -25,7 +27,19 @@ const LicensesScreen = () => {
         showSettings={false}
         showTheme={false}
       />
-      <WebView originWhitelist={['*']} source={licensesSource} />
+
+      {
+        Platform.OS === 'web' ? (
+          <View style={{ flex: 1 }}>
+            <iframe
+              src={webSource}
+              style={{ width: '100%', height: '100%', borderWidth: 0 }}
+            />
+          </View>
+        ) : (
+          <WebView originWhitelist={['*']} source={licensesSource} />
+        )
+      }
     </SafeAreaView>
   );
 }
