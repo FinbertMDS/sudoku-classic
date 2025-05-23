@@ -6,7 +6,9 @@ import { InitGameCoreEvent } from '../types';
 
 export const handleInitGame = async (payload: InitGameCoreEvent) => {
   try {
+    console.time('generateBoard');
     const initGame = generateBoard(payload.level, payload.id);
+    console.timeEnd('generateBoard');
     await BoardService.save(initGame);
     // Emit gameStarted in next tick
     requestAnimationFrame(() => {

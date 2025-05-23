@@ -26,9 +26,6 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
   const { mode, theme } = useTheme();
   const { t } = useTranslation();
 
-  console.log('stats', stats);
-
-
   if (!stats) {
     return (
       <View
@@ -114,6 +111,7 @@ const styles = StyleSheet.create({
   card: {
     width: SCREEN_WIDTH - 100,
     padding: 8,
+    paddingRight: 30,
     marginBottom: 16,
     borderRadius: 10,
     borderLeftWidth: 6,
