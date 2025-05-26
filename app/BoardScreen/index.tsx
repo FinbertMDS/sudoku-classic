@@ -77,6 +77,7 @@ const BoardScreen = () => {
   const [solvedBoard, setSolvedBoard] = useState<number[][]>(
     createEmptyGridNumber(),
   );
+  const [score, setScore] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [showPauseModal, setShowPauseModal] = useState<boolean>(false);
   const [noteMode, setNoteMode] = useState<boolean>(false);
@@ -108,6 +109,7 @@ const BoardScreen = () => {
       setHistory([deepCloneBoard(initGame.initialBoard)]);
       setNotes(createEmptyGridNotes<string>());
       setSolvedBoard(initGame.solvedBoard);
+      setScore(initGame.savedScore);
       setIsPlaying(true);
     } else {
       const initGame = await BoardService.loadInit();
@@ -120,6 +122,7 @@ const BoardScreen = () => {
         setHistory(savedGame.savedHistory);
         setNotes(savedGame.savedNotes);
         setSolvedBoard(initGame.solvedBoard);
+        setScore(savedGame.savedScore);
         setIsPlaying(true);
       }
     }
@@ -276,6 +279,7 @@ const BoardScreen = () => {
     await BoardService.save({
       savedId: id,
       savedLevel: level,
+      savedScore: score,
       savedBoard: board,
       savedHintCount: hintCount,
       savedTotalHintCountUsed: totalHintCountUsed,
@@ -294,6 +298,7 @@ const BoardScreen = () => {
     await BoardService.save({
       savedId: id,
       savedLevel: level,
+      savedScore: score,
       savedBoard: board,
       savedHintCount: hintCount,
       savedTotalHintCountUsed: totalHintCountUsed,
@@ -319,6 +324,7 @@ const BoardScreen = () => {
     await BoardService.save({
       savedId: id,
       savedLevel: level,
+      savedScore: score,
       savedBoard: board,
       savedHintCount: hintCount,
       savedTotalHintCountUsed: totalHintCountUsed,
@@ -577,6 +583,7 @@ const BoardScreen = () => {
           isPlaying={isPlaying}
           level={level}
           mistakes={mistakes}
+          score={score}
           secondsRef={secondsRef}
           isPaused={isPaused}
           settings={settings}

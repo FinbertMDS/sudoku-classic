@@ -13,6 +13,7 @@ type InfoPanelProps = {
   isPlaying: boolean;
   level: string;
   mistakes: number;
+  score: number;
   secondsRef: React.RefObject<number>;
   isPaused: boolean;
   settings: AppSettings;
@@ -24,6 +25,7 @@ const InfoPanel = ({
   isPlaying,
   level,
   mistakes,
+  score,
   secondsRef,
   isPaused,
   settings,
@@ -94,6 +96,12 @@ const InfoPanel = ({
           </Text>
         </View>
       )}
+      <View style={styles.infoBlock}>
+        <Text style={[styles.title, { color: theme.text }]}>{t('score')}</Text>
+        <Text style={[styles.value, { color: theme.text }]}>
+          {Math.round(score)}
+        </Text>
+      </View>
 
       <TouchableOpacity style={styles.infoBlock} onPress={onPause}>
         {!isPaused ? (
