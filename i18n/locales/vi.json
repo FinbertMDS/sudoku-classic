@@ -44,6 +44,7 @@
   "congratulations": "Bạn đã giải xong Sudoku!",
   "backToMain": "Quay lại trang chính",
 
+  "welcomeTitle": "🎯\nChào mừng đến với\n{{appName}}",
   "continueGame": "Tiếp tục trò chơi",
   "newGame": "Trò chơi mới",
   "clearStorage": "Xóa dữ liệu đã lưu",

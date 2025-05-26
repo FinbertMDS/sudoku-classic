@@ -44,6 +44,7 @@
   "congratulations": "You have completed the Sudoku!",
   "backToMain": "Back to Main Screen",
 
+  "welcomeTitle": "🎯\nWelcome to\n{{appName}}",
   "continueGame": "Continue Game",
   "newGame": "New Game",
   "clearStorage": "Clear Storage",

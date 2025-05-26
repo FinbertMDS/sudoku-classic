@@ -44,6 +44,7 @@
   "congratulations": "数独を解きました！",
   "backToMain": "メイン画面に戻る",
 
+  "welcomeTitle": "🎯\nようこそ、\n{{appName}}へ",
   "continueGame": "ゲームを続ける",
   "newGame": "新しいゲーム",
   "clearStorage": "保存したデータを削除",

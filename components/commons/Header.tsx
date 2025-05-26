@@ -43,7 +43,7 @@ const Header = ({
     <>
       {/* Header */}
       <View style={[styles.header, { backgroundColor: theme.background }]}>
-        {showBack && (
+        {showBack ? (
           <View style={styles.side}>
             <TouchableOpacity onPress={onBack ? onBack : defaultOnBack}>
               <MaterialCommunityIcons
@@ -53,6 +53,8 @@ const Header = ({
               />
             </TouchableOpacity>
           </View>
+        ) : (
+          <View style={styles.side} />
         )}
         {title && title.length > 0 && (
           <View style={styles.center}>
