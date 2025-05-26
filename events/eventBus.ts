@@ -1,7 +1,7 @@
 type EventCallback = (...args: any[]) => void;
 
 class EventBus {
-  private events: {[key: string]: EventCallback[]} = {};
+  private events: { [key: string]: EventCallback[] } = {};
 
   on(event: string, callback: EventCallback) {
     if (!this.events[event]) {
@@ -14,7 +14,7 @@ class EventBus {
     if (!this.events[event]) {
       return;
     }
-    this.events[event] = this.events[event].filter(cb => cb !== callback);
+    this.events[event] = this.events[event].filter((cb) => cb !== callback);
   }
 
   emit(event: string, ...args: any[]) {
@@ -24,7 +24,7 @@ class EventBus {
 
     // Push event handling to next tick
     requestAnimationFrame(() => {
-      this.events[event].forEach(callback => {
+      this.events[event].forEach((callback) => {
         try {
           callback(...args);
         } catch (error) {

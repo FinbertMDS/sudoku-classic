@@ -31,7 +31,7 @@ const StatisticsScreen = () => {
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
     useCallback(() => {
-      updateStatsCache().then(_ => {
+      updateStatsCache().then((_) => {
         loadData();
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,9 +39,9 @@ const StatisticsScreen = () => {
   );
 
   useAppPause(
-    () => { },
+    () => {},
     () => {
-      updateStatsCache().then(_ => {
+      updateStatsCache().then((_) => {
         loadData();
       });
     },
@@ -65,7 +65,8 @@ const StatisticsScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <Header
         title={t('statistics')}
         showBack={false}
@@ -75,7 +76,8 @@ const StatisticsScreen = () => {
         custom={
           <TouchableOpacity
             onPress={() => setShowDropdown(true)}
-            style={styles.iconButton}>
+            style={styles.iconButton}
+          >
             <Ionicons name="filter" size={24} color={theme.primary} />
           </TouchableOpacity>
         }
@@ -92,12 +94,14 @@ const StatisticsScreen = () => {
                   ? theme.primary
                   : theme.settingItemBackground,
             },
-          ]}>
+          ]}
+        >
           <Text
             style={[
               styles.chipText,
               { color: activeTab === 'level' ? theme.text : theme.secondary },
-            ]}>
+            ]}
+          >
             {t('levelStats')}
           </Text>
         </TouchableOpacity>
@@ -112,12 +116,14 @@ const StatisticsScreen = () => {
                   ? theme.primary
                   : theme.settingItemBackground,
             },
-          ]}>
+          ]}
+        >
           <Text
             style={[
               styles.chipText,
               { color: activeTab === 'chart' ? theme.text : theme.secondary },
-            ]}>
+            ]}
+          >
             {t('chartsStats')}
           </Text>
         </TouchableOpacity>
@@ -135,7 +141,7 @@ const StatisticsScreen = () => {
       {showDropdown && (
         <TimeFilterDropdown
           selected={filter}
-          onSelect={newFilter => {
+          onSelect={(newFilter) => {
             setFilter(newFilter);
             setShowDropdown(false);
           }}

@@ -11,7 +11,7 @@ import {
   Share,
   StyleSheet,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { appConfig } from '../../appConfig';
@@ -67,12 +67,18 @@ const OptionsScreen = () => {
   };
 
   const openURL = (url: string) => {
-    Linking.openURL(url).catch(err => console.error('Error opening URL', err));
+    Linking.openURL(url).catch((err) =>
+      console.error('Error opening URL', err),
+    );
   };
 
   const menuItems: OptionMenuItem[] = [
     { icon: 'cog', label: t('settings'), onPress: handleGoToSettings },
-    { icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY as any },
+    {
+      icon: 'school',
+      label: t('howToPlay'),
+      screen: SCREENS.HOW_TO_PLAY as any,
+    },
     { icon: 'star-outline', label: t('rateApp'), onPress: handleRateApp },
     { icon: 'share-variant', label: t('shareApp'), onPress: handleShareApp },
     {
@@ -95,7 +101,8 @@ const OptionsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}>
+      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}
+    >
       <Header
         title={t('options')}
         showBack={true}
@@ -106,7 +113,8 @@ const OptionsScreen = () => {
         style={[
           styles.contentContainer,
           { backgroundColor: theme.backgroundSecondary },
-        ]}>
+        ]}
+      >
         {menuItems.map(({ icon, label, screen, onPress }) => (
           <TouchableOpacity
             key={label}
@@ -119,8 +127,9 @@ const OptionsScreen = () => {
                 ? navigation.navigate(screen as any)
                 : onPress
                   ? onPress()
-                  : () => { }
-            }>
+                  : () => {}
+            }
+          >
             <MaterialCommunityIcons
               name={icon as any}
               size={24}

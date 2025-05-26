@@ -1,8 +1,8 @@
 // GameStatsManager.ts
 
 import uuid from 'react-native-uuid';
-import {GameEndedCoreEvent} from '../events/types';
-import {statsStorage} from '../storage';
+import { GameEndedCoreEvent } from '../events/types';
+import { statsStorage } from '../storage';
 import {
   GameLogEntry,
   GameStats,
@@ -11,12 +11,12 @@ import {
   Level,
   TimeRange,
 } from '../types';
-import {getTodayDateString, isInTimeRange} from '../utils/dateUtil';
-import {getStatsFromLogs} from '../utils/statsUtil';
+import { getTodayDateString, isInTimeRange } from '../utils/dateUtil';
+import { getStatsFromLogs } from '../utils/statsUtil';
 
 export const GameStatsManager = {
   async shouldUpdateStatsCache(): Promise<boolean> {
-    const lastUpdateStr = statsStorage.getLastStatsCacheUpdate();
+    const lastUpdateStr = await statsStorage.getLastStatsCacheUpdate();
 
     const today = getTodayDateString(); // e.g., '2025-04-30'
     const isUpdatedToday = lastUpdateStr === today;
@@ -28,16 +28,16 @@ export const GameStatsManager = {
     filter: TimeRange,
   ): Promise<Record<Level, GameStats>> {
     try {
-      const cache: GameStatsCache = statsStorage.getStatsCache();
+      const cache: GameStatsCache = await statsStorage.getStatsCache();
 
       if (cache[filter]) {
         return cache[filter]!;
       }
 
       const computedStats = getStatsFromLogs(logs, filter);
-      const updatedCache = {...cache, [filter]: computedStats};
+      const updatedCache = { ...cache, [filter]: computedStats };
 
-      statsStorage.saveStatsCache(updatedCache);
+      await statsStorage.saveStatsCache(updatedCache);
 
       return computedStats;
     } catch (error) {
@@ -51,16 +51,16 @@ export const GameStatsManager = {
     affectedRanges: TimeRange[],
   ): Promise<void> {
     try {
-      const cache: GameStatsCache = statsStorage.getStatsCache();
+      const cache: GameStatsCache = await statsStorage.getStatsCache();
 
-      const updatedCache: GameStatsCache = {...cache};
+      const updatedCache: GameStatsCache = { ...cache };
 
       for (const range of affectedRanges) {
         const updatedStats = getStatsFromLogs(logs, range);
         updatedCache[range] = updatedStats;
       }
 
-      statsStorage.saveStatsCache(updatedCache);
+      await statsStorage.saveStatsCache(updatedCache);
     } catch (error) {
       console.warn('Failed to update stats cache:', error);
     }
@@ -71,12 +71,12 @@ export const GameStatsManager = {
     updatedLogs: GameLogEntry[],
   ): Promise<void> {
     try {
-      const cache: GameStatsCache = statsStorage.getStatsCache();
+      const cache: GameStatsCache = await statsStorage.getStatsCache();
 
       // Xác định các khoảng thời gian cần cập nhật lại
       const rangesToUpdate = new Set<TimeRange>();
 
-      updatedLogs.forEach(log => {
+      updatedLogs.forEach((log) => {
         if (isInTimeRange(log.date, 'today')) {
           rangesToUpdate.add('today');
         }
@@ -92,13 +92,13 @@ export const GameStatsManager = {
       });
       rangesToUpdate.add('all'); // luôn luôn cập nhật all
 
-      const updatedCache = {...cache};
+      const updatedCache = { ...cache };
 
       for (const range of rangesToUpdate) {
         updatedCache[range] = getStatsFromLogs(logs, range);
       }
 
-      statsStorage.saveStatsCache(updatedCache);
+      await statsStorage.saveStatsCache(updatedCache);
     } catch (error) {
       console.warn('Failed to update stats with cache:', error);
     }
@@ -107,7 +107,7 @@ export const GameStatsManager = {
   async getLog(id: string): Promise<GameLogEntry | null> {
     try {
       const logs = await this.getLogs();
-      const log = logs.find(_log => _log.id === id);
+      const log = logs.find((_log) => _log.id === id);
       if (log) {
         return log;
       }
@@ -135,7 +135,7 @@ export const GameStatsManager = {
     try {
       const existing = await this.getLogs();
       if (override) {
-        const index = existing.findIndex(_log => _log.id === log.id);
+        const index = existing.findIndex((_log) => _log.id === log.id);
         if (index !== -1) {
           existing[index] = log;
         } else {
@@ -146,7 +146,7 @@ export const GameStatsManager = {
         existing.unshift(log);
       }
 
-      statsStorage.saveGameLogs(existing);
+      await statsStorage.saveGameLogs(existing);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -168,7 +168,7 @@ export const GameStatsManager = {
         updated = [...sortedLogs, ...existing];
       }
 
-      statsStorage.saveGameLogs(updated);
+      await statsStorage.saveGameLogs(updated);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -217,7 +217,7 @@ export const GameStatsManager = {
 
   async resetStatistics() {
     try {
-      statsStorage.clearStatsData();
+      await statsStorage.clearStatsData();
     } catch (error) {
       console.error('Error clearing all data:', error);
     }

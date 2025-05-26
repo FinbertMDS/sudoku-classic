@@ -3,40 +3,40 @@ import { ConfigContext, ExpoConfig } from 'expo/config';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "sudoku-classic",
-  slug: "sudoku-classic",
-  version: "1.0.0",
-  orientation: "portrait",
-  icon: "./assets/images/icon.png",
-  scheme: "sudokuclassic",
-  userInterfaceStyle: "automatic",
+  name: 'sudoku-classic',
+  slug: 'sudoku-classic',
+  version: '1.0.0',
+  orientation: 'portrait',
+  icon: './assets/images/icon.png',
+  scheme: 'sudokuclassic',
+  userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   ios: {
-    supportsTablet: true
+    supportsTablet: true,
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/images/adaptive-icon.png",
-      backgroundColor: "#ffffff"
+      foregroundImage: './assets/images/adaptive-icon.png',
+      backgroundColor: '#ffffff',
     },
     edgeToEdgeEnabled: true,
-    package: "com.finbertngo.sudokuclassic"
+    package: 'com.finbertngo.sudokuclassic',
   },
   web: {
-    bundler: "metro",
-    output: "static",
-    favicon: "./assets/images/favicon.png"
+    bundler: 'metro',
+    output: 'static',
+    favicon: './assets/images/favicon.png',
   },
   plugins: [
-    "expo-router",
+    'expo-router',
     [
-      "expo-splash-screen",
+      'expo-splash-screen',
       {
-        image: "./assets/images/splash-icon.png",
+        image: './assets/images/splash-icon.png',
         imageWidth: 200,
-        resizeMode: "contain",
-        backgroundColor: "#ffffff"
-      }
+        resizeMode: 'contain',
+        backgroundColor: '#ffffff',
+      },
     ],
     [
       'react-native-google-mobile-ads',
@@ -47,7 +47,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   ],
   experiments: {
-    typedRoutes: true
+    typedRoutes: true,
   },
   extra: {
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
@@ -60,4 +60,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     AD_UNIT_INTERSTITIAL_ANDROID: process.env.AD_UNIT_INTERSTITIAL_ANDROID,
     AD_UNIT_REWARDED_ANDROID: process.env.AD_UNIT_REWARDED_ANDROID,
   },
-}); 
+});

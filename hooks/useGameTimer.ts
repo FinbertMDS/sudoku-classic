@@ -1,8 +1,8 @@
 // useGameTimer.ts
 
-import {useEffect, useRef, useState} from 'react';
-import {BoardService} from '../services/BoardService';
-import {MAX_TIMEPLAYED} from '../utils/constants';
+import { useEffect, useRef, useState } from 'react';
+import { BoardService } from '../services/BoardService';
+import { MAX_TIMEPLAYED } from '../utils/constants';
 
 interface TimePlayedOptions {
   maxTimePlayed?: number;
@@ -18,7 +18,7 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
 
   // Load last played time from storage once
   useEffect(() => {
-    BoardService.loadSavedTimePlayed().then(value => {
+    BoardService.loadSavedTimePlayed().then((value) => {
       if (value != null) {
         try {
           const saved = parseInt(value.toString(), 10);
@@ -48,7 +48,7 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
       return;
     }
     intervalRef.current = setInterval(() => {
-      setSeconds(prev => {
+      setSeconds((prev) => {
         const updated = prev + 1;
         if (updated >= maxTimePlayed) {
           if (onLimitReached) {

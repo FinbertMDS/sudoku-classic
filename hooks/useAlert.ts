@@ -8,13 +8,13 @@ export const useAlert = () => {
     title: string,
     message?: string,
     buttons?: AlertButton[],
-    options?: AlertOptions
+    options?: AlertOptions,
   ) => {
     if (Platform.OS === 'web') {
       // Nếu có nhiều button, dùng confirm
       if (buttons?.length && buttons.length > 1) {
-        const confirmButton = buttons.find(b => b.style !== 'cancel');
-        const cancelButton = buttons.find(b => b.style === 'cancel');
+        const confirmButton = buttons.find((b) => b.style !== 'cancel');
+        const cancelButton = buttons.find((b) => b.style === 'cancel');
 
         const confirmText = confirmButton?.text ?? t('ok');
         const cancelText = cancelButton?.text ?? t('cancel');
@@ -26,7 +26,6 @@ export const useAlert = () => {
         } else {
           cancelButton?.onPress?.();
         }
-
       } else if (buttons?.length === 1) {
         // Nếu chỉ có 1 button và có onPress, gọi khi alert bị đóng
         const button = buttons[0];
@@ -41,11 +40,12 @@ export const useAlert = () => {
       Alert.alert(
         title,
         message,
-        buttons?.map(button => ({
+        buttons?.map((button) => ({
           ...button,
-          text: button.text ?? (button.style === 'cancel' ? t('cancel') : t('ok')),
+          text:
+            button.text ?? (button.style === 'cancel' ? t('cancel') : t('ok')),
         })),
-        options
+        options,
       );
     }
   };

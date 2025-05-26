@@ -1,7 +1,7 @@
 // useNumberCounts.ts
 
-import {useMemo} from 'react';
-import {AppSettings, CellValue} from '../types';
+import { useMemo } from 'react';
+import { AppSettings, CellValue } from '../types';
 
 export function useNumberCounts(
   board: CellValue[][],

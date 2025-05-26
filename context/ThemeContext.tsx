@@ -13,10 +13,12 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType>({
   theme: lightTheme,
   mode: 'light',
-  toggleTheme: () => { },
+  toggleTheme: () => {},
 });
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const systemColorScheme = useColorScheme();
   const [mode, setMode] = useState<'light' | 'dark'>('light');
 
@@ -27,7 +29,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, [systemColorScheme]);
 
   const toggleTheme = () => {
-    setMode(prev => (prev === 'light' ? 'dark' : 'light'));
+    setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   const theme = mode === 'dark' ? darkTheme : lightTheme;

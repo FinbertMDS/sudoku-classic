@@ -18,9 +18,7 @@ import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
 import LanguageSwitcher from '../../i18n/LanguageSwitcher';
 import { SettingsService } from '../../services/SettingsService';
-import {
-  SettingsParamProps
-} from '../../types';
+import { SettingsParamProps } from '../../types';
 import { DEFAULT_SETTINGS, MAX_MISTAKES } from '../../utils/constants';
 
 const SettingsScreen = () => {
@@ -41,9 +39,8 @@ const SettingsScreen = () => {
 
   const goBack = useSafeGoBack();
 
-
   useEffect(() => {
-    SettingsService.load().then(data => {
+    SettingsService.load().then((data) => {
       if (data) {
         setSettings(data);
       }
@@ -55,7 +52,7 @@ const SettingsScreen = () => {
   }, [settings]);
 
   const toggle = (key: string, value: boolean) => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const updated = SettingsService.normalizeSettings({
         ...prev,
         [key]: value,
@@ -101,7 +98,8 @@ const SettingsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <Header
         title={t('settings')}
         showBack={true}
@@ -123,14 +121,16 @@ const SettingsScreen = () => {
         style={[
           styles.contentContainer,
           { backgroundColor: theme.backgroundSecondary },
-        ]}>
+        ]}
+      >
         {Object.entries(labels).map(([key, label]) => (
           <View
             key={key}
             style={[
               styles.settingRow,
               { backgroundColor: theme.settingItemBackground },
-            ]}>
+            ]}
+          >
             <View style={styles.labelContainer}>
               <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
               {descriptions[key as keyof typeof descriptions] && (
@@ -141,7 +141,7 @@ const SettingsScreen = () => {
             </View>
             <Switch
               value={settings[key as keyof typeof DEFAULT_SETTINGS]}
-              onValueChange={value => toggle(key, value)}
+              onValueChange={(value) => toggle(key, value)}
             />
           </View>
         ))}
@@ -155,7 +155,8 @@ const SettingsScreen = () => {
                 borderColor: theme.buttonBorder,
               },
             ]}
-            onPress={() => setShowConfirmDialog(true)}>
+            onPress={() => setShowConfirmDialog(true)}
+          >
             <Text style={[styles.buttonText, { color: theme.buttonText }]}>
               {t('clearStorage')}
             </Text>

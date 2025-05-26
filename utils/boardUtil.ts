@@ -1,9 +1,9 @@
 // boardUtil.ts
 
-import { generateKillerSudoku } from 'killer-sudoku-generator';
+import { Board, generate, solve } from 'sudoku-core';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
-import { Cage, CellValue, InitGame, Level } from '../types';
-import { BOARD_SIZE, LEVELS } from './constants';
+import { CellValue, InitGame, Level } from '../types';
+import { BOARD_SIZE } from './constants';
 
 /**
  * Chuyển string thành mảng 2 chiều theo số cột nhất định (thường là 9 với Sudoku).
@@ -17,8 +17,16 @@ export function stringToGrid(input: string, columns = 9): CellValue[][] {
     const row = input
       .slice(i, i + columns)
       .split('')
-      .map(ch => (ch === '-' ? null : parseInt(ch, 10)));
+      .map((ch) => (ch === '-' ? null : parseInt(ch, 10)));
     grid.push(row);
+  }
+  return grid;
+}
+
+export function convertBoardToGrid(board: Board): CellValue[][] {
+  const grid: CellValue[][] = [];
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    grid.push(board.slice(i * BOARD_SIZE, i * BOARD_SIZE + BOARD_SIZE));
   }
   return grid;
 }
@@ -50,14 +58,14 @@ export function createEmptyGridNotes<T>(): T[][][] {
  * Deep clone a 2D array (for board)
  */
 export const deepCloneBoard = (board: CellValue[][]): CellValue[][] => {
-  return board.map(row => [...row]);
+  return board.map((row) => [...row]);
 };
 
 /**
  * Deep clone a 3D array (for notes)
  */
 export const deepCloneNotes = (notes: string[][][]): string[][][] => {
-  return notes.map(row => row.map(cell => [...cell]));
+  return notes.map((row) => row.map((cell) => [...cell]));
 };
 
 /**
@@ -81,116 +89,14 @@ export const checkBoardIsSolved = (
   );
 };
 
-export function sortAreasCells(areas: Cage[]): Cage[] {
-  return areas.map(cage => ({
-    ...cage,
-    cells: [...cage.cells].sort((a, b) => {
-      if (a[0] !== b[0]) {
-        // Ưu tiên hàng (row) trước
-        return a[0] - b[0];
-      }
-      // Nếu cùng hàng, ưu tiên cột (col)
-      return a[1] - b[1];
-    }),
-  }));
-}
-
-export function getAdjacentCellsInSameCage(
-  row: number,
-  col: number,
-  cages: Cage[],
-) {
-  // Danh sách các vị trí xung quanh: trên, dưới, trái, phải
-  const adjacentCells = [
-    { direction: 'top', row: row - 1, col: col },
-    { direction: 'bottom', row: row + 1, col: col },
-    { direction: 'left', row: row, col: col - 1 },
-    { direction: 'right', row: row, col: col + 1 },
-  ];
-
-  const result = {
-    top: false,
-    bottom: false,
-    left: false,
-    right: false,
-    topleft: false,
-    topright: false,
-    bottomleft: false,
-    bottomright: false,
-  };
-
-  // Duyệt qua tất cả các cage để tìm các ô xung quanh thuộc cùng *cage*
-  for (let cage of cages) {
-    let currentCell = [row, col];
-
-    // Kiểm tra nếu ô hiện tại có trong cage
-    if (
-      cage.cells.some(
-        cell => JSON.stringify(cell) === JSON.stringify(currentCell),
-      )
-    ) {
-      // Duyệt qua các ô xung quanh
-      for (let adj of adjacentCells) {
-        // Kiểm tra nếu ô xung quanh có trong cùng một cage
-        if (
-          cage.cells.some(
-            cell => JSON.stringify(cell) === JSON.stringify([adj.row, adj.col]),
-          )
-        ) {
-          result[adj.direction as keyof typeof result] = true; // Gán true cho ô xung quanh nếu thuộc cùng cage
-        }
-        // Kiểm tra nếu ô ở phía trên bên trái có trong cùng một cage
-        if (
-          adj.direction === 'top' &&
-          cage.cells.some(
-            cell => JSON.stringify(cell) === JSON.stringify([row - 1, col - 1]),
-          )
-        ) {
-          result.topleft = true; // Gán true cho ô trên bên trái nếu thuộc cùng cage
-        }
-        // Kiểm tra nếu ô ở phía trên bên phải có trong cùng một cage
-        if (
-          adj.direction === 'top' &&
-          cage.cells.some(
-            cell => JSON.stringify(cell) === JSON.stringify([row - 1, col + 1]),
-          )
-        ) {
-          result.topright = true; // Gán true cho ô trên bên phải nếu thuộc cùng cage
-        }
-        // Kiểm tra nếu ô ở phía dưới bên trái có trong cùng một cage
-        if (
-          adj.direction === 'bottom' &&
-          cage.cells.some(
-            cell => JSON.stringify(cell) === JSON.stringify([row + 1, col - 1]),
-          )
-        ) {
-          result.bottomleft = true; // Gán true cho ô dưới bên trái nếu thuộc cùng cage
-        }
-        // Kiểm tra nếu ô ở phía dưới bên phải có trong cùng một cage
-        if (
-          adj.direction === 'bottom' &&
-          cage.cells.some(
-            cell => JSON.stringify(cell) === JSON.stringify([row + 1, col + 1]),
-          )
-        ) {
-          result.bottomright = true; // Gán true cho ô dưới bên phải nếu thuộc cùng cage
-        }
-      }
-      break; // Nếu đã tìm được cage, không cần duyệt qua các cage khác nữa
-    }
-  }
-
-  return result;
-}
-
 export function removeNoteFromPeers(
   notes: string[][][],
   row: number,
   col: number,
   value: number,
 ): string[][][] {
-  const updatedNotes = notes.map(rowNotes =>
-    rowNotes.map(cellNotes => [...cellNotes]),
+  const updatedNotes = notes.map((rowNotes) =>
+    rowNotes.map((cellNotes) => [...cellNotes]),
   );
 
   const valueStr = value.toString();
@@ -224,7 +130,7 @@ export function removeNoteFromPeers(
 
   for (const key of peers) {
     const [r, c] = key.split(',').map(Number);
-    updatedNotes[r][c] = updatedNotes[r][c].filter(n => n !== valueStr);
+    updatedNotes[r][c] = updatedNotes[r][c].filter((n) => n !== valueStr);
   }
 
   // Remove notes from current cell
@@ -233,30 +139,14 @@ export function removeNoteFromPeers(
   return updatedNotes;
 }
 
-export const increaseDifficulty = (level: Level): Difficulty => {
-  const mapping: Record<Level, Difficulty> = {
-    easy: 'medium',
-    medium: 'hard',
-    hard: 'expert',
-    expert: 'expert',
-  };
-  return mapping[level];
-};
-
 export const generateBoard = (level: Level, id: string) => {
-  const adjustedDifficulty = increaseDifficulty(level as Level);
-
-  const sudoku = generateKillerSudoku(adjustedDifficulty);
-
-  // if level is expert
-  const shouldHideAllCells = level === LEVELS[LEVELS.length - 1];
-  const puzzleString = shouldHideAllCells ? '-'.repeat(81) : sudoku.puzzle;
+  const board = generate(level as Difficulty);
+  const solvedBoard = solve(board);
 
   const initGame = {
     id,
-    initialBoard: stringToGrid(puzzleString),
-    solvedBoard: stringToGrid(sudoku.solution),
-    cages: sortAreasCells(sudoku.areas),
+    initialBoard: convertBoardToGrid(board),
+    solvedBoard: convertBoardToGrid(solvedBoard.board as Board),
     savedLevel: level,
   } as InitGame;
 

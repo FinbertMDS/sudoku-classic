@@ -46,7 +46,11 @@ const Header = ({
         {showBack && (
           <View style={styles.side}>
             <TouchableOpacity onPress={onBack ? onBack : defaultOnBack}>
-              <MaterialCommunityIcons name="chevron-left" size={28} color={theme.iconColor} />
+              <MaterialCommunityIcons
+                name="chevron-left"
+                size={28}
+                color={theme.iconColor}
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -71,12 +75,19 @@ const Header = ({
             {showSettings && (
               <TouchableOpacity
                 onPress={onSettings ? onSettings : defaultOnSettings}
-                style={styles.iconButton}>
-                <MaterialCommunityIcons name="cog-outline" size={24} color={theme.primary} />
+                style={styles.iconButton}
+              >
+                <MaterialCommunityIcons
+                  name="cog-outline"
+                  size={24}
+                  color={theme.primary}
+                />
               </TouchableOpacity>
             )}
           </View>
-        ) : showBack ? <View style={styles.side} /> : null}
+        ) : showBack ? (
+          <View style={styles.side} />
+        ) : null}
       </View>
     </>
   );

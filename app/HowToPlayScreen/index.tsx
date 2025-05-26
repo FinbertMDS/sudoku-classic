@@ -68,7 +68,8 @@ const HowToPlayScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <Header
         title={t('howToPlay.title')}
         showBack={true}
@@ -79,11 +80,12 @@ const HowToPlayScreen = () => {
         style={[
           styles.container,
           { backgroundColor: theme.backgroundSecondary },
-        ]}>
+        ]}
+      >
         <FlatList
           ref={flatListRef}
           data={slides}
-          keyExtractor={item => item.key}
+          keyExtractor={(item) => item.key}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -126,7 +128,8 @@ const HowToPlayScreen = () => {
           {index > 0 ? (
             <TouchableOpacity
               onPress={onBack}
-              style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}>
+              style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
+            >
               <Ionicons name="arrow-back" size={24} color={theme.iconColor} />
             </TouchableOpacity>
           ) : (
@@ -135,7 +138,8 @@ const HowToPlayScreen = () => {
 
           <TouchableOpacity
             onPress={onNext}
-            style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}>
+            style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
+          >
             <Ionicons
               name={index === slides.length - 1 ? 'checkmark' : 'arrow-forward'}
               size={24}

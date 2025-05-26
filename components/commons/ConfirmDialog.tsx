@@ -32,9 +32,11 @@ const ConfirmDialog = ({
         useNativeDriver
         onBackButtonPress={() => onCancel()}
         onBackdropPress={() => onCancel()}
-        onDismiss={() => onCancel()}>
+        onDismiss={() => onCancel()}
+      >
         <View
-          style={[styles.dialogWrapper, { backgroundColor: theme.background }]}>
+          style={[styles.dialogWrapper, { backgroundColor: theme.background }]}
+        >
           <View style={styles.dialog}>
             <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
             <Text style={[styles.message, { color: theme.secondary }]}>
@@ -45,7 +47,8 @@ const ConfirmDialog = ({
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => onCancel()}
-              style={[styles.button, styles.borderRight]}>
+              style={[styles.button, styles.borderRight]}
+            >
               <Text style={[styles.cancelText, { color: theme.text }]}>
                 {cancelText}
               </Text>

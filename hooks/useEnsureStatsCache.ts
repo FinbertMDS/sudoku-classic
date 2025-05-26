@@ -1,9 +1,9 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
 // Giả định bạn có sẵn hàm này để lấy tất cả logs
-import {GameStatsManager} from '../services/GameStatsManager';
-import {statsStorage} from '../storage';
-import {TimeRange} from '../types';
+import { GameStatsManager } from '../services/GameStatsManager';
+import { statsStorage } from '../storage';
+import { TimeRange } from '../types';
 
 export function useEnsureStatsCache() {
   const updateStatsCache = async (): Promise<boolean> => {
@@ -22,7 +22,7 @@ export function useEnsureStatsCache() {
         const allLogs = await GameStatsManager.getLogs();
         await GameStatsManager.updateStatsWithAllCache(allLogs, affectedRanges);
 
-        statsStorage.setLastStatsCacheUpdate();
+        await statsStorage.setLastStatsCacheUpdate();
       }
       return needsUpdate;
     } catch (err) {

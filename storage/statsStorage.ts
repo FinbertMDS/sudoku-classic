@@ -12,21 +12,21 @@ const saveGameLogs = async (logs: GameLogEntry[]) =>
   await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
 
 const getGameLogs = async (): Promise<GameLogEntry[]> => {
-  return await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS) || [];
+  return (await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS)) || [];
 };
 
 const saveStatsCache = async (cache: GameStatsCache) =>
   await saveItem(STORAGE_KEY_GAME_STATS_CACHE, JSON.stringify(cache));
 
 const getStatsCache = async (): Promise<GameStatsCache> => {
-  return await getItem<GameStatsCache>(STORAGE_KEY_GAME_STATS_CACHE) || {};
+  return (await getItem<GameStatsCache>(STORAGE_KEY_GAME_STATS_CACHE)) || {};
 };
 
 const saveDailyStats = async (dailyStats: DailyStats[]) =>
   await saveItem(STORAGE_KEY_DAILY_STATS, JSON.stringify(dailyStats));
 
 const getDailyStats = async (): Promise<DailyStats[]> => {
-  return await getItem<DailyStats[]>(STORAGE_KEY_DAILY_STATS) || [];
+  return (await getItem<DailyStats[]>(STORAGE_KEY_DAILY_STATS)) || [];
 };
 
 const setLastStatsCacheUpdate = async () => {

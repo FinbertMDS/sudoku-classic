@@ -1,5 +1,40 @@
 1. Màn LicensesScreen không vào được.
 
+------
+
+khi gọi handleNewGame thì UI bị treo, vẫn hiển thị modal New Game.
+generateBoard: 174426.75 ms
+sau khi generateBoard xong thì mới chuyển sang trang Board.
+có cách nào tối ưu thời gian load trang Board với expo router không?
+
+const handleNewGame = async (level: Level) => {
+    await BoardService.clear();
+    const id = uuid.v4().toString();
+    eventBus.emit(CORE_EVENTS.initGame, { level, id });
+    router.push({
+      pathname: SCREENS.BOARD as any,
+      params: { id, level, type: 'init' },
+    });
+  };
+
+eventBus.on(CORE_EVENTS.initGame, handleInitGame);
+
+export const handleInitGame = async (payload: InitGameCoreEvent) => {
+  try {
+    console.time('generateBoard');
+    const initGame = generateBoard(payload.level, payload.id);
+    console.timeEnd('generateBoard');
+    await BoardService.save(initGame);
+    // Emit gameStarted in next tick
+    requestAnimationFrame(() => {
+      eventBus.emit(CORE_EVENTS.gameStarted);
+    });
+  } catch (error) {
+    console.error('Error in handleInitGame:', error);
+  }
+};
+
+
 ------------
 Remove library not need
     "expo-web-browser": "~14.1.6",

@@ -29,7 +29,8 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
   if (!stats) {
     return (
       <View
-        style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
+        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
+      >
         <ActivityIndicator size="large" color={theme.secondary} />
         <Text style={styles.title}>{t('loading')}</Text>
       </View>
@@ -37,9 +38,11 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
   }
 
   return (
-    <View style={[styles.cardsContainer, { backgroundColor: theme.background }]}>
+    <View
+      style={[styles.cardsContainer, { backgroundColor: theme.background }]}
+    >
       <ScrollView style={{ backgroundColor: theme.background }}>
-        {LEVELS.map(level => (
+        {LEVELS.map((level) => (
           <View
             key={level}
             style={[
@@ -48,7 +51,8 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
                 backgroundColor: theme.background,
                 borderLeftColor: getLevelColor(level, mode),
               },
-            ]}>
+            ]}
+          >
             <Text style={[styles.level, { color: theme.text }]}>
               {t(`level.${level}`)}
             </Text>
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
   card: {
     width: SCREEN_WIDTH - 100,
     padding: 8,
+    paddingRight: 30,
     marginBottom: 16,
     borderRadius: 10,
     borderLeftWidth: 6,
