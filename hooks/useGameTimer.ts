@@ -1,8 +1,9 @@
 // useGameTimer.ts
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { BoardService } from '../services/BoardService';
 import { MAX_TIMEPLAYED } from '../utils/constants';
+import { useAppPause } from './useAppPause';
 
 interface TimePlayedOptions {
   maxTimePlayed?: number;
@@ -10,10 +11,10 @@ interface TimePlayedOptions {
 }
 
 export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
-  const [seconds, setSeconds] = useState(0);
   const maxTimePlayed = options?.maxTimePlayed ?? MAX_TIMEPLAYED;
   const onLimitReached = options?.onLimitReached;
 
+  const secondsRef = useRef<number>(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load last played time from storage once
@@ -23,7 +24,7 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
         try {
           const saved = parseInt(value.toString(), 10);
           if (!isNaN(saved)) {
-            setSeconds(saved);
+            secondsRef.current = saved;
           }
         } catch (error) {
           console.error('Failed to parse saved time played:', error);
@@ -39,7 +40,7 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
     } else {
       stopTimer();
     }
-    return stopTimer;
+    return () => stopTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning]);
 
@@ -48,15 +49,11 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
       return;
     }
     intervalRef.current = setInterval(() => {
-      setSeconds((prev) => {
-        const updated = prev + 1;
-        if (updated >= maxTimePlayed) {
-          if (onLimitReached) {
-            onLimitReached();
-          }
-        }
-        return updated;
-      });
+      secondsRef.current += 1;
+      if (secondsRef.current >= maxTimePlayed) {
+        stopTimer();
+        onLimitReached?.();
+      }
     }, 1000);
   }
 
@@ -69,11 +66,18 @@ export function useGameTimer(isRunning: boolean, options?: TimePlayedOptions) {
 
   function resetTimer() {
     stopTimer();
-    setSeconds(0);
+    secondsRef.current = 0;
   }
 
+  useAppPause(
+    () => {
+      stopTimer();
+    },
+    () => {},
+  );
+
   return {
-    seconds,
+    getSeconds: () => secondsRef.current,
     stopTimer,
     resetTimer,
   };

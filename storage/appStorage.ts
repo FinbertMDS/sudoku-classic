@@ -57,9 +57,7 @@ const getHasPlayed = async (): Promise<boolean | null> => {
   return await getItem<boolean>(STORAGE_KEY_HAS_PLAYED);
 };
 const setHasPlayed = async (data: boolean) => {
-  console.log('setHasPlayed', data);
   await saveItem(STORAGE_KEY_HAS_PLAYED, data);
-  console.log('setHasPlayed2', await getItem<boolean>(STORAGE_KEY_HAS_PLAYED));
 };
 const clearHasPlayed = async () => {
   await deleteItem(STORAGE_KEY_HAS_PLAYED);
