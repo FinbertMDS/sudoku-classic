@@ -43,9 +43,18 @@ export const SettingsService = {
 
   async clear(): Promise<void> {
     try {
-      await appStorage.clearSettings();
+      await appStorage.clearAll();
     } catch (err) {
       console.error('Failed to clear settings', err);
     }
+  },
+
+  async getHasPlayed(): Promise<boolean> {
+    const hasPlayed = await appStorage.getHasPlayed();
+    return hasPlayed ?? false;
+  },
+
+  async setHasPlayed(hasPlayed: boolean): Promise<void> {
+    await appStorage.setHasPlayed(hasPlayed);
   },
 };

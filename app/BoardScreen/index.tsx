@@ -20,6 +20,7 @@ import NumberPad from '../../components/Board/NumberPad';
 import PauseModal from '../../components/Board/PauseModal';
 import ConfirmDialog from '../../components/commons/ConfirmDialog';
 import Header from '../../components/commons/Header';
+import HowToPlay from '../../components/HowToPlay';
 import { useTheme } from '../../context/ThemeContext';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
@@ -67,6 +68,7 @@ const BoardScreen = () => {
   const goBack = useSafeGoBack();
   const { alert } = useAlert();
 
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -122,8 +124,20 @@ const BoardScreen = () => {
       }
     }
   };
-  useEffect(() => {
+  const handleAfterCheckHasPlayed = () => {
+    SettingsService.setHasPlayed(true);
+    setShowHowToPlay(false);
     handeGameStarted();
+  };
+
+  useEffect(() => {
+    SettingsService.getHasPlayed().then((hasPlayed) => {
+      if (!hasPlayed) {
+        setShowHowToPlay(true);
+      } else {
+        handleAfterCheckHasPlayed();
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -524,6 +538,15 @@ const BoardScreen = () => {
       }
     }, []),
   );
+
+  if (showHowToPlay) {
+    return (
+      <HowToPlay
+        headerTitle={t('appName')}
+        onClose={handleAfterCheckHasPlayed}
+      />
+    );
+  }
 
   if (isLoading) {
     return (

@@ -101,7 +101,7 @@ const MainScreen = () => {
       />
 
       <View style={styles.middle}>
-        <Text style={styles.title}>
+        <Text style={[styles.title, { color: theme.text }]}>
           {t('welcomeTitle', { appName: t('appName') })}
         </Text>
       </View>
