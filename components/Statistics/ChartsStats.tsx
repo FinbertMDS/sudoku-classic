@@ -1,11 +1,11 @@
 // StatisticsScreen.tsx
 
-import React, {useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
-import {ScrollView} from 'react-native';
-import {useTheme} from '../../context/ThemeContext';
-import {GameLogEntry, TimeFilter} from '../../types';
-import {getChartConfig} from '../../utils/colorUtil';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ScrollView } from 'react-native';
+import { useTheme } from '../../context/ThemeContext';
+import { GameLogEntry, TimeFilter } from '../../types';
+import { getChartConfig } from '../../utils/colorUtil';
 import {
   convertToPieData,
   convertToStackedData,
@@ -22,9 +22,9 @@ type ChartsStatsProps = {
   filter: TimeFilter;
 };
 
-const ChartsStats = ({logs, filter}: ChartsStatsProps) => {
-  const {mode, theme} = useTheme();
-  const {t} = useTranslation();
+const ChartsStats = ({ logs, filter }: ChartsStatsProps) => {
+  const { mode, theme } = useTheme();
+  const { t } = useTranslation();
   const dailyStats = useMemo(
     () => getDailyStatsFromLogs(logs, filter),
     [logs, filter],
@@ -40,7 +40,7 @@ const ChartsStats = ({logs, filter}: ChartsStatsProps) => {
   const chartConfig = useMemo(() => getChartConfig(mode), [mode]);
 
   return (
-    <ScrollView style={{backgroundColor: theme.background}}>
+    <ScrollView style={{ backgroundColor: theme.background }}>
       <GameBarChart dailyStats={dailyStats} chartConfig={chartConfig} />
       <TimeLineChart dailyStats={dailyStats} chartConfig={chartConfig} />
       <GamePieChart levelCounts={levelCounts} chartConfig={chartConfig} />

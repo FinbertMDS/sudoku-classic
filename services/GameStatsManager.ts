@@ -76,7 +76,7 @@ export const GameStatsManager = {
       // Xác định các khoảng thời gian cần cập nhật lại
       const rangesToUpdate = new Set<TimeRange>();
 
-      updatedLogs.forEach(log => {
+      updatedLogs.forEach((log) => {
         if (isInTimeRange(log.date, 'today')) {
           rangesToUpdate.add('today');
         }
@@ -107,7 +107,7 @@ export const GameStatsManager = {
   async getLog(id: string): Promise<GameLogEntry | null> {
     try {
       const logs = await this.getLogs();
-      const log = logs.find(_log => _log.id === id);
+      const log = logs.find((_log) => _log.id === id);
       if (log) {
         return log;
       }
@@ -135,7 +135,7 @@ export const GameStatsManager = {
     try {
       const existing = await this.getLogs();
       if (override) {
-        const index = existing.findIndex(_log => _log.id === log.id);
+        const index = existing.findIndex((_log) => _log.id === log.id);
         if (index !== -1) {
           existing[index] = log;
         } else {

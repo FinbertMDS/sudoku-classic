@@ -1,16 +1,16 @@
 import { useAlert } from '@/hooks/useAlert';
 import { useSafeGoBack } from '@/hooks/useSafeGoBack';
-import {
-  useFocusEffect
-} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { router, useLocalSearchParams } from 'expo-router';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  ActivityIndicator,
-  Platform,
-  StyleSheet
-} from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ActionButtons from '../../components/Board/ActionButtons';
 import { BannerAdSafe } from '../../components/Board/BannerAdSafe';
@@ -34,7 +34,7 @@ import {
   BoardParamProps,
   Cell,
   CellValue,
-  SavedGame
+  SavedGame,
 } from '../../types';
 import {
   checkBoardIsSolved,
@@ -48,7 +48,7 @@ import {
 import {
   DEFAULT_SETTINGS,
   MAX_HINTS,
-  MAX_MISTAKES
+  MAX_MISTAKES,
 } from '../../utils/constants';
 import { getAdUnit } from '../../utils/getAdUnit';
 
@@ -70,9 +70,8 @@ const BoardScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [initialBoard, setInitialBoard] = useState<CellValue[][]>(
-    createEmptyGrid<CellValue>(),
-  );
+  const [initialBoard, setInitialBoard] =
+    useState<CellValue[][]>(createEmptyGrid<CellValue>());
   const [solvedBoard, setSolvedBoard] = useState<number[][]>(
     createEmptyGridNumber(),
   );
@@ -84,9 +83,8 @@ const BoardScreen = () => {
     setSelectedCell(cell);
   }, []);
 
-  const [board, setBoard] = useState<CellValue[][]>(
-    createEmptyGrid<CellValue>(),
-  );
+  const [board, setBoard] =
+    useState<CellValue[][]>(createEmptyGrid<CellValue>());
   const [history, setHistory] = useState<CellValue[][][]>([
     createEmptyGrid<CellValue>(),
   ]);
@@ -140,7 +138,7 @@ const BoardScreen = () => {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const savedSettingsRef = useRef<AppSettings>(null);
   useEffect(() => {
-    SettingsService.load().then(data => {
+    SettingsService.load().then((data) => {
       if (data) {
         setSettings(data);
       }
@@ -326,7 +324,7 @@ const BoardScreen = () => {
   };
 
   const saveHistory = (newBoard: CellValue[][]) => {
-    setHistory(prev => [...prev, deepCloneBoard(newBoard)]);
+    setHistory((prev) => [...prev, deepCloneBoard(newBoard)]);
   };
 
   /**
@@ -339,7 +337,7 @@ const BoardScreen = () => {
 
     const lastState = history[history.length - 2];
     setBoard(deepCloneBoard(lastState));
-    setHistory(prev => prev.slice(0, -1));
+    setHistory((prev) => prev.slice(0, -1));
   };
 
   /**
@@ -415,7 +413,9 @@ const BoardScreen = () => {
     setSelectedCell({ ...selectedCell, value: solvedNum });
     setBoard(newBoard);
     saveHistory(newBoard);
-    setNotes(prevNotes => removeNoteFromPeers(prevNotes, row, col, solvedNum));
+    setNotes((prevNotes) =>
+      removeNoteFromPeers(prevNotes, row, col, solvedNum),
+    );
 
     if (checkBoardIsSolved(newBoard, solvedBoard)) {
       handleCheckSolved(totalHintCountUsed + 1);
@@ -455,7 +455,7 @@ const BoardScreen = () => {
       const newNotes = deepCloneNotes(notes);
       const cellNotes = newNotes[row][col];
       if (cellNotes.includes(num.toString())) {
-        newNotes[row][col] = cellNotes.filter(n => n !== num.toString());
+        newNotes[row][col] = cellNotes.filter((n) => n !== num.toString());
       } else {
         newNotes[row][col] = [...cellNotes, num.toString()].sort();
       }
@@ -469,7 +469,7 @@ const BoardScreen = () => {
       setSelectedCell({ ...selectedCell, value: num });
 
       if (settings.autoRemoveNotes) {
-        setNotes(prevNotes => removeNoteFromPeers(prevNotes, row, col, num));
+        setNotes((prevNotes) => removeNoteFromPeers(prevNotes, row, col, num));
       }
 
       if (settings.mistakeLimit && num !== correctValue) {
@@ -487,7 +487,7 @@ const BoardScreen = () => {
   useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      Object.values(timeoutRefs.current).forEach(timeoutId => {
+      Object.values(timeoutRefs.current).forEach((timeoutId) => {
         clearTimeout(timeoutId);
       });
     };
@@ -527,7 +527,8 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top']}
-        style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
+        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
+      >
         <ActivityIndicator size="large" color={theme.primary} />
       </SafeAreaView>
     );
@@ -537,7 +538,8 @@ const BoardScreen = () => {
     <>
       <SafeAreaView
         edges={['top', 'bottom']}
-        style={[styles.container, { backgroundColor: theme.background }]}>
+        style={[styles.container, { backgroundColor: theme.background }]}
+      >
         <Header
           title={t('appName')}
           showBack={true}

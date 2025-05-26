@@ -29,8 +29,8 @@ const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
     );
   }
 
-  const labels = dailyStats.map(s => formatShortChartDate(s.date));
-  const timeData = dailyStats.map(s => Math.floor(s.totalTimeSeconds / 60)); // phút
+  const labels = dailyStats.map((s) => formatShortChartDate(s.date));
+  const timeData = dailyStats.map((s) => Math.floor(s.totalTimeSeconds / 60)); // phút
   const chartWidth = Math.max(dailyStats.length * CHART_WIDTH, screenWidth);
 
   return (

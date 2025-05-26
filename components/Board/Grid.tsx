@@ -8,15 +8,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTheme } from '../../context/ThemeContext';
 import { AppSettings, Cell, CellValue } from '../../types';
-import {
-  isColFilled,
-  isRowFilled
-} from '../../utils/boardUtil';
+import { isColFilled, isRowFilled } from '../../utils/boardUtil';
 import {
   ANIMATION_DURATION,
   ANIMATION_TYPE,
   BOARD_SIZE,
-  CELL_SIZE
+  CELL_SIZE,
 } from '../../utils/constants';
 
 type GridProps = {
@@ -176,7 +173,8 @@ const Grid = ({
       return (
         <View
           key={`cell-${row}-${col}`}
-          style={[styles.cellWrapper, { backgroundColor: theme.background }]}>
+          style={[styles.cellWrapper, { backgroundColor: theme.background }]}
+        >
           {showRelatedOverlay && (
             <View
               style={[
@@ -188,15 +186,18 @@ const Grid = ({
 
           {showOverlay && (
             <View
-              style={[styles.selectedOverlay, { backgroundColor: overlayColor }]}
+              style={[
+                styles.selectedOverlay,
+                { backgroundColor: overlayColor },
+              ]}
             />
           )}
 
           <TouchableOpacity
             style={[styles.cell, borderStyle]}
             onPress={() => onPress({ row, col, value: cellValue })}
-            activeOpacity={0.8}>
-
+            activeOpacity={0.8}
+          >
             {cellNotes.length > 0 && (
               <View style={styles.notesContainerTop}>
                 {Array.from({ length: BOARD_SIZE }, (_, i) => {
@@ -204,7 +205,8 @@ const Grid = ({
                   return (
                     <Text
                       key={i}
-                      style={[styles.noteText, { color: theme.text }]}>
+                      style={[styles.noteText, { color: theme.text }]}
+                    >
                       {cellNotes.includes(noteValue) ? i + 1 : ' '}
                     </Text>
                   );
@@ -214,14 +216,16 @@ const Grid = ({
 
             <Animated.View
               style={[styles.cell, animatedStyle]}
-              pointerEvents="box-none">
+              pointerEvents="box-none"
+            >
               {showValue && (
                 <Text
                   style={[
                     styles.cellText,
                     { color: theme.text },
                     showMistake && { color: theme.danger },
-                  ]}>
+                  ]}
+                >
                   {cellValue}
                 </Text>
               )}

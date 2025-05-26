@@ -18,15 +18,15 @@ export function useMistakeCounter(options?: MistakeOptions) {
 
   // Load last mistakes from storage once
   useEffect(() => {
-    BoardService.loadSavedMistake().then(value => {
+    BoardService.loadSavedMistake().then((value) => {
       setMistakes(value.savedMistake);
       setTotalMistakes(value.savedTotalMistake);
     });
   }, []);
 
   const incrementMistake = () => {
-    setTotalMistakes(prev => prev + 1);
-    setMistakes(prev => {
+    setTotalMistakes((prev) => prev + 1);
+    setMistakes((prev) => {
       const updated = prev + 1;
       if (updated >= maxMistakes) {
         setLimitMistakeReached(true);

@@ -19,7 +19,7 @@ const resources = {
 
 const fallback = { languageTag: LANGUAGES[0].code };
 const getBestLanguage = () => {
-  const bestLang = RNLocalize.findBestLanguageTag(LANGUAGES.map(l => l.code));
+  const bestLang = RNLocalize.findBestLanguageTag(LANGUAGES.map((l) => l.code));
   return bestLang?.languageTag || fallback.languageTag;
 };
 
@@ -52,7 +52,7 @@ export const autoDetectLanguage = async () => {
   return preferedLanguage;
 };
 
-AppState.addEventListener('change', async state => {
+AppState.addEventListener('change', async (state) => {
   if (state === 'active') {
     await autoDetectLanguage();
   }

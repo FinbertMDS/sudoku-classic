@@ -29,7 +29,8 @@ const PauseModal = ({ level, mistake, time, onResume }: PauseModalProps) => {
         useNativeDriver
         onBackButtonPress={() => onResume()}
         onBackdropPress={() => onResume()}
-        onDismiss={() => onResume()}>
+        onDismiss={() => onResume()}
+      >
         <View style={[styles.modalBox, { backgroundColor: theme.background }]}>
           {/* Header */}
           <Text style={[styles.modalHeader, { color: theme.text }]}>
@@ -61,8 +62,11 @@ const PauseModal = ({ level, mistake, time, onResume }: PauseModalProps) => {
           {/* Button Tiếp tục */}
           <TouchableOpacity
             style={[styles.resumeButton, { backgroundColor: theme.primary }]}
-            onPress={onResume}>
-            <Text style={[styles.resumeButtonText, { color: theme.buttonText }]}>
+            onPress={onResume}
+          >
+            <Text
+              style={[styles.resumeButtonText, { color: theme.buttonText }]}
+            >
               {t('continue')}
             </Text>
           </TouchableOpacity>

@@ -1,7 +1,13 @@
 import { format, parseISO } from 'date-fns';
 import { TFunction } from 'i18next';
 import { ColorSchemeName } from 'react-native';
-import { DailyStats, GameLogEntry, GameStats, Level, TimeRange } from '../types';
+import {
+  DailyStats,
+  GameLogEntry,
+  GameStats,
+  Level,
+  TimeRange,
+} from '../types';
 import { getLevelColor, levelColors } from './colorUtil';
 import { DAILY_STATS_DATE_FORMAT, LEVELS } from './constants';
 import { formatShortChartDate, isInTimeRange } from './dateUtil';
@@ -28,7 +34,7 @@ export function getStatsFromLogs(
     master: createEmptyStats(),
   };
 
-  const filtered = logs.filter(log => isInTimeRange(log.date, filter));
+  const filtered = logs.filter((log) => isInTimeRange(log.date, filter));
   for (const log of filtered) {
     const level = log.level;
     const stats = statsByLevel[level];
@@ -70,9 +76,9 @@ export function getDailyStatsFromLogs(
 
   const map = new Map<string, { games: number; totalTimeSeconds: number }>();
   const filtered = logs.filter(
-    log => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.date, filter),
   );
-  filtered.forEach(log => {
+  filtered.forEach((log) => {
     const date = format(parseISO(log.date), DAILY_STATS_DATE_FORMAT);
     const durationSeconds = log.durationSeconds;
 
@@ -115,9 +121,9 @@ export function convertToPieData(
   };
 
   const filtered = logs.filter(
-    log => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.date, filter),
   );
-  filtered.forEach(log => {
+  filtered.forEach((log) => {
     levelMap[log.level]++;
   });
 
@@ -129,7 +135,7 @@ export function convertToPieData(
       legendFontColor: scheme === 'dark' ? '#fff' : '#333',
       legendFontSize: 12,
     }))
-    .filter(item => item.count > 0);
+    .filter((item) => item.count > 0);
 }
 
 export function convertToStackedData(
@@ -144,9 +150,9 @@ export function convertToStackedData(
 
   const dateMap = new Map<string, Record<Level, number>>();
   const filtered = logs.filter(
-    log => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.date, filter),
   );
-  filtered.forEach(log => {
+  filtered.forEach((log) => {
     const date = format(parseISO(log.date), DAILY_STATS_DATE_FORMAT);
     if (!dateMap.has(date)) {
       dateMap.set(date, {
@@ -166,8 +172,8 @@ export function convertToStackedData(
 
   return {
     labels: sorted.map(([date]) => formatShortChartDate(date)),
-    legend: LEVELS.map(level => t(`level.${level}`)),
-    data: sorted.map(([, counts]) => LEVELS.map(l => counts[l])),
-    barColors: LEVELS.map(level => levelColors[level][scheme!]),
+    legend: LEVELS.map((level) => t(`level.${level}`)),
+    data: sorted.map(([, counts]) => LEVELS.map((l) => counts[l])),
+    barColors: LEVELS.map((level) => levelColors[level][scheme!]),
   };
 }

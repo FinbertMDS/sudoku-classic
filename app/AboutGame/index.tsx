@@ -25,7 +25,9 @@ export default function AboutGame() {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const openURL = (url: string) => {
-    Linking.openURL(url).catch(err => console.error('Error opening URL', err));
+    Linking.openURL(url).catch((err) =>
+      console.error('Error opening URL', err),
+    );
   };
 
   const year = new Date().getFullYear();
@@ -34,7 +36,8 @@ export default function AboutGame() {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <Header
         title={t('aboutGame')}
         showBack={true}
@@ -45,7 +48,8 @@ export default function AboutGame() {
         contentContainerStyle={[
           styles.contentContainer,
           { backgroundColor: theme.backgroundSecondary },
-        ]}>
+        ]}
+      >
         <View style={[styles.card, { backgroundColor: theme.background }]}>
           <Text style={[styles.title, { color: theme.text }]}>
             {t('appNameWithAuthor', {
@@ -103,7 +107,8 @@ const Item = ({
         backgroundColor: theme.background,
         borderBottomColor: isLast ? 'transparent' : '#ccc',
       },
-    ]}>
+    ]}
+  >
     <Text style={[styles.itemText, { color: theme.text }]}>{label}</Text>
   </TouchableOpacity>
 );

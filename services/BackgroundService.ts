@@ -27,7 +27,6 @@ export const BackgroundService = {
   },
 
   async fetchUnsplashImage(query: string): Promise<string | null> {
-
     try {
       const res = await axios.get('https://api.unsplash.com/photos/random', {
         params: {

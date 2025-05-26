@@ -23,7 +23,7 @@ export const levelColors: Record<Level, { light: string; dark: string }> = {
   },
   master: {
     light: '#f472b6', // rose-400
-    dark: '#ec4899',  // rose-500
+    dark: '#ec4899', // rose-500
   },
 };
 
@@ -55,5 +55,5 @@ export function getLevelColor(
 export function getLevelColorsBySchema(
   scheme: ColorSchemeName = 'light',
 ): string[] {
-  return LEVELS.map(level => levelColors[level][scheme!]);
+  return LEVELS.map((level) => levelColors[level][scheme!]);
 }

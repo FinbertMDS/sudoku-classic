@@ -29,8 +29,8 @@ const GameBarChart = ({ dailyStats, chartConfig }: GameBarChartProps) => {
     );
   }
 
-  const labels = dailyStats.map(s => formatShortChartDate(s.date));
-  const data = dailyStats.map(s => s.games);
+  const labels = dailyStats.map((s) => formatShortChartDate(s.date));
+  const data = dailyStats.map((s) => s.games);
   const chartWidth = Math.max(dailyStats.length * CHART_WIDTH, screenWidth);
 
   return (

@@ -4,7 +4,7 @@ export function useRewardedAdSafe() {
     isLoaded: false,
     isEarnedReward: false,
     isClosed: false,
-    load: () => { },
-    show: () => { },
+    load: () => {},
+    show: () => {},
   };
 }

@@ -1,5 +1,11 @@
-
-import { AD_UNIT_BANNER_ANDROID, AD_UNIT_BANNER_IOS, AD_UNIT_INTERSTITIAL_ANDROID, AD_UNIT_INTERSTITIAL_IOS, AD_UNIT_REWARDED_ANDROID, AD_UNIT_REWARDED_IOS } from '@/env';
+import {
+  AD_UNIT_BANNER_ANDROID,
+  AD_UNIT_BANNER_IOS,
+  AD_UNIT_INTERSTITIAL_ANDROID,
+  AD_UNIT_INTERSTITIAL_IOS,
+  AD_UNIT_REWARDED_ANDROID,
+  AD_UNIT_REWARDED_IOS,
+} from '@/env';
 import { Platform } from 'react-native';
 import { TestIds } from 'react-native-google-mobile-ads';
 
@@ -10,7 +16,6 @@ const DEV_AD_UNITS: Record<AdType, string> = {
   interstitial: TestIds.INTERSTITIAL,
   rewarded: TestIds.REWARDED,
 };
-
 
 const PROD_AD_UNITS_IOS: Record<AdType, string> = {
   banner: AD_UNIT_BANNER_IOS,

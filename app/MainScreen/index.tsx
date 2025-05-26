@@ -10,7 +10,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import Header from '../../components/commons/Header';
 import NewGameMenu from '../../components/Main/NewGameMenu';
@@ -80,7 +83,8 @@ const MainScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       {backgroundUrl && (
         <ImageBackground
           source={{ uri: backgroundUrl }}
@@ -107,7 +111,8 @@ const MainScreen = () => {
                 borderColor: theme.buttonBorder,
               },
             ]}
-            onPress={handleContinueGame}>
+            onPress={handleContinueGame}
+          >
             <Text style={[styles.buttonText, { color: theme.buttonText }]}>
               {t('continueGame')}
             </Text>
@@ -125,7 +130,8 @@ const MainScreen = () => {
                 borderColor: theme.buttonBorder,
               },
             ]}
-            onPress={handleClearStorage}>
+            onPress={handleClearStorage}
+          >
             <Text style={[styles.buttonText, { color: theme.buttonText }]}>
               {t('clearStorage')}
             </Text>

@@ -26,7 +26,8 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-        }}>
+        }}
+      >
         <Stack.Screen name={SCREENS.HOME_TABS} />
         <Stack.Screen name={SCREENS.NOT_FOUND} />
         <Stack.Screen name={SCREENS.BOARD} />

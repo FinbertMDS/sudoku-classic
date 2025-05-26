@@ -91,9 +91,17 @@ const InfoPanel = ({
 
       <TouchableOpacity style={styles.infoBlock} onPress={onPause}>
         {!isPaused ? (
-          <MaterialCommunityIcons name="pause-circle-outline" size={28} color={theme.iconColor} />
+          <MaterialCommunityIcons
+            name="pause-circle-outline"
+            size={28}
+            color={theme.iconColor}
+          />
         ) : (
-          <MaterialCommunityIcons name="play-circle-outline" size={28} color={theme.iconColor} />
+          <MaterialCommunityIcons
+            name="play-circle-outline"
+            size={28}
+            color={theme.iconColor}
+          />
         )}
       </TouchableOpacity>
     </View>

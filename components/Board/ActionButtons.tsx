@@ -105,13 +105,14 @@ const ActionButtons = ({
         <TouchableOpacity
           key={idx}
           style={styles.actionButton}
-          onPress={btn.onPress}>
+          onPress={btn.onPress}
+        >
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons
               name={
                 btn.icon.length > 0 && btn.iconChangeFlag
-                  ? btn.icon[1] as any
-                  : btn.icon[0] as any
+                  ? (btn.icon[1] as any)
+                  : (btn.icon[0] as any)
               }
               size={24}
               color={
@@ -121,7 +122,9 @@ const ActionButtons = ({
               }
             />
             {btn.showBadge && (
-              <View style={[styles.hintBadge, { backgroundColor: theme.danger }]}>
+              <View
+                style={[styles.hintBadge, { backgroundColor: theme.danger }]}
+              >
                 <Text style={[styles.hintBadgeText, { color: theme.onError }]}>
                   {btn.badgeCount}
                 </Text>
@@ -136,7 +139,8 @@ const ActionButtons = ({
                       ? theme.buttonBlue
                       : theme.secondary,
                 },
-              ]}>
+              ]}
+            >
               {btn.label}
             </Text>
           </View>

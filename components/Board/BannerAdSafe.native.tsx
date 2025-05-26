@@ -29,14 +29,15 @@ export const BannerAdSafe = () => {
           bottom: insets.bottom,
           backgroundColor: theme.background,
         },
-      ]}>
+      ]}
+    >
       <BannerAd
         ref={bannerRef}
         unitId={bannerId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
       />
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

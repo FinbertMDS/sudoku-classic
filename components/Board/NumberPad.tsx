@@ -17,12 +17,13 @@ const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      {Array.from({ length: BOARD_SIZE }, (_, i) => i + 1).map(num => (
+      {Array.from({ length: BOARD_SIZE }, (_, i) => i + 1).map((num) => (
         <TouchableOpacity
           key={num}
           style={[styles.button]}
           onPress={() => onSelectNumber(num)}
-          disabled={counts[num] === BOARD_SIZE}>
+          disabled={counts[num] === BOARD_SIZE}
+        >
           <Text style={[styles.text, { color: theme.text }]}>
             {counts[num] === BOARD_SIZE ? ' ' : num}
           </Text>

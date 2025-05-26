@@ -20,7 +20,8 @@ const LicensesScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}>
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <Header
         title={t('licenses')}
         showBack={true}
@@ -28,21 +29,19 @@ const LicensesScreen = () => {
         showTheme={false}
       />
 
-      {
-        Platform.OS === 'web' ? (
-          <View style={{ flex: 1 }}>
-            <iframe
-              src={webSource}
-              style={{ width: '100%', height: '100%', borderWidth: 0 }}
-            />
-          </View>
-        ) : (
-          <WebView originWhitelist={['*']} source={licensesSource} />
-        )
-      }
+      {Platform.OS === 'web' ? (
+        <View style={{ flex: 1 }}>
+          <iframe
+            src={webSource}
+            style={{ width: '100%', height: '100%', borderWidth: 0 }}
+          />
+        </View>
+      ) : (
+        <WebView originWhitelist={['*']} source={licensesSource} />
+      )}
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

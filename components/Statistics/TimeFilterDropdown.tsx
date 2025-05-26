@@ -17,7 +17,11 @@ interface Props {
   onSelect: (filter: TimeFilter) => void;
 }
 
-const TimeFilterDropdown: React.FC<Props> = ({ selected, onSelect, onClose }) => {
+const TimeFilterDropdown: React.FC<Props> = ({
+  selected,
+  onSelect,
+  onClose,
+}) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
@@ -33,7 +37,9 @@ const TimeFilterDropdown: React.FC<Props> = ({ selected, onSelect, onClose }) =>
     <Modal transparent onRequestClose={onClose}>
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
-          <View style={[styles.container, { backgroundColor: theme.background }]}>
+          <View
+            style={[styles.container, { backgroundColor: theme.background }]}
+          >
             {options.map((option, index) => (
               <TouchableOpacity
                 key={option.value}
@@ -55,7 +61,8 @@ const TimeFilterDropdown: React.FC<Props> = ({ selected, onSelect, onClose }) =>
                 onPress={() => {
                   onSelect(option.value);
                   onClose();
-                }}>
+                }}
+              >
                 <Text style={[styles.label, { color: theme.text }]}>
                   {option.label}
                 </Text>

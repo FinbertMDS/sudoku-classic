@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
 
   useFocusEffect(
     useCallback(() => {
-      autoDetectLanguage().then(lang => {
+      autoDetectLanguage().then((lang) => {
         if (lang) {
           setSelectedLang(lang);
         }
@@ -25,7 +25,7 @@ export default function LanguageSwitcher() {
   );
 
   useEffect(() => {
-    autoDetectLanguage().then(lang => {
+    autoDetectLanguage().then((lang) => {
       if (lang) {
         setSelectedLang(lang);
       }
@@ -40,22 +40,27 @@ export default function LanguageSwitcher() {
 
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}>
+      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}
+    >
       <Text style={[styles.label, { color: theme.text }]}>{t('language')}</Text>
       <View style={styles.buttons}>
-        {LANGUAGES.map(lang => (
+        {LANGUAGES.map((lang) => (
           <TouchableOpacity
             key={lang.code}
             style={[
               styles.button,
-              selectedLang === lang.code && { backgroundColor: theme.buttonBlue },
+              selectedLang === lang.code && {
+                backgroundColor: theme.buttonBlue,
+              },
             ]}
-            onPress={() => changeLanguage(lang.code)}>
+            onPress={() => changeLanguage(lang.code)}
+          >
             <Text
               style={[
                 selectedLang === lang.code ? styles.selectedText : styles.text,
                 { color: theme.text },
-              ]}>
+              ]}
+            >
               {lang.label}
             </Text>
           </TouchableOpacity>

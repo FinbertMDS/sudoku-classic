@@ -17,7 +17,7 @@ export function stringToGrid(input: string, columns = 9): CellValue[][] {
     const row = input
       .slice(i, i + columns)
       .split('')
-      .map(ch => (ch === '-' ? null : parseInt(ch, 10)));
+      .map((ch) => (ch === '-' ? null : parseInt(ch, 10)));
     grid.push(row);
   }
   return grid;
@@ -58,14 +58,14 @@ export function createEmptyGridNotes<T>(): T[][][] {
  * Deep clone a 2D array (for board)
  */
 export const deepCloneBoard = (board: CellValue[][]): CellValue[][] => {
-  return board.map(row => [...row]);
+  return board.map((row) => [...row]);
 };
 
 /**
  * Deep clone a 3D array (for notes)
  */
 export const deepCloneNotes = (notes: string[][][]): string[][][] => {
-  return notes.map(row => row.map(cell => [...cell]));
+  return notes.map((row) => row.map((cell) => [...cell]));
 };
 
 /**
@@ -95,8 +95,8 @@ export function removeNoteFromPeers(
   col: number,
   value: number,
 ): string[][][] {
-  const updatedNotes = notes.map(rowNotes =>
-    rowNotes.map(cellNotes => [...cellNotes]),
+  const updatedNotes = notes.map((rowNotes) =>
+    rowNotes.map((cellNotes) => [...cellNotes]),
   );
 
   const valueStr = value.toString();
@@ -130,7 +130,7 @@ export function removeNoteFromPeers(
 
   for (const key of peers) {
     const [r, c] = key.split(',').map(Number);
-    updatedNotes[r][c] = updatedNotes[r][c].filter(n => n !== valueStr);
+    updatedNotes[r][c] = updatedNotes[r][c].filter((n) => n !== valueStr);
   }
 
   // Remove notes from current cell

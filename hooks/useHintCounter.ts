@@ -18,15 +18,15 @@ export function useHintCounter(options?: HintOptions) {
 
   // Load last mistakes from storage once
   useEffect(() => {
-    BoardService.loadSavedHintCount().then(value => {
+    BoardService.loadSavedHintCount().then((value) => {
       setHintCount(value.savedHintCount);
       setTotalHintCountUsed(value.savedTotalHintCountUsed);
     });
   }, []);
 
   const decrementHintCount = () => {
-    setTotalHintCountUsed(prev => prev + 1);
-    setHintCount(prev => {
+    setTotalHintCountUsed((prev) => prev + 1);
+    setHintCount((prev) => {
       const updated = prev - 1;
       if (updated <= 0) {
         setLimitHintReached(true);
