@@ -44,7 +44,7 @@ const GameStackedBarChart = ({
         <StackedBarChart
           data={stackedData}
           width={chartWidth}
-          height={220}
+          height={300}
           chartConfig={{
             ...chartConfig,
           }}

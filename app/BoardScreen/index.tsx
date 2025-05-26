@@ -612,6 +612,7 @@ const BoardScreen = () => {
           level={level}
           mistake={mistakes}
           time={secondsRef.current}
+          settings={settings}
           onResume={() => handleResume()}
         />
       )}

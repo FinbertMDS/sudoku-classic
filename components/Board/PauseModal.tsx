@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
 import { useTheme } from '../../context/ThemeContext';
-import { Level } from '../../types';
+import { AppSettings, Level } from '../../types';
 import { MAX_MISTAKES } from '../../utils/constants';
 import { formatTime } from '../../utils/dateUtil';
 
@@ -11,10 +11,17 @@ type PauseModalProps = {
   level: Level;
   mistake: number;
   time: number;
+  settings: AppSettings;
   onResume: () => void;
 };
 
-const PauseModal = ({ level, mistake, time, onResume }: PauseModalProps) => {
+const PauseModal = ({
+  level,
+  mistake,
+  time,
+  settings,
+  onResume,
+}: PauseModalProps) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
@@ -45,18 +52,22 @@ const PauseModal = ({ level, mistake, time, onResume }: PauseModalProps) => {
                 {t(`level.${level}`)}
               </Text>
             </View>
-            <View style={styles.infoBlock}>
-              <Text style={styles.infoTitle}>{t('mistakes')}</Text>
-              <Text style={[styles.infoValue, { color: theme.text }]}>
-                {mistake}/{MAX_MISTAKES}
-              </Text>
-            </View>
-            <View style={styles.infoBlock}>
-              <Text style={styles.infoTitle}>{t('time')}</Text>
-              <Text style={[styles.infoValue, { color: theme.text }]}>
-                {formatTime(time)}
-              </Text>
-            </View>
+            {settings.mistakeLimit && (
+              <View style={styles.infoBlock}>
+                <Text style={styles.infoTitle}>{t('mistakes')}</Text>
+                <Text style={[styles.infoValue, { color: theme.text }]}>
+                  {mistake}/{MAX_MISTAKES}
+                </Text>
+              </View>
+            )}
+            {settings.timer && (
+              <View style={styles.infoBlock}>
+                <Text style={styles.infoTitle}>{t('time')}</Text>
+                <Text style={[styles.infoValue, { color: theme.text }]}>
+                  {formatTime(time)}
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Button Tiếp tục */}

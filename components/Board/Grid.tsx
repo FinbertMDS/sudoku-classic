@@ -167,10 +167,10 @@ const Grid = ({
 
       const borderStyle = {
         borderColor: theme.cellBorderColor,
-        borderTopWidth: isBoldBorder(row) ? 1.2 : 0.2,
-        borderBottomWidth: isLastBolBorder(row) ? 1.2 : 0.2,
-        borderLeftWidth: isBoldBorder(col) ? 1.2 : 0.2,
-        borderRightWidth: col === BOARD_SIZE - 1 ? 1.2 : 0.2,
+        borderTopWidth: isBoldBorder(row) ? 2 : 0.1,
+        borderBottomWidth: isLastBolBorder(row) ? 2 : 0.1,
+        borderLeftWidth: isBoldBorder(col) ? 2 : 0.1,
+        borderRightWidth: col === BOARD_SIZE - 1 ? 2 : 0.1,
       };
 
       return (
