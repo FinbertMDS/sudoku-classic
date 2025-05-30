@@ -56,7 +56,7 @@ const Header = ({
         ) : (
           <View style={styles.side} />
         )}
-        {title && title.length > 0 && (
+        {title && (
           <View style={styles.center}>
             <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
           </View>

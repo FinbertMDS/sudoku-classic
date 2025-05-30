@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 export const appConfig = {
   iosAppId: '1234567890',
   androidPackageName: 'com.finbertngo.sudokuclassic',
-  developerMail: 'ngovanhuy.jp@gmail.com',
+  developerMail: 'finbertngo@gmail.com',
   version: nativeApplicationVersion,
   buildNumber: nativeBuildVersion,
   getStoreUrl: () =>

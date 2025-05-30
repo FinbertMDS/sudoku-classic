@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   boardContainer: {
     width: '100%' as const,
     alignItems: 'center' as const,
-    marginTop: 40,
+    marginTop: 30,
   },
   gridWrapper: {
     width: CELL_SIZE * BOARD_SIZE,
@@ -302,9 +302,10 @@ const styles = StyleSheet.create({
   noteText: {
     top: 1,
     left: 2,
-    fontSize: 9,
-    width: 10,
+    fontSize: 8,
+    width: 9,
     textAlign: 'center' as const,
+    fontWeight: '600' as const,
   },
 });
 

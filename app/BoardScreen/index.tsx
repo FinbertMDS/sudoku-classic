@@ -24,6 +24,7 @@ import HowToPlay from '../../components/HowToPlay';
 import { useTheme } from '../../context/ThemeContext';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
+import { GameEndedCoreEvent } from '../../events/types';
 import { useAppPause } from '../../hooks/useAppPause';
 import { useHintCounter } from '../../hooks/useHintCounter';
 import { useMistakeCounter } from '../../hooks/useMistakeCounter';
@@ -47,6 +48,7 @@ import {
   removeNoteFromPeers,
 } from '../../utils/boardUtil';
 import {
+  AD_REQUEST_OPTIONS,
   DEFAULT_SETTINGS,
   MAX_HINTS,
   MAX_MISTAKES,
@@ -177,7 +179,7 @@ const BoardScreen = () => {
     isClosed: isClosedRewarded,
     load: loadRewarded,
     show: showRewarded,
-  } = useRewardedAdSafe(getAdUnit('rewarded'));
+  } = useRewardedAdSafe(getAdUnit('rewarded'), AD_REQUEST_OPTIONS);
   useEffect(() => {
     loadRewarded();
   }, [loadRewarded]);
@@ -401,7 +403,7 @@ const BoardScreen = () => {
               timePlayed: secondsRef.current,
               mistakes: totalMistakes,
               hintCount: _totalHintCountUsed,
-            });
+            } as GameEndedCoreEvent);
             await BoardService.clear();
             goBack();
           },
@@ -453,9 +455,9 @@ const BoardScreen = () => {
     const clonedSolved = deepCloneBoard(solvedBoard);
     setSelectedCell(null);
     setBoard(clonedSolved);
-    saveHistory(clonedSolved);
     setNotes(createEmptyGridNotes<string>());
     // handleCheckSolved(solvedBoard);
+    saveHistory(clonedSolved);
   };
 
   /**
@@ -481,6 +483,10 @@ const BoardScreen = () => {
       }
       setNotes(newNotes);
     } else {
+      const currentValue = board[row][col];
+      if (currentValue === num) {
+        return;
+      }
       const correctValue = solvedBoard[row][col];
       if (settings.mistakeLimit && num !== correctValue) {
         if (mistakes >= MAX_MISTAKES) {
@@ -544,6 +550,48 @@ const BoardScreen = () => {
       }
     }, []),
   );
+
+  useEffect(() => {
+    if (limitMistakeReached && !isLoadedRewarded && !isClosedRewarded) {
+      Alert.alert(
+        t('mistakeWarning.title'),
+        t('mistakeWarning.messageNotAd', { max: MAX_MISTAKES }),
+        [
+          {
+            text: t('ok'),
+            onPress: () => {
+              handleLimitMistakeReached();
+            },
+          },
+        ],
+        {
+          cancelable: false,
+        },
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [limitMistakeReached, isLoadedRewarded]);
+
+  useEffect(() => {
+    if (limitHintReached && !isLoadedRewarded && !isClosedRewarded) {
+      Alert.alert(
+        t('hintWarning.title'),
+        t('hintWarning.messageNotAd'),
+        [
+          {
+            text: t('ok'),
+            onPress: () => {
+              handleLimitHintReached(true);
+            },
+          },
+        ],
+        {
+          cancelable: false,
+        },
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [limitHintReached, isLoadedRewarded]);
 
   if (showHowToPlay) {
     return (
@@ -623,7 +671,7 @@ const BoardScreen = () => {
           onResume={() => handleResume()}
         />
       )}
-      {limitMistakeReached && (
+      {limitMistakeReached && isLoadedRewarded && (
         <ConfirmDialog
           title={t('mistakeWarning.title')}
           message={t('mistakeWarning.message', { max: MAX_MISTAKES })}
@@ -637,7 +685,7 @@ const BoardScreen = () => {
           }}
         />
       )}
-      {limitHintReached && (
+      {limitHintReached && isLoadedRewarded && (
         <ConfirmDialog
           title={t('hintWarning.title')}
           message={t('hintWarning.message', { max: MAX_HINTS })}

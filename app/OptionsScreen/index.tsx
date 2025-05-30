@@ -101,7 +101,7 @@ const OptionsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}
+      style={[styles.container, { backgroundColor: theme.background }]}
     >
       <Header
         title={t('options')}
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop: 16,
+    paddingTop: 16,
     paddingHorizontal: 16,
   },
   item: {

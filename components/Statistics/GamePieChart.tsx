@@ -27,7 +27,7 @@ const GamePieChart = ({ levelCounts, chartConfig }: GamePieChartProps) => {
     );
   }
 
-  const chartWidth = screenWidth - 32;
+  const chartWidth = screenWidth - 16;
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

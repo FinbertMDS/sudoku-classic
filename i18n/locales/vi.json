@@ -132,6 +132,8 @@
 
   "mistakeWarning.title": "Đã vượt quá số lần sai",
   "mistakeWarning.message": "Bạn đã mắc quá {{max}} lỗi!\nXem quảng cáo để tiếp tục chơi.",
+  "mistakeWarning.messageNotAd": "Bạn đã mắc quá {{max}} lỗi!",
   "hintWarning.title": "Đã hết gợi ý",
-  "hintWarning.message": "Bạn đã dùng hết gợi ý.\nXem quảng cáo để nhận thêm và tiếp tục chơi nhé!"
+  "hintWarning.message": "Bạn đã dùng hết gợi ý.\nXem quảng cáo để nhận thêm và tiếp tục chơi nhé!",
+  "hintWarning.messageNotAd": "Bạn đã dùng hết gợi ý."
 }

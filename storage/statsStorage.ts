@@ -1,4 +1,9 @@
-import { DailyStats, GameLogEntry, GameStatsCache } from '../types';
+import {
+  DailyStats,
+  GameLogEntry,
+  GameLogEntryV2,
+  GameStatsCache,
+} from '../types';
 import {
   STORAGE_KEY_DAILY_STATS,
   STORAGE_KEY_GAME_LOGS,
@@ -8,46 +13,91 @@ import {
 import { getTodayDateString } from '../utils/dateUtil';
 import { deleteItem, getItem, saveItem } from './storage';
 
-const saveGameLogs = async (logs: GameLogEntry[]) =>
-  await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
-
-const getGameLogs = async (): Promise<GameLogEntry[]> => {
-  return (await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS)) || [];
+const saveGameLogs = async (logs: GameLogEntry[]) => {
+  try {
+    await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
+  } catch (_) {}
 };
 
-const saveStatsCache = async (cache: GameStatsCache) =>
-  await saveItem(STORAGE_KEY_GAME_STATS_CACHE, JSON.stringify(cache));
+const getGameLogs = async (): Promise<GameLogEntry[] | null> => {
+  try {
+    return (await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS)) || [];
+  } catch (_) {
+    return [];
+  }
+};
+
+const saveGameLogsV2 = async (logs: GameLogEntryV2[]) => {
+  try {
+    await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
+  } catch (_) {}
+};
+
+const getGameLogsV2 = async (): Promise<GameLogEntryV2[] | null> => {
+  try {
+    return (await getItem<GameLogEntryV2[]>(STORAGE_KEY_GAME_LOGS)) || [];
+  } catch (_) {
+    return [];
+  }
+};
+
+const saveStatsCache = async (cache: GameStatsCache) => {
+  try {
+    await saveItem(STORAGE_KEY_GAME_STATS_CACHE, JSON.stringify(cache));
+  } catch (_) {}
+};
 
 const getStatsCache = async (): Promise<GameStatsCache> => {
-  return (await getItem<GameStatsCache>(STORAGE_KEY_GAME_STATS_CACHE)) || {};
+  try {
+    return (await getItem<GameStatsCache>(STORAGE_KEY_GAME_STATS_CACHE)) || {};
+  } catch (_) {
+    return {};
+  }
 };
 
-const saveDailyStats = async (dailyStats: DailyStats[]) =>
-  await saveItem(STORAGE_KEY_DAILY_STATS, JSON.stringify(dailyStats));
+const saveDailyStats = async (dailyStats: DailyStats[]) => {
+  try {
+    await saveItem(STORAGE_KEY_DAILY_STATS, JSON.stringify(dailyStats));
+  } catch (_) {}
+};
 
 const getDailyStats = async (): Promise<DailyStats[]> => {
-  return (await getItem<DailyStats[]>(STORAGE_KEY_DAILY_STATS)) || [];
+  try {
+    return (await getItem<DailyStats[]>(STORAGE_KEY_DAILY_STATS)) || [];
+  } catch (_) {
+    return [];
+  }
 };
 
 const setLastStatsCacheUpdate = async () => {
   const today = getTodayDateString();
-  await saveItem(STORAGE_KEY_LAST_STATS_CACHE_UPDATE, today);
+  try {
+    await saveItem(STORAGE_KEY_LAST_STATS_CACHE_UPDATE, today);
+  } catch (_) {}
 };
 
 const getLastStatsCacheUpdate = async (): Promise<string | null> => {
-  return await getItem<string>(STORAGE_KEY_LAST_STATS_CACHE_UPDATE);
+  try {
+    return await getItem<string>(STORAGE_KEY_LAST_STATS_CACHE_UPDATE);
+  } catch (_) {
+    return null;
+  }
 };
 
 const clearStatsData = async () => {
-  await deleteItem(STORAGE_KEY_DAILY_STATS);
-  await deleteItem(STORAGE_KEY_GAME_LOGS);
-  await deleteItem(STORAGE_KEY_GAME_STATS_CACHE);
-  await deleteItem(STORAGE_KEY_LAST_STATS_CACHE_UPDATE);
+  try {
+    await deleteItem(STORAGE_KEY_DAILY_STATS);
+    await deleteItem(STORAGE_KEY_GAME_LOGS);
+    await deleteItem(STORAGE_KEY_GAME_STATS_CACHE);
+    await deleteItem(STORAGE_KEY_LAST_STATS_CACHE_UPDATE);
+  } catch (_) {}
 };
 
 export const statsStorage = {
   saveGameLogs,
   getGameLogs,
+  saveGameLogsV2,
+  getGameLogsV2,
   saveStatsCache,
   getStatsCache,
   saveDailyStats,

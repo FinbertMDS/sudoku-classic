@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     width: '100%' as const,
-    marginTop: 40,
+    marginTop: 30,
   },
   actionButton: {
     alignItems: 'center' as const,

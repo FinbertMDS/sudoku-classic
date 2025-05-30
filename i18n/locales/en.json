@@ -132,6 +132,8 @@
 
   "mistakeWarning.title": "Mistake Limit Reached",
   "mistakeWarning.message": "You've made more than {{max}} mistakes!\nWatch an ad to continue playing.",
+  "mistakeWarning.messageNotAd": "You've made more than {{max}} mistakes!",
   "hintWarning.title": "Out of Hints",
-  "hintWarning.message": "You've used all your hints!\nWatch an ad to reset your hints and continue solving."
+  "hintWarning.message": "You've used all your hints!\nWatch an ad to reset your hints and continue solving.",
+  "hintWarning.messageNotAd": "You've used all your hints!"
 }

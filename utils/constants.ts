@@ -9,7 +9,7 @@ export const SCREENS = {
   SETTINGS: 'SettingsScreen/index',
   HOW_TO_PLAY: 'HowToPlayScreen/index',
   ABOUT_GAME: 'AboutGame/index',
-  LICENSES: 'LicensesScreen/index',
+  SK_WEBVIEW: 'SkWebView/index',
   NOT_FOUND: '+not-found',
 } as const;
 
@@ -20,7 +20,6 @@ export const MAX_MISTAKES = 5;
 export const MAX_HINTS = 5;
 
 export const ANIMATION_DURATION = 300; // in ms
-export const ANIMATION_CELL_KEY_SEPARATOR = '-';
 export const ANIMATION_TYPE = {
   ROW: 1,
   COL: 2,
@@ -40,6 +39,8 @@ export const STORAGE_KEY_LANG_KEY_PREFERRED = 'preferredLanguage';
 export const STORAGE_KEY_SETTINGS = 'settings';
 export const STORAGE_KEY_BACKGROUNDS = 'backgrounds';
 export const STORAGE_KEY_HAS_PLAYED = 'hasPlayed';
+export const STORAGE_KEY_QUOTES = 'quotes';
+export const STORAGE_KEY_MIGRATION_VERSION = 'migrationVersion';
 
 export const CHART_WIDTH = 60;
 export const CHART2_WIDTH = 70;

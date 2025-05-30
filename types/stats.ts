@@ -3,11 +3,22 @@ import { Level } from './game';
 export interface GameLogEntry {
   id: string; // unique ID (UUID)
   level: Level;
-  date: string; // ISO format: e.g., '2025-04-30T14:23:00Z'
+  date: string; // game start date ISO format: e.g., '2025-04-30T14:23:00Z'
   durationSeconds: number;
   completed: boolean;
-  endTime?: string; // ISO format: e.g., '2025-04-30T14:23:00Z'
+  endTime?: string; // game end date ISO format: e.g., '2025-04-30T14:23:00Z'
   mistakes?: number;
+}
+
+export interface GameLogEntryV2 {
+  id: string; // unique ID (UUID)
+  level: Level;
+  completed: boolean;
+  startTime: string; // ISO format: e.g., '2025-04-30T14:23:00Z'
+  endTime: string; // ISO format: e.g., '2025-04-30T14:23:00Z'
+  durationSeconds: number;
+  mistakes?: number;
+  hintCount?: number;
 }
 
 export type TimeRange = 'today' | 'week' | 'month' | 'year' | 'all';

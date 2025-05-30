@@ -4,7 +4,7 @@ import uuid from 'react-native-uuid';
 import { GameEndedCoreEvent } from '../events/types';
 import { statsStorage } from '../storage';
 import {
-  GameLogEntry,
+  GameLogEntryV2,
   GameStats,
   GameStatsCache,
   InitGame,
@@ -24,7 +24,7 @@ export const GameStatsManager = {
   },
 
   async getStatsWithCache(
-    logs: GameLogEntry[],
+    logs: GameLogEntryV2[],
     filter: TimeRange,
   ): Promise<Record<Level, GameStats>> {
     try {
@@ -47,7 +47,7 @@ export const GameStatsManager = {
   },
 
   async updateStatsWithAllCache(
-    logs: GameLogEntry[],
+    logs: GameLogEntryV2[],
     affectedRanges: TimeRange[],
   ): Promise<void> {
     try {
@@ -67,8 +67,8 @@ export const GameStatsManager = {
   },
 
   async updateStatsWithCache(
-    logs: GameLogEntry[],
-    updatedLogs: GameLogEntry[],
+    logs: GameLogEntryV2[],
+    updatedLogs: GameLogEntryV2[],
   ): Promise<void> {
     try {
       const cache: GameStatsCache = await statsStorage.getStatsCache();
@@ -77,16 +77,16 @@ export const GameStatsManager = {
       const rangesToUpdate = new Set<TimeRange>();
 
       updatedLogs.forEach((log) => {
-        if (isInTimeRange(log.date, 'today')) {
+        if (isInTimeRange(log.endTime, 'today')) {
           rangesToUpdate.add('today');
         }
-        if (isInTimeRange(log.date, 'week')) {
+        if (isInTimeRange(log.endTime, 'week')) {
           rangesToUpdate.add('week');
         }
-        if (isInTimeRange(log.date, 'month')) {
+        if (isInTimeRange(log.endTime, 'month')) {
           rangesToUpdate.add('month');
         }
-        if (isInTimeRange(log.date, 'year')) {
+        if (isInTimeRange(log.endTime, 'year')) {
           rangesToUpdate.add('year');
         }
       });
@@ -104,7 +104,7 @@ export const GameStatsManager = {
     }
   },
 
-  async getLog(id: string): Promise<GameLogEntry | null> {
+  async getLog(id: string): Promise<GameLogEntryV2 | null> {
     try {
       const logs = await this.getLogs();
       const log = logs.find((_log) => _log.id === id);
@@ -117,9 +117,9 @@ export const GameStatsManager = {
     return null;
   },
 
-  async getLogs(): Promise<GameLogEntry[]> {
+  async getLogs(): Promise<GameLogEntryV2[]> {
     try {
-      return statsStorage.getGameLogs();
+      return statsStorage.getGameLogsV2();
     } catch (error) {
       console.error('Error loading logs:', error);
     }
@@ -131,7 +131,7 @@ export const GameStatsManager = {
    * If override is true, it will replace the existing log with the same ID.
    * If override is false, it will append the new log to the existing logs.
    */
-  async saveLog(log: GameLogEntry, override: boolean = true) {
+  async saveLog(log: GameLogEntryV2, override: boolean = true) {
     try {
       const existing = await this.getLogs();
       if (override) {
@@ -157,31 +157,34 @@ export const GameStatsManager = {
    * If append is true, it will append the new logs to the existing logs.
    * If append is false, it will replace the existing logs with the new logs.
    */
-  async saveLogs(logs: GameLogEntry[], append: boolean = true) {
+  async saveLogs(logs: GameLogEntryV2[], append: boolean = true) {
     try {
-      let updated: GameLogEntry[] = logs;
+      let updated: GameLogEntryV2[] = logs;
       if (append) {
         const existing = await this.getLogs();
         const sortedLogs = logs.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          (a, b) =>
+            new Date(b.endTime).getTime() - new Date(a.endTime).getTime(),
         );
         updated = [...sortedLogs, ...existing];
       }
 
-      await statsStorage.saveGameLogs(updated);
+      await statsStorage.saveGameLogsV2(updated);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
   },
 
-  async recordGameStart(initGame: InitGame): Promise<GameLogEntry> {
-    const newEntry: GameLogEntry = {
+  async recordGameStart(initGame: InitGame): Promise<GameLogEntryV2> {
+    const newEntry: GameLogEntryV2 = {
       id: initGame.id,
       level: initGame.savedLevel,
-      date: new Date().toISOString(),
-      durationSeconds: 0,
       completed: false,
+      startTime: new Date().toISOString(),
+      endTime: new Date().toISOString(),
+      durationSeconds: 0,
       mistakes: 0,
+      hintCount: 0,
     };
 
     await this.saveLog(newEntry, false);
@@ -191,24 +194,26 @@ export const GameStatsManager = {
   async recordGameWin(payload: GameEndedCoreEvent) {
     // 👉 Record daily log
     const oldEntry = await this.getLog(payload.id);
-    let newEntry: GameLogEntry;
+    let newEntry: GameLogEntryV2;
     if (oldEntry) {
       newEntry = {
         ...oldEntry,
         completed: true,
-        durationSeconds: payload.timePlayed,
         endTime: new Date().toISOString(),
+        durationSeconds: payload.timePlayed,
         mistakes: payload.mistakes,
+        hintCount: payload.hintCount,
       };
     } else {
       newEntry = {
         id: uuid.v4().toString(),
         level: payload.level,
-        date: new Date().toISOString(),
-        durationSeconds: payload.timePlayed,
         completed: true,
+        startTime: new Date().toISOString(),
         endTime: new Date().toISOString(),
+        durationSeconds: payload.timePlayed,
         mistakes: payload.mistakes,
+        hintCount: payload.hintCount,
       };
     }
     await this.saveLog(newEntry, true);

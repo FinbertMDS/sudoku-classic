@@ -18,7 +18,7 @@ import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
 import LanguageSwitcher from '../../i18n/LanguageSwitcher';
 import { SettingsService } from '../../services/SettingsService';
-import { SettingsParamProps } from '../../types';
+import { AppSettings, SettingsParamProps } from '../../types';
 import { DEFAULT_SETTINGS, MAX_MISTAKES } from '../../utils/constants';
 
 const SettingsScreen = () => {
@@ -57,7 +57,7 @@ const SettingsScreen = () => {
         ...prev,
         [key]: value,
       });
-      eventBus.emit(CORE_EVENTS.settingsUpdated, updated);
+      eventBus.emit(CORE_EVENTS.settingsUpdated, updated as AppSettings);
       return updated;
     });
   };

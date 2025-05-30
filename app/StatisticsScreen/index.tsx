@@ -14,13 +14,13 @@ import { useTheme } from '../../context/ThemeContext';
 import { useAppPause } from '../../hooks/useAppPause';
 import { useEnsureStatsCache } from '../../hooks/useEnsureStatsCache';
 import { GameStatsManager } from '../../services/GameStatsManager';
-import { GameLogEntry, GameStats, Level, TimeFilter } from '../../types';
+import { GameLogEntryV2, GameStats, Level, TimeFilter } from '../../types';
 
 const StatisticsScreen = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [stats, setStats] = useState<Record<Level, GameStats> | null>(null);
-  const [logs, setLogs] = useState<GameLogEntry[]>([]);
+  const [logs, setLogs] = useState<GameLogEntryV2[]>([]);
   const [activeTab, setActiveTab] = useState<'level' | 'chart'>('level');
 
   const [filter, setFilter] = useState<TimeFilter>('all');

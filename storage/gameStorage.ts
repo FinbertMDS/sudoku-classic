@@ -5,27 +5,45 @@ import {
 } from '../utils/constants';
 import { deleteItem, getItem, saveItem } from './storage';
 
-const saveInitGame = async (game: InitGame) =>
-  await saveItem(STORAGE_KEY_INIT_GAME, JSON.stringify(game));
-
-const getInitGame = async (): Promise<InitGame | null> => {
-  return await getItem<InitGame>(STORAGE_KEY_INIT_GAME);
+const saveInitGame = async (game: InitGame) => {
+  try {
+    await saveItem(STORAGE_KEY_INIT_GAME, JSON.stringify(game));
+  } catch (_) {}
 };
 
-const saveSavedGame = async (game: SavedGame) =>
-  await saveItem(STORAGE_KEY_SAVED_GAME, JSON.stringify(game));
+const getInitGame = async (): Promise<InitGame | null> => {
+  try {
+    return await getItem<InitGame>(STORAGE_KEY_INIT_GAME);
+  } catch (_) {
+    return null;
+  }
+};
+
+const saveSavedGame = async (game: SavedGame) => {
+  try {
+    await saveItem(STORAGE_KEY_SAVED_GAME, JSON.stringify(game));
+  } catch (_) {}
+};
 
 const getSavedGame = async (): Promise<SavedGame | null> => {
-  return await getItem<SavedGame>(STORAGE_KEY_SAVED_GAME);
+  try {
+    return await getItem<SavedGame>(STORAGE_KEY_SAVED_GAME);
+  } catch (_) {
+    return null;
+  }
 };
 
 const clearGameData = async () => {
-  await deleteItem(STORAGE_KEY_INIT_GAME);
-  await deleteItem(STORAGE_KEY_SAVED_GAME);
+  try {
+    await deleteItem(STORAGE_KEY_INIT_GAME);
+    await deleteItem(STORAGE_KEY_SAVED_GAME);
+  } catch (_) {}
 };
 
 const clearSavedGameData = async () => {
-  await deleteItem(STORAGE_KEY_SAVED_GAME);
+  try {
+    await deleteItem(STORAGE_KEY_SAVED_GAME);
+  } catch (_) {}
 };
 
 export const gameStorage = {

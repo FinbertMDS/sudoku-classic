@@ -17,10 +17,13 @@ import {
 import uuid from 'react-native-uuid';
 import Header from '../../components/commons/Header';
 import NewGameMenu from '../../components/Main/NewGameMenu';
+import { QuoteBox } from '../../components/Main/QuoteBox';
 import { useTheme } from '../../context/ThemeContext';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
+import { InitGameCoreEvent } from '../../events/types';
 import { useDailyBackground } from '../../hooks/useDailyBackground';
+import { useDailyQuote } from '../../hooks/useDailyQuote';
 import { BoardService } from '../../services/BoardService';
 import { Level } from '../../types/index';
 import { SCREENS } from '../../utils/constants';
@@ -30,12 +33,14 @@ const MainScreen = () => {
   const { t } = useTranslation();
   const [hasSavedGame, setHasSavedGame] = useState(false);
   const { backgroundUrl, loadBackgrounds } = useDailyBackground(mode);
+  const { quote, loadQuote } = useDailyQuote();
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
     useCallback(() => {
       checkSavedGame();
       loadBackgrounds();
+      loadQuote();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
@@ -48,12 +53,7 @@ const MainScreen = () => {
   const handleNewGame = async (level: Level) => {
     await BoardService.clear();
     const id = uuid.v4().toString();
-    eventBus.emit(CORE_EVENTS.initGame, { level, id });
-    // navigation.navigate(SCREENS.BOARD, {
-    //   id,
-    //   level,
-    //   type: 'init',
-    // });
+    eventBus.emit(CORE_EVENTS.initGame, { level, id } as InitGameCoreEvent);
     router.push({
       pathname: SCREENS.BOARD as any,
       params: { id, level, type: 'init' },
@@ -99,7 +99,7 @@ const MainScreen = () => {
         showSettings={true}
         showTheme={true}
       />
-
+      {quote && <QuoteBox q={quote.q} a={quote.a} />}
       <View style={styles.middle}>
         <Text style={[styles.title, { color: theme.text }]}>
           {t('welcomeTitle', { appName: t('appName') })}
@@ -156,12 +156,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 22,
+    fontSize: 32,
     textAlign: 'center',
-    lineHeight: 66,
+    lineHeight: 48,
+    fontWeight: '500',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   footer: {
-    paddingBottom: 64,
+    marginBottom: 96,
     paddingHorizontal: 20,
     alignItems: 'center',
   },

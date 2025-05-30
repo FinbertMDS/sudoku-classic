@@ -3,7 +3,7 @@ import { TFunction } from 'i18next';
 import { ColorSchemeName } from 'react-native';
 import {
   DailyStats,
-  GameLogEntry,
+  GameLogEntryV2,
   GameStats,
   Level,
   TimeRange,
@@ -23,7 +23,7 @@ export function createEmptyStats(): GameStats {
 }
 
 export function getStatsFromLogs(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   filter: TimeRange,
 ): Record<Level, GameStats> {
   const statsByLevel: Record<Level, GameStats> = {
@@ -34,7 +34,7 @@ export function getStatsFromLogs(
     master: createEmptyStats(),
   };
 
-  const filtered = logs.filter((log) => isInTimeRange(log.date, filter));
+  const filtered = logs.filter((log) => isInTimeRange(log.endTime, filter));
   for (const log of filtered) {
     const level = log.level;
     const stats = statsByLevel[level];
@@ -67,7 +67,7 @@ export function getStatsFromLogs(
 }
 
 export function getDailyStatsFromLogs(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   filter: TimeRange,
 ): DailyStats[] {
   if (logs.length === 0) {
@@ -76,10 +76,10 @@ export function getDailyStatsFromLogs(
 
   const map = new Map<string, { games: number; totalTimeSeconds: number }>();
   const filtered = logs.filter(
-    (log) => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.endTime, filter),
   );
   filtered.forEach((log) => {
-    const date = format(parseISO(log.date), DAILY_STATS_DATE_FORMAT);
+    const date = format(parseISO(log.endTime), DAILY_STATS_DATE_FORMAT);
     const durationSeconds = log.durationSeconds;
 
     if (!map.has(date)) {
@@ -92,7 +92,7 @@ export function getDailyStatsFromLogs(
   });
 
   const sorted = Array.from(map.entries()).sort(([a], [b]) =>
-    a.localeCompare(b),
+    b.localeCompare(a),
   );
 
   return sorted.map(([date, { games, totalTimeSeconds }]) => ({
@@ -103,7 +103,7 @@ export function getDailyStatsFromLogs(
 }
 
 export function convertToPieData(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   scheme: ColorSchemeName = 'light',
   t: TFunction,
   filter: TimeRange,
@@ -121,7 +121,7 @@ export function convertToPieData(
   };
 
   const filtered = logs.filter(
-    (log) => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.endTime, filter),
   );
   filtered.forEach((log) => {
     levelMap[log.level]++;
@@ -139,7 +139,7 @@ export function convertToPieData(
 }
 
 export function convertToStackedData(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   scheme: ColorSchemeName = 'light',
   t: TFunction,
   filter: TimeRange,
@@ -150,10 +150,10 @@ export function convertToStackedData(
 
   const dateMap = new Map<string, Record<Level, number>>();
   const filtered = logs.filter(
-    (log) => log.completed && isInTimeRange(log.date, filter),
+    (log) => log.completed && isInTimeRange(log.endTime, filter),
   );
   filtered.forEach((log) => {
-    const date = format(parseISO(log.date), DAILY_STATS_DATE_FORMAT);
+    const date = format(parseISO(log.endTime), DAILY_STATS_DATE_FORMAT);
     if (!dateMap.has(date)) {
       dateMap.set(date, {
         easy: 0,
@@ -167,7 +167,7 @@ export function convertToStackedData(
   });
 
   const sorted = Array.from(dateMap.entries()).sort(([a], [b]) =>
-    a.localeCompare(b),
+    b.localeCompare(a),
   );
 
   return {

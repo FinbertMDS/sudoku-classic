@@ -4,7 +4,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,13 +21,6 @@ export default function AboutGame() {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const openURL = (url: string) => {
-    Linking.openURL(url).catch((err) =>
-      console.error('Error opening URL', err),
-    );
-  };
 
   const year = new Date().getFullYear();
   const copyrightYear = year === 2025 ? year : `2025 - ${year}`;
@@ -66,20 +58,38 @@ export default function AboutGame() {
         </View>
 
         <View style={[styles.section, { backgroundColor: theme.background }]}>
-          {/* <Item
+          <Item
             theme={theme}
-            label="Terms of Service"
-            onPress={() => openURL('https://yourdomain.com/terms')}
+            label={t('termsOfService')}
+            onPress={() =>
+              navigation.navigate(SCREENS.SK_WEBVIEW, {
+                title: 'termsOfService',
+                type: 'terms',
+                needPadding: true,
+              })
+            }
           />
           <Item
             theme={theme}
-            label="Privacy Policy"
-            onPress={() => openURL('https://yourdomain.com/privacy')}
-          /> */}
+            label={t('privacyPolicy')}
+            onPress={() =>
+              navigation.navigate(SCREENS.SK_WEBVIEW, {
+                title: 'privacyPolicy',
+                type: 'privacy',
+                needPadding: true,
+              })
+            }
+          />
           <Item
             theme={theme}
             label={t('licenses')}
-            onPress={() => navigation.navigate(SCREENS.LICENSES as any)}
+            onPress={() =>
+              navigation.navigate(SCREENS.SK_WEBVIEW, {
+                title: 'licenses',
+                type: 'licenses',
+                needPadding: false,
+              })
+            }
             isLast={true}
           />
         </View>
@@ -103,6 +113,7 @@ const Item = ({
     onPress={onPress}
     style={[
       styles.item,
+      // eslint-disable-next-line react-native/no-inline-styles
       {
         backgroundColor: theme.background,
         borderBottomColor: isLast ? 'transparent' : '#ccc',
