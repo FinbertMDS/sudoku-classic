@@ -19,6 +19,7 @@ import Header from '../../components/commons/Header';
 import NewGameMenu from '../../components/Main/NewGameMenu';
 import { QuoteBox } from '../../components/Main/QuoteBox';
 import { useTheme } from '../../context/ThemeContext';
+import { IS_UI_TESTING } from '../../env';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
 import { InitGameCoreEvent } from '../../events/types';
@@ -125,7 +126,7 @@ const MainScreen = () => {
 
         <NewGameMenu handleNewGame={handleNewGame} />
 
-        {__DEV__ && (
+        {__DEV__ && IS_UI_TESTING !== 'true' && (
           <TouchableOpacity
             style={[
               styles.button,

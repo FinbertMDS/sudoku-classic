@@ -49,11 +49,26 @@ const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
           fromZero
           chartConfig={{
             ...chartConfig,
-            propsForLabels: { x: -10 },
           }}
-          xLabelsOffset={-10}
+          yLabelsOffset={32}
           style={styles.chart}
           bezier
+          renderDotContent={({ x, y, index }) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                {
+                  top: y - 16,
+                  left: x - 15,
+                },
+              ]}
+            >
+              <Text style={[styles.dotText, { color: theme.secondary }]}>
+                {timeData[index]}
+              </Text>
+            </View>
+          )}
         />
       </ScrollView>
     </View>
@@ -74,7 +89,14 @@ const styles = StyleSheet.create({
   },
   chart: {
     borderRadius: 12,
-    marginLeft: -10,
+  },
+  dot: {
+    position: 'absolute',
+    width: 30,
+    alignItems: 'center',
+  },
+  dotText: {
+    fontSize: 12,
   },
 });
 

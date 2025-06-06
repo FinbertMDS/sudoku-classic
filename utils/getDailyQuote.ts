@@ -2,7 +2,7 @@
 import { QuoteService } from '../services/QuoteService';
 import { DailyQuotes } from '../types';
 
-export const getDailyQuote = async (): Promise<DailyQuotes> => {
+export const getDailyQuote = async (): Promise<DailyQuotes | null> => {
   const today = new Date().toISOString().split('T')[0];
   const cached = await QuoteService.load();
   if (cached) {
@@ -27,5 +27,5 @@ export const getDailyQuote = async (): Promise<DailyQuotes> => {
       }
     }
   }
-  return { q: '', a: '', h: '' };
+  return null;
 };

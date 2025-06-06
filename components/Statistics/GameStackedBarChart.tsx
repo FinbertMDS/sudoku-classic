@@ -44,9 +44,10 @@ const GameStackedBarChart = ({
         <StackedBarChart
           data={stackedData}
           width={chartWidth}
-          height={300}
+          height={250}
           chartConfig={{
             ...chartConfig,
+            barPercentage: 0.7,
           }}
           style={styles.chart}
           hideLegend={false}

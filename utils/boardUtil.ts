@@ -191,3 +191,16 @@ export const isColFilled = (
   }
   return true; // Nếu tất cả ô trong cột đều khác 0, coi như đã filled
 };
+
+export function getFontSizesFromCellSize(cellSize: number) {
+  return {
+    cellText: 22, // ví dụ: 40 → 22
+    noteText: 8, // ví dụ: 40 → 8
+    noteWidth: 9, // ví dụ: 40 → 9
+  };
+  // return {
+  //   cellText: DeviceInfo.isTablet() ? Math.floor(cellSize / 1.5) : 22, // ví dụ: 40 → 22
+  //   noteText: DeviceInfo.isTablet() ? Math.floor(cellSize / 4.25) : 8, // ví dụ: 40 → 8
+  //   noteWidth: DeviceInfo.isTablet() ? Math.floor(cellSize / 4) : 9, // ví dụ: 40 → 9
+  // };
+}

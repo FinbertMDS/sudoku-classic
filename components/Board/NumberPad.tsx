@@ -25,10 +25,15 @@ const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
   const { buttonWidth, buttonHeight } = useMemo(() => {
     const screenWidth = Dimensions.get('window').width;
     const containerPadding = 8; // padding left/right của container
+    // const containerPadding = DeviceInfo.isTablet() ? 150 : 8; // padding left/right của container
     const availableWidth = screenWidth - containerPadding * 2; // width khả dụng
     const width = availableWidth / 9; // chia đều cho 9 button
     const height = width + 20; // height = width + padding top/bottom 10px
-    return { buttonWidth: width, buttonHeight: height };
+    // const height = width + (DeviceInfo.isTablet() ? 0 : 20); // height = width + padding top/bottom 10px
+    return {
+      buttonWidth: Math.max(width, 40),
+      buttonHeight: Math.max(height, 40),
+    };
   }, []);
 
   // Tạo mảng số từ 1-9 một lần duy nhất
@@ -52,7 +57,12 @@ const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
           onPress={() => onSelectNumber(num)}
           disabled={counts[num] === BOARD_SIZE}
         >
-          <Text style={[styles.text, { color: theme.text }]}>
+          <Text
+            style={[
+              // eslint-disable-next-line react-native/no-inline-styles
+              { color: theme.text, fontSize: buttonWidth > 50 ? 48 : 32 },
+            ]}
+          >
             {counts[num] === BOARD_SIZE ? ' ' : num}
           </Text>
         </TouchableOpacity>
@@ -68,15 +78,13 @@ const styles = StyleSheet.create({
     width: '100%' as const,
     alignItems: 'center' as const,
     marginTop: 30,
+    // marginTop: DeviceInfo.isTablet() ? 10 : 30,
     paddingHorizontal: 32,
   },
   button: {
     borderRadius: 8,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
-  },
-  text: {
-    fontSize: 32,
   },
 });
 

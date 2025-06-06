@@ -1,9 +1,4 @@
-import {
-  DailyStats,
-  GameLogEntry,
-  GameLogEntryV2,
-  GameStatsCache,
-} from '../types';
+import { DailyStats, GameLogEntry, GameStatsCache } from '../types';
 import {
   STORAGE_KEY_DAILY_STATS,
   STORAGE_KEY_GAME_LOGS,
@@ -22,20 +17,6 @@ const saveGameLogs = async (logs: GameLogEntry[]) => {
 const getGameLogs = async (): Promise<GameLogEntry[] | null> => {
   try {
     return (await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS)) || [];
-  } catch (_) {
-    return [];
-  }
-};
-
-const saveGameLogsV2 = async (logs: GameLogEntryV2[]) => {
-  try {
-    await saveItem(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
-  } catch (_) {}
-};
-
-const getGameLogsV2 = async (): Promise<GameLogEntryV2[] | null> => {
-  try {
-    return (await getItem<GameLogEntryV2[]>(STORAGE_KEY_GAME_LOGS)) || [];
   } catch (_) {
     return [];
   }
@@ -96,8 +77,6 @@ const clearStatsData = async () => {
 export const statsStorage = {
   saveGameLogs,
   getGameLogs,
-  saveGameLogsV2,
-  getGameLogsV2,
   saveStatsCache,
   getStatsCache,
   saveDailyStats,

@@ -90,12 +90,14 @@ const PauseModal = ({
 const styles = StyleSheet.create({
   modalBox: {
     padding: 20,
+    // padding: DeviceInfo.isTablet() ? 40 : 20,
     borderRadius: 13,
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalHeader: {
     fontSize: 22,
+    // fontSize: DeviceInfo.isTablet() ? 28 : 22,
     fontWeight: 'bold',
     marginBottom: 20,
   },
@@ -110,10 +112,12 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     fontSize: 14,
+    // fontSize: DeviceInfo.isTablet() ? 22 : 14,
     color: '#888',
   },
   infoValue: {
     fontSize: 16,
+    // fontSize: DeviceInfo.isTablet() ? 24 : 16,
     fontWeight: 'bold',
   },
   resumeButton: {
@@ -123,6 +127,7 @@ const styles = StyleSheet.create({
   },
   resumeButtonText: {
     fontSize: 16,
+    // fontSize: DeviceInfo.isTablet() ? 24 : 16,
     fontWeight: 'bold',
   },
 });

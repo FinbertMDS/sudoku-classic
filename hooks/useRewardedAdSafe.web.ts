@@ -1,5 +1,5 @@
 // hooks/useRewardedAdSafe.web.ts
-export function useRewardedAdSafe(adUnitId: string, options: any) {
+export function useRewardedAdSafe(adUnitId: string) {
   return {
     isLoaded: false,
     isEarnedReward: false,

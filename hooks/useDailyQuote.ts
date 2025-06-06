@@ -8,6 +8,9 @@ export const useDailyQuote = () => {
   const loadQuote = async () => {
     try {
       const dailyQuote = await getDailyQuote();
+      if (!dailyQuote) {
+        return;
+      }
       setQuote(dailyQuote);
     } catch (error) {
       console.log('Failed to fetch quote:', error);

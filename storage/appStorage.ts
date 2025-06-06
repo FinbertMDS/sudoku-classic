@@ -142,7 +142,6 @@ const clearAll = async () => {
   await clearLangKeyDefault();
   await clearLangKeyPreferred();
   await clearSettings();
-  await clearBackgrounds();
   await clearQuotes();
   await clearHasPlayed();
 };

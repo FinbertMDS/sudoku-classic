@@ -38,7 +38,7 @@ const GamePieChart = ({ levelCounts, chartConfig }: GamePieChartProps) => {
         <PieChart
           data={levelCounts}
           width={chartWidth}
-          height={300}
+          height={220}
           accessor="count"
           backgroundColor="transparent"
           paddingLeft="0"

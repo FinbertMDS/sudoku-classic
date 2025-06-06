@@ -8,6 +8,7 @@ import {
   useForeground,
 } from 'react-native-google-mobile-ads';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AD_REQUEST_OPTIONS } from '../../hooks/useRewardedAdSafe.native';
 import { getAdUnit } from '../../utils/getAdUnit';
 
 export const BannerAdSafe = () => {
@@ -35,6 +36,7 @@ export const BannerAdSafe = () => {
         ref={bannerRef}
         unitId={bannerId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={AD_REQUEST_OPTIONS}
       />
     </View>
   );

@@ -49,11 +49,11 @@ const GameBarChart = ({ dailyStats, chartConfig }: GameBarChartProps) => {
           fromZero
           chartConfig={{
             ...chartConfig,
-            propsForLabels: { x: -10 },
+            barPercentage: 0.7,
           }}
-          xLabelsOffset={-10}
           style={styles.chart}
           showValuesOnTopOfBars
+          yLabelsOffset={32}
           yAxisLabel={''}
           yAxisSuffix={''}
         />
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   },
   chart: {
     borderRadius: 12,
-    marginLeft: -10,
   },
 });
 

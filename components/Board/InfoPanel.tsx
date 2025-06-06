@@ -66,6 +66,7 @@ const InfoPanel = ({
     }, 1000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -136,9 +137,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+    // fontSize: DeviceInfo.isTablet() ? 20 : 14,
   },
   value: {
     fontSize: 16,
+    // fontSize: DeviceInfo.isTablet() ? 22 : 16,
     fontWeight: 'bold' as const,
   },
 });

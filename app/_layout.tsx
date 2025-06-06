@@ -35,7 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name={SCREENS.SETTINGS} />
         <Stack.Screen name={SCREENS.HOW_TO_PLAY} />
         <Stack.Screen name={SCREENS.ABOUT_GAME} />
-        <Stack.Screen name={SCREENS.LICENSES} />
+        <Stack.Screen name={SCREENS.SK_WEBVIEW} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

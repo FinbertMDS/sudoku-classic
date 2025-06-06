@@ -4,7 +4,7 @@ import uuid from 'react-native-uuid';
 import { GameEndedCoreEvent } from '../events/types';
 import { statsStorage } from '../storage';
 import {
-  GameLogEntryV2,
+  GameLogEntry,
   GameStats,
   GameStatsCache,
   InitGame,
@@ -24,7 +24,7 @@ export const GameStatsManager = {
   },
 
   async getStatsWithCache(
-    logs: GameLogEntryV2[],
+    logs: GameLogEntry[],
     filter: TimeRange,
   ): Promise<Record<Level, GameStats>> {
     try {
@@ -47,7 +47,7 @@ export const GameStatsManager = {
   },
 
   async updateStatsWithAllCache(
-    logs: GameLogEntryV2[],
+    logs: GameLogEntry[],
     affectedRanges: TimeRange[],
   ): Promise<void> {
     try {
@@ -67,8 +67,8 @@ export const GameStatsManager = {
   },
 
   async updateStatsWithCache(
-    logs: GameLogEntryV2[],
-    updatedLogs: GameLogEntryV2[],
+    logs: GameLogEntry[],
+    updatedLogs: GameLogEntry[],
   ): Promise<void> {
     try {
       const cache: GameStatsCache = await statsStorage.getStatsCache();
@@ -104,7 +104,7 @@ export const GameStatsManager = {
     }
   },
 
-  async getLog(id: string): Promise<GameLogEntryV2 | null> {
+  async getLog(id: string): Promise<GameLogEntry | null> {
     try {
       const logs = await this.getLogs();
       const log = logs.find((_log) => _log.id === id);
@@ -117,9 +117,9 @@ export const GameStatsManager = {
     return null;
   },
 
-  async getLogs(): Promise<GameLogEntryV2[]> {
+  async getLogs(): Promise<GameLogEntry[]> {
     try {
-      return statsStorage.getGameLogsV2();
+      return statsStorage.getGameLogs();
     } catch (error) {
       console.error('Error loading logs:', error);
     }
@@ -131,7 +131,7 @@ export const GameStatsManager = {
    * If override is true, it will replace the existing log with the same ID.
    * If override is false, it will append the new log to the existing logs.
    */
-  async saveLog(log: GameLogEntryV2, override: boolean = true) {
+  async saveLog(log: GameLogEntry, override: boolean = true) {
     try {
       const existing = await this.getLogs();
       if (override) {
@@ -157,9 +157,9 @@ export const GameStatsManager = {
    * If append is true, it will append the new logs to the existing logs.
    * If append is false, it will replace the existing logs with the new logs.
    */
-  async saveLogs(logs: GameLogEntryV2[], append: boolean = true) {
+  async saveLogs(logs: GameLogEntry[], append: boolean = true) {
     try {
-      let updated: GameLogEntryV2[] = logs;
+      let updated: GameLogEntry[] = logs;
       if (append) {
         const existing = await this.getLogs();
         const sortedLogs = logs.sort(
@@ -169,14 +169,14 @@ export const GameStatsManager = {
         updated = [...sortedLogs, ...existing];
       }
 
-      await statsStorage.saveGameLogsV2(updated);
+      await statsStorage.saveGameLogs(updated);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
   },
 
-  async recordGameStart(initGame: InitGame): Promise<GameLogEntryV2> {
-    const newEntry: GameLogEntryV2 = {
+  async recordGameStart(initGame: InitGame): Promise<GameLogEntry> {
+    const newEntry: GameLogEntry = {
       id: initGame.id,
       level: initGame.savedLevel,
       completed: false,
@@ -194,7 +194,7 @@ export const GameStatsManager = {
   async recordGameWin(payload: GameEndedCoreEvent) {
     // 👉 Record daily log
     const oldEntry = await this.getLog(payload.id);
-    let newEntry: GameLogEntryV2;
+    let newEntry: GameLogEntry;
     if (oldEntry) {
       newEntry = {
         ...oldEntry,

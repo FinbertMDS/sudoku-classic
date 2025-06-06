@@ -16,7 +16,10 @@ import { getLevelColor } from '../../utils/colorUtil';
 import { LEVELS } from '../../utils/constants';
 import { formatTime } from '../../utils/dateUtil';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+let SCREEN_WIDTH = Dimensions.get('window').width;
+// if (DeviceInfo.isTablet()) {
+//   SCREEN_WIDTH = Math.min(SCREEN_WIDTH, Dimensions.get('window').height);
+// }
 
 type LevelStatsProps = {
   stats: Record<Level, GameStats> | null;
@@ -115,7 +118,6 @@ const styles = StyleSheet.create({
   card: {
     width: SCREEN_WIDTH - 100,
     padding: 8,
-    paddingRight: 30,
     marginBottom: 16,
     borderRadius: 10,
     borderLeftWidth: 6,

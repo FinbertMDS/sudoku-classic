@@ -12,7 +12,7 @@ export const QuoteBox = ({ q, a }: QuoteProps) => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.quoteText, { color: theme.text }]}>
+      <Text style={[styles.quoteText, { color: theme.text }]} selectable={true}>
         “{q}” —{'\n'}
         <Text style={[styles.authorText, { color: theme.text }]}>{a}</Text>
       </Text>

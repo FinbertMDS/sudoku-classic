@@ -48,7 +48,6 @@ import {
   removeNoteFromPeers,
 } from '../../utils/boardUtil';
 import {
-  AD_REQUEST_OPTIONS,
   DEFAULT_SETTINGS,
   MAX_HINTS,
   MAX_MISTAKES,
@@ -179,7 +178,7 @@ const BoardScreen = () => {
     isClosed: isClosedRewarded,
     load: loadRewarded,
     show: showRewarded,
-  } = useRewardedAdSafe(getAdUnit('rewarded'), AD_REQUEST_OPTIONS);
+  } = useRewardedAdSafe(getAdUnit('rewarded'));
   useEffect(() => {
     loadRewarded();
   }, [loadRewarded]);
@@ -595,10 +594,18 @@ const BoardScreen = () => {
 
   if (showHowToPlay) {
     return (
-      <HowToPlay
-        headerTitle={t('appName')}
-        onClose={handleAfterCheckHasPlayed}
-      />
+      <SafeAreaView
+        edges={['top', 'bottom']}
+        style={[styles.container, { backgroundColor: theme.background }]}
+      >
+        <Header
+          title={t('appName')}
+          showBack={true}
+          showSettings={false}
+          showTheme={false}
+        />
+        <HowToPlay onClose={handleAfterCheckHasPlayed} />
+      </SafeAreaView>
     );
   }
 

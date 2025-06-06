@@ -8,12 +8,15 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTheme } from '../../context/ThemeContext';
 import { AppSettings, Cell, CellValue } from '../../types';
-import { isColFilled, isRowFilled } from '../../utils/boardUtil';
+import {
+  getFontSizesFromCellSize,
+  isColFilled,
+  isRowFilled,
+} from '../../utils/boardUtil';
 import {
   ANIMATION_DURATION,
   ANIMATION_TYPE,
   BOARD_SIZE,
-  CELL_SIZE,
 } from '../../utils/constants';
 
 type GridProps = {
@@ -39,6 +42,12 @@ const Grid = ({
   const rowScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
+
+  const cellSize = 40;
+  // const { height } = Dimensions.get('window');
+  // const cellSize = DeviceInfo.isTablet() && height > 950 ? 60 : 40;
+
+  const { cellText, noteText, noteWidth } = getFontSizesFromCellSize(cellSize);
 
   const animatedStyles = useRef(
     Array.from({ length: BOARD_SIZE }, (_, row) =>
@@ -167,23 +176,34 @@ const Grid = ({
 
       const borderStyle = {
         borderColor: theme.cellBorderColor,
-        borderTopWidth: isBoldBorder(row) ? 2 : 0.1,
-        borderBottomWidth: isLastBolBorder(row) ? 2 : 0.1,
-        borderLeftWidth: isBoldBorder(col) ? 2 : 0.1,
-        borderRightWidth: col === BOARD_SIZE - 1 ? 2 : 0.1,
+        borderTopWidth: isBoldBorder(row) ? 2 : 0.5,
+        borderBottomWidth: isLastBolBorder(row) ? 2 : 0.5,
+        borderLeftWidth: isBoldBorder(col) ? 2 : 0.5,
+        borderRightWidth: col === BOARD_SIZE - 1 ? 2 : 0.5,
       };
 
       return (
         <View
           key={`cell-${row}-${col}`}
-          style={[styles.cellWrapper, { backgroundColor: theme.overlayColor }]}
+          style={[
+            styles.cellWrapper,
+            {
+              backgroundColor: theme.overlayColor,
+              width: cellSize,
+              height: cellSize,
+            },
+          ]}
         >
           {overlayColor && (
             <View style={[styles.overlay, { backgroundColor: overlayColor }]} />
           )}
 
           <TouchableOpacity
-            style={[styles.cell, borderStyle]}
+            style={[
+              styles.cell,
+              borderStyle,
+              { width: cellSize, height: cellSize },
+            ]}
             onPress={() => onPress({ row, col, value: cellValue })}
             activeOpacity={0.8}
           >
@@ -194,7 +214,14 @@ const Grid = ({
                   return (
                     <Text
                       key={i}
-                      style={[styles.noteText, { color: theme.text }]}
+                      style={[
+                        styles.noteText,
+                        {
+                          color: theme.text,
+                          fontSize: noteText,
+                          width: noteWidth,
+                        },
+                      ]}
                     >
                       {cellNotes.includes(noteValue) ? i + 1 : ' '}
                     </Text>
@@ -204,14 +231,18 @@ const Grid = ({
             )}
 
             <Animated.View
-              style={[styles.cell, animatedStyle]}
+              style={[
+                styles.cell,
+                animatedStyle,
+                { width: cellSize, height: cellSize },
+              ]}
               pointerEvents="box-none"
             >
               {showValue && (
                 <Text
                   style={[
                     styles.cellText,
-                    { color: theme.text },
+                    { color: theme.text, fontSize: cellText },
                     showMistake && { color: theme.danger },
                   ]}
                 >
@@ -231,7 +262,12 @@ const Grid = ({
     <>
       {/* Board Sudoku */}
       <View style={styles.boardContainer}>
-        <View style={styles.gridWrapper}>
+        <View
+          style={{
+            width: cellSize * BOARD_SIZE,
+            height: cellSize * BOARD_SIZE,
+          }}
+        >
           <View style={styles.grid}>
             {board.map((row, i) => (
               <View key={i} style={styles.row}>
@@ -253,10 +289,6 @@ const styles = StyleSheet.create({
     alignItems: 'center' as const,
     marginTop: 30,
   },
-  gridWrapper: {
-    width: CELL_SIZE * BOARD_SIZE,
-    height: CELL_SIZE * BOARD_SIZE,
-  },
   grid: {
     flexDirection: 'column' as const,
     width: '100%' as const,
@@ -266,8 +298,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
   },
   cellWrapper: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
     position: 'relative' as const,
   },
   overlay: {
@@ -279,15 +309,12 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
   cell: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
     // borderWidth: 0.1,
     zIndex: 20,
   },
   cellText: {
-    fontSize: 22,
     fontWeight: '500',
   },
   notesContainerTop: {
@@ -302,8 +329,6 @@ const styles = StyleSheet.create({
   noteText: {
     top: 1,
     left: 2,
-    fontSize: 8,
-    width: 9,
     textAlign: 'center' as const,
     fontWeight: '600' as const,
   },

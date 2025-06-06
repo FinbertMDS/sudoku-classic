@@ -40,58 +40,62 @@ const Header = ({
   };
 
   return (
-    <>
-      {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.background }]}>
-        {showBack ? (
-          <View style={styles.side}>
-            <TouchableOpacity onPress={onBack ? onBack : defaultOnBack}>
+    <View style={[styles.header, { backgroundColor: theme.background }]}>
+      {showBack ? (
+        <View style={styles.side}>
+          <TouchableOpacity onPress={onBack ? onBack : defaultOnBack}>
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={28}
+              color={theme.iconColor}
+            />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.side} />
+      )}
+      {title && (
+        <View style={styles.center}>
+          <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
+        </View>
+      )}
+      {/* Right side */}
+      {showTheme || showSettings ? (
+        <View style={[styles.side, styles.right]}>
+          {showCustom && custom ? <>{custom}</> : null}
+          {showTheme && (
+            <TouchableOpacity
+              accessibilityLabel="ThemeButton"
+              testID="ThemeButton"
+              onPress={toggleTheme}
+              style={styles.iconButton}
+            >
               <MaterialCommunityIcons
-                name="chevron-left"
-                size={28}
-                color={theme.iconColor}
+                name={mode === 'light' ? 'weather-night' : 'weather-sunny'}
+                size={24}
+                color={theme.primary}
               />
             </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.side} />
-        )}
-        {title && (
-          <View style={styles.center}>
-            <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
-          </View>
-        )}
-        {/* Right side */}
-        {showTheme || showSettings ? (
-          <View style={[styles.side, styles.right]}>
-            {showCustom && custom ? <>{custom}</> : null}
-            {showTheme && (
-              <TouchableOpacity onPress={toggleTheme} style={styles.iconButton}>
-                <MaterialCommunityIcons
-                  name={mode === 'light' ? 'weather-night' : 'weather-sunny'}
-                  size={24}
-                  color={theme.primary}
-                />
-              </TouchableOpacity>
-            )}
-            {showSettings && (
-              <TouchableOpacity
-                onPress={onSettings ? onSettings : defaultOnSettings}
-                style={styles.iconButton}
-              >
-                <MaterialCommunityIcons
-                  name="cog-outline"
-                  size={24}
-                  color={theme.primary}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-        ) : showBack ? (
-          <View style={styles.side} />
-        ) : null}
-      </View>
-    </>
+          )}
+          {showSettings && (
+            <TouchableOpacity
+              accessibilityLabel="SettingsButton"
+              testID="SettingsButton"
+              onPress={onSettings ? onSettings : defaultOnSettings}
+              style={styles.iconButton}
+            >
+              <MaterialCommunityIcons
+                name="cog-outline"
+                size={24}
+                color={theme.primary}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      ) : showBack ? (
+        <View style={styles.side} />
+      ) : null}
+    </View>
   );
 };
 

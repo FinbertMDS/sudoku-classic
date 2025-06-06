@@ -11,19 +11,16 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../../components/commons/Header';
 import { useTheme } from '../../context/ThemeContext';
 import { getTutorialImage } from '../../utils/tutorialImages';
 
 const SLIDE_WIDTH = Dimensions.get('window').width;
 
 type HowToPlayProps = {
-  headerTitle: string;
   onClose: () => void;
 };
 
-const HowToPlay = ({ headerTitle, onClose }: HowToPlayProps) => {
+const HowToPlay = ({ onClose }: HowToPlayProps) => {
   const { width } = useWindowDimensions();
   const flatListRef = useRef<FlatList>(null);
   const [index, setIndex] = useState(0);
@@ -69,89 +66,77 @@ const HowToPlay = ({ headerTitle, onClose }: HowToPlayProps) => {
   });
 
   return (
-    <SafeAreaView
-      edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+    <View
+      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}
     >
-      <Header
-        title={headerTitle}
-        showBack={true}
-        showSettings={false}
-        showTheme={false}
-      />
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.backgroundSecondary },
-        ]}
-      >
-        <FlatList
-          ref={flatListRef}
-          data={slides}
-          keyExtractor={(item) => item.key}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onViewableItemsChanged={onViewableItemsChanged.current}
-          renderItem={({ item }) => (
-            <View style={[styles.slide, { width }]}>
-              <Image
-                source={item.image}
-                style={styles.image}
-                resizeMode="contain"
-              />
-              <Text style={[styles.description, { color: theme.secondary }]}>
-                {t(item.text)}
-              </Text>
-            </View>
-          )}
-          getItemLayout={(_, i) => ({
-            length: SLIDE_WIDTH,
-            offset: SLIDE_WIDTH * i,
-            index: i,
-          })}
-        />
-
-        <View style={styles.pagination}>
-          {slides.map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.dot,
-                {
-                  backgroundColor:
-                    index === i ? theme.buttonBlue : theme.secondary,
-                },
-              ]}
+      <FlatList
+        ref={flatListRef}
+        data={slides}
+        keyExtractor={(item) => item.key}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onViewableItemsChanged={onViewableItemsChanged.current}
+        renderItem={({ item }) => (
+          <View style={[styles.slide, { width }]}>
+            <Image
+              source={item.image}
+              style={styles.image}
+              resizeMode="contain"
             />
-          ))}
-        </View>
+            <Text style={[styles.description, { color: theme.secondary }]}>
+              {t(item.text)}
+            </Text>
+          </View>
+        )}
+        getItemLayout={(_, i) => ({
+          length: SLIDE_WIDTH,
+          offset: SLIDE_WIDTH * i,
+          index: i,
+        })}
+      />
 
-        <View style={styles.buttonRow}>
-          {index > 0 ? (
-            <TouchableOpacity
-              onPress={onBack}
-              style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
-            >
-              <Ionicons name="arrow-back" size={24} color={theme.iconColor} />
-            </TouchableOpacity>
-          ) : (
-            <View />
-          )}
+      <View style={styles.pagination}>
+        {slides.map((_, i) => (
+          <View
+            key={i}
+            style={[
+              styles.dot,
+              {
+                backgroundColor:
+                  index === i ? theme.buttonBlue : theme.secondary,
+              },
+            ]}
+          />
+        ))}
+      </View>
 
+      <View style={styles.buttonRow}>
+        {index > 0 ? (
           <TouchableOpacity
-            onPress={onNext}
+            onPress={onBack}
             style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
           >
-            <Ionicons
-              name={index === slides.length - 1 ? 'checkmark' : 'arrow-forward'}
-              size={24}
-              color={theme.iconColor}
-            />
+            <Ionicons name="arrow-back" size={24} color={theme.iconColor} />
           </TouchableOpacity>
-        </View>
+        ) : (
+          <View />
+        )}
+
+        <TouchableOpacity
+          accessibilityLabel="HowToPlayNextButton"
+          testID="HowToPlayNextButton"
+          onPress={onNext}
+          style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
+        >
+          <Ionicons
+            name={index === slides.length - 1 ? 'checkmark' : 'arrow-forward'}
+            size={24}
+            color={theme.iconColor}
+          />
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
