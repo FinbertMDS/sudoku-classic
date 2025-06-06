@@ -1,5 +1,6 @@
 import { useAlert } from '@/hooks/useAlert';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Device from 'expo-device';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -137,11 +138,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    // fontSize: DeviceInfo.isTablet() ? 20 : 14,
+    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 20 : 14,
   },
   value: {
     fontSize: 16,
-    // fontSize: DeviceInfo.isTablet() ? 22 : 16,
+    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 22 : 16,
     fontWeight: 'bold' as const,
   },
 });

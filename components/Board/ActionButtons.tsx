@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Device from 'expo-device';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -115,8 +116,7 @@ const ActionButtons = ({
                   ? (btn.icon[1] as any)
                   : (btn.icon[0] as any)
               }
-              size={24}
-              // size={DeviceInfo.isTablet() ? 36 : 24}
+              size={Device.deviceType === Device.DeviceType.TABLET ? 36 : 24}
               color={
                 btn.icon.length > 0 && btn.iconChangeFlag
                   ? theme.buttonBlue
@@ -157,8 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     width: '100%' as const,
-    marginTop: 30,
-    // marginTop: DeviceInfo.isTablet() ? 10 : 30,
+    marginTop: Device.deviceType === Device.DeviceType.TABLET ? 10 : 30,
   },
   actionButton: {
     alignItems: 'center' as const,
@@ -185,10 +184,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    fontSize: 12,
-    marginTop: 4,
-    // fontSize: DeviceInfo.isTablet() ? 18 : 12,
-    // marginTop: DeviceInfo.isTablet() ? 10 : 4,
+    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 18 : 12,
+    marginTop: Device.deviceType === Device.DeviceType.TABLET ? 10 : 4,
   },
 });
 

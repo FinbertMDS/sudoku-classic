@@ -1,5 +1,5 @@
 // boardUtil.ts
-
+import * as Device from 'expo-device';
 import { Board, generate, solve } from 'sudoku-core';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 import { CellValue, InitGame, Level } from '../types';
@@ -52,6 +52,17 @@ export function createEmptyGridNotes<T>(): T[][][] {
   return Array.from({ length: BOARD_SIZE }, () =>
     Array.from({ length: BOARD_SIZE }, () => []),
   );
+}
+
+export function convertBoardToCore(board: CellValue[][]): Board {
+  return board.flat();
+}
+
+export function getCellFromIndex(index: number): { row: number; col: number } {
+  return {
+    row: Math.floor(index / BOARD_SIZE),
+    col: index % BOARD_SIZE,
+  };
 }
 
 /**
@@ -194,13 +205,17 @@ export const isColFilled = (
 
 export function getFontSizesFromCellSize(cellSize: number) {
   return {
-    cellText: 22, // ví dụ: 40 → 22
-    noteText: 8, // ví dụ: 40 → 8
-    noteWidth: 9, // ví dụ: 40 → 9
+    cellText:
+      Device.deviceType === Device.DeviceType.TABLET
+        ? Math.floor(cellSize / 1.5)
+        : 22, // ví dụ: 40 → 22
+    noteText:
+      Device.deviceType === Device.DeviceType.TABLET
+        ? Math.floor(cellSize / 4.25)
+        : 8, // ví dụ: 40 → 8
+    noteWidth:
+      Device.deviceType === Device.DeviceType.TABLET
+        ? Math.floor(cellSize / 4)
+        : 9, // ví dụ: 40 → 9
   };
-  // return {
-  //   cellText: DeviceInfo.isTablet() ? Math.floor(cellSize / 1.5) : 22, // ví dụ: 40 → 22
-  //   noteText: DeviceInfo.isTablet() ? Math.floor(cellSize / 4.25) : 8, // ví dụ: 40 → 8
-  //   noteWidth: DeviceInfo.isTablet() ? Math.floor(cellSize / 4) : 9, // ví dụ: 40 → 9
-  // };
 }

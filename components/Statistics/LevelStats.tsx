@@ -1,5 +1,6 @@
 // StatisticsScreen.tsx
 
+import * as Device from 'expo-device';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -17,9 +18,9 @@ import { LEVELS } from '../../utils/constants';
 import { formatTime } from '../../utils/dateUtil';
 
 let SCREEN_WIDTH = Dimensions.get('window').width;
-// if (DeviceInfo.isTablet()) {
-//   SCREEN_WIDTH = Math.min(SCREEN_WIDTH, Dimensions.get('window').height);
-// }
+if (Device.deviceType === Device.DeviceType.TABLET) {
+  SCREEN_WIDTH = Math.min(SCREEN_WIDTH, Dimensions.get('window').height);
+}
 
 type LevelStatsProps = {
   stats: Record<Level, GameStats> | null;

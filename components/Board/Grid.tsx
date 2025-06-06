@@ -1,5 +1,12 @@
+import * as Device from 'expo-device';
 import React, { useCallback, useEffect, useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -43,9 +50,10 @@ const Grid = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
 
-  const cellSize = 40;
-  // const { height } = Dimensions.get('window');
-  // const cellSize = DeviceInfo.isTablet() && height > 950 ? 60 : 40;
+  const isTablet = Device.deviceType === Device.DeviceType.TABLET;
+
+  const { height } = Dimensions.get('window');
+  const cellSize = isTablet && height > 950 ? 60 : 40;
 
   const { cellText, noteText, noteWidth } = getFontSizesFromCellSize(cellSize);
 
