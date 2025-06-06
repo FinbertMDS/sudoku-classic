@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: SCREEN_WIDTH - 100,
+    maxWidth: SCREEN_WIDTH - 100,
     padding: 8,
     marginBottom: 16,
     borderRadius: 10,

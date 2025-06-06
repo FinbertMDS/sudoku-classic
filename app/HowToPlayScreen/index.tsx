@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
-import { HowToPlay } from '../../components/HowToPlay';
+import HowToPlay from '../../components/HowToPlay';
 import { useTheme } from '../../context/ThemeContext';
 import { useSafeGoBack } from '../../hooks/useSafeGoBack';
 

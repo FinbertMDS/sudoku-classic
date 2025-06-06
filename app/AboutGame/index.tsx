@@ -62,7 +62,7 @@ export default function AboutGame() {
             theme={theme}
             label={t('termsOfService')}
             onPress={() =>
-              navigation.navigate(SCREENS.SK_WEBVIEW, {
+              navigation.navigate(SCREENS.SK_WEBVIEW as any, {
                 title: 'termsOfService',
                 type: 'terms',
                 needPadding: true,
@@ -73,7 +73,7 @@ export default function AboutGame() {
             theme={theme}
             label={t('privacyPolicy')}
             onPress={() =>
-              navigation.navigate(SCREENS.SK_WEBVIEW, {
+              navigation.navigate(SCREENS.SK_WEBVIEW as any, {
                 title: 'privacyPolicy',
                 type: 'privacy',
                 needPadding: true,
