@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   Dimensions,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,7 +19,7 @@ import { LEVELS } from '../../utils/constants';
 import { formatTime } from '../../utils/dateUtil';
 
 let SCREEN_WIDTH = Dimensions.get('window').width;
-if (Device.deviceType === Device.DeviceType.TABLET) {
+if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
   SCREEN_WIDTH = Math.min(SCREEN_WIDTH, Dimensions.get('window').height);
 }
 

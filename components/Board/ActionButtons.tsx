@@ -2,7 +2,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Device from 'expo-device';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { IS_UI_TESTING } from '../../env';
 import { ActionButtonProps } from '../../types/components';
@@ -116,7 +122,12 @@ const ActionButtons = ({
                   ? (btn.icon[1] as any)
                   : (btn.icon[0] as any)
               }
-              size={Device.deviceType === Device.DeviceType.TABLET ? 36 : 24}
+              size={
+                Platform.OS !== 'web' &&
+                Device.deviceType === Device.DeviceType.TABLET
+                  ? 36
+                  : 24
+              }
               color={
                 btn.icon.length > 0 && btn.iconChangeFlag
                   ? theme.buttonBlue
@@ -157,7 +168,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     width: '100%' as const,
-    marginTop: Device.deviceType === Device.DeviceType.TABLET ? 10 : 30,
+    marginTop:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 10
+        : 30,
   },
   actionButton: {
     alignItems: 'center' as const,
@@ -184,8 +198,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 18 : 12,
-    marginTop: Device.deviceType === Device.DeviceType.TABLET ? 10 : 4,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 18
+        : 12,
+    marginTop:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 10
+        : 4,
   },
 });
 

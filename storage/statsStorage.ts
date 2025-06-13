@@ -14,7 +14,7 @@ const saveGameLogs = async (logs: GameLogEntry[]) => {
   } catch (_) {}
 };
 
-const getGameLogs = async (): Promise<GameLogEntry[] | null> => {
+const getGameLogs = async (): Promise<GameLogEntry[]> => {
   try {
     return (await getItem<GameLogEntry[]>(STORAGE_KEY_GAME_LOGS)) || [];
   } catch (_) {

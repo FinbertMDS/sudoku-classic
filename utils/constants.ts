@@ -9,7 +9,7 @@ export const SCREENS = {
   SETTINGS: 'SettingsScreen/index',
   HOW_TO_PLAY: 'HowToPlayScreen/index',
   ABOUT_GAME: 'AboutGame/index',
-  SK_WEBVIEW: 'SkWebView/index',
+  SK_WEBVIEW: 'AboutGame/SkWebViewScreen/index',
   NOT_FOUND: '+not-found',
 } as const;
 

@@ -1,5 +1,6 @@
 // QuoteService.ts
 import axios from 'axios';
+import { Platform } from 'react-native';
 import { appStorage } from '../storage';
 import { DailyQuotes } from '../types';
 
@@ -26,6 +27,9 @@ export const QuoteService = {
   },
 
   async fetchQuote(): Promise<DailyQuotes | null> {
+    if (__DEV__ && Platform.OS === 'web') {
+      return null;
+    }
     try {
       const res = await axios.get('https://zenquotes.io/api/today');
       if (res.data && res.data.length > 0) {

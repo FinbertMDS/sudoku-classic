@@ -426,8 +426,6 @@ const BoardScreen = () => {
       return;
     }
 
-    console.log(hintBoard);
-
     decrementHintCount();
     const solvedNum = hintBoard.steps[0].updates[0].filledValue;
     const { row, col } = getCellFromIndex(hintBoard.steps[0].updates[0].index);

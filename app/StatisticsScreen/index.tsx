@@ -59,8 +59,6 @@ const StatisticsScreen = () => {
       loadedLogs,
       filter,
     );
-    console.log(loadedStats);
-
     setStats(loadedStats);
   }
 

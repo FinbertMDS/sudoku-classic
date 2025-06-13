@@ -84,7 +84,7 @@ export default function AboutGame() {
             theme={theme}
             label={t('licenses')}
             onPress={() =>
-              navigation.navigate(SCREENS.SK_WEBVIEW, {
+              navigation.navigate(SCREENS.SK_WEBVIEW as any, {
                 title: 'licenses',
                 type: 'licenses',
                 needPadding: false,

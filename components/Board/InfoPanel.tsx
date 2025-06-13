@@ -3,7 +3,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Device from 'expo-device';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useGameTimer } from '../../hooks/useGameTimer';
 import { AppSettings } from '../../types';
@@ -137,12 +143,16 @@ const styles = StyleSheet.create({
     minWidth: 70,
   },
   title: {
-    fontSize: 14,
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 20 : 14,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 20
+        : 14,
   },
   value: {
-    fontSize: 16,
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 22 : 16,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 22
+        : 16,
     fontWeight: 'bold' as const,
   },
 });

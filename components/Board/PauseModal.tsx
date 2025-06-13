@@ -1,7 +1,13 @@
 import * as Device from 'expo-device';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import { useTheme } from '../../context/ThemeContext';
 import { AppSettings, Level } from '../../types';
@@ -90,13 +96,19 @@ const PauseModal = ({
 
 const styles = StyleSheet.create({
   modalBox: {
-    padding: Device.deviceType === Device.DeviceType.TABLET ? 40 : 20,
+    padding:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 40
+        : 20,
     borderRadius: 13,
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalHeader: {
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 28 : 22,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 28
+        : 22,
     fontWeight: 'bold',
     marginBottom: 20,
   },
@@ -110,11 +122,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoTitle: {
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 22 : 14,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 22
+        : 14,
     color: '#888',
   },
   infoValue: {
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 24 : 16,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 24
+        : 16,
     fontWeight: 'bold',
   },
   resumeButton: {
@@ -123,7 +141,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   resumeButtonText: {
-    fontSize: Device.deviceType === Device.DeviceType.TABLET ? 24 : 16,
+    fontSize:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 24
+        : 16,
     fontWeight: 'bold',
   },
 });

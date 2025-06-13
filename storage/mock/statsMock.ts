@@ -110,7 +110,6 @@ const saveMockGameLogs = async () => {
   if (oldLogs.length > 0) {
     return;
   }
-  console.log('mock game logs', gameLog);
   await GameStatsManager.saveLogs(gameLog);
   const affectedRanges: TimeRange[] = ['today', 'week', 'month', 'year', 'all'];
 

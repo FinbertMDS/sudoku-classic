@@ -1,6 +1,13 @@
 import * as Device from 'expo-device';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
 import { useTheme } from '../../context/ThemeContext';
@@ -9,7 +16,7 @@ import { CHART_WIDTH } from '../../utils/constants';
 import { formatShortChartDate } from '../../utils/dateUtil';
 
 let screenWidth = Dimensions.get('window').width;
-if (Device.deviceType === Device.DeviceType.TABLET) {
+if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
   screenWidth = Math.min(screenWidth, Dimensions.get('window').height);
 }
 

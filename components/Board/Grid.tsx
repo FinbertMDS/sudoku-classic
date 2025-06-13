@@ -2,6 +2,7 @@ import * as Device from 'expo-device';
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Dimensions,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -50,7 +51,8 @@ const Grid = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
 
-  const isTablet = Device.deviceType === Device.DeviceType.TABLET;
+  const isTablet =
+    Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET;
 
   const { height } = Dimensions.get('window');
   const cellSize = isTablet && height > 950 ? 60 : 40;
