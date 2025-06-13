@@ -82,3 +82,5 @@ export const UNSPLASH_KEYWORDS_DARK = [
   'moody blurred background',
   'dark blurry night',
 ];
+
+export const SHOW_UNSPLASH_IMAGE_INFO = false;

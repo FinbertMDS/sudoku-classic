@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ImageBackground,
+  Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -27,13 +28,13 @@ import { useDailyBackground } from '../../hooks/useDailyBackground';
 import { useDailyQuote } from '../../hooks/useDailyQuote';
 import { BoardService } from '../../services/BoardService';
 import { Level } from '../../types/index';
-import { SCREENS } from '../../utils/constants';
+import { SCREENS, SHOW_UNSPLASH_IMAGE_INFO } from '../../utils/constants';
 
 const MainScreen = () => {
   const { mode, theme } = useTheme();
   const { t } = useTranslation();
   const [hasSavedGame, setHasSavedGame] = useState(false);
-  const { backgroundUrl, loadBackgrounds } = useDailyBackground(mode);
+  const { background, loadBackgrounds } = useDailyBackground(mode);
   const { quote, loadQuote } = useDailyQuote();
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
@@ -86,13 +87,38 @@ const MainScreen = () => {
       edges={['top']}
       style={[styles.container, { backgroundColor: theme.background }]}
     >
-      {backgroundUrl && (
+      {background && background.url && (
         <ImageBackground
-          source={{ uri: backgroundUrl }}
+          source={{ uri: background.url }}
           style={[StyleSheet.absoluteFillObject, { top: insets.top }]}
           resizeMode="cover"
           blurRadius={2}
-        />
+        >
+          {SHOW_UNSPLASH_IMAGE_INFO && (
+            <View style={styles.attributionContainer}>
+              <Text style={styles.attributionText}>
+                Photo by{' '}
+                <Text
+                  style={styles.linkText}
+                  onPress={() =>
+                    Linking.openURL(
+                      background.photographerLink ?? 'https://unsplash.com',
+                    )
+                  }
+                >
+                  {background.photographerName}
+                </Text>{' '}
+                on{' '}
+                <Text
+                  style={styles.linkText}
+                  onPress={() => Linking.openURL('https://unsplash.com')}
+                >
+                  Unsplash
+                </Text>
+              </Text>
+            </View>
+          )}
+        </ImageBackground>
       )}
       <Header
         title={t('appName')}
@@ -151,6 +177,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  attributionContainer: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    right: 10,
+    padding: 6,
+    borderRadius: 6,
+  },
+  attributionText: {
+    color: 'white',
+    fontSize: 12,
+  },
+  linkText: {
+    textDecorationLine: 'underline',
+    color: '#ccc',
+  },
+
   middle: {
     flex: 1,
     justifyContent: 'center',
