@@ -13,6 +13,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    bundleIdentifier: 'com.finbertngo.sudokuclassic',
   },
   android: {
     adaptiveIcon: {
@@ -45,6 +46,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         androidAppId: process.env.AD_APP_ID_ANDROID,
       },
     ],
+    'expo-localization',
   ],
   experiments: {
     typedRoutes: true,

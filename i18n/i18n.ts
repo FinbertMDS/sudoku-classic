@@ -1,8 +1,8 @@
 // i18n.ts
 
+import * as Localization from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as RNLocalize from 'react-native-localize';
 import { LANGUAGES } from '../utils/constants';
 
 import { appStorage } from '../storage';
@@ -18,8 +18,11 @@ const resources = {
 
 const fallback = { languageTag: LANGUAGES[0].code };
 const getBestLanguage = () => {
-  const bestLang = RNLocalize.findBestLanguageTag(LANGUAGES.map((l) => l.code));
-  return bestLang?.languageTag || fallback.languageTag;
+  const deviceLocale = Localization.locale; // ví dụ: 'en-US', 'vi-VN'
+  const deviceLanguage = deviceLocale.split('-')[0]; // lấy 'en', 'vi', 'ja'
+
+  const matched = LANGUAGES.find((l) => l.code === deviceLanguage);
+  return matched?.code || fallback.languageTag;
 };
 
 i18n.use(initReactI18next).init({

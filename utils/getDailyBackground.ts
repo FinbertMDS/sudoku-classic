@@ -25,9 +25,6 @@ export const getDailyBackgrounds = async (): Promise<DailyBackgrounds> => {
     ),
   ]);
 
-  console.log(lightData);
-  console.log(darkData);
-
   if (lightData && darkData) {
     const result = { date: today, light: lightData, dark: darkData };
     await BackgroundService.save(result);
