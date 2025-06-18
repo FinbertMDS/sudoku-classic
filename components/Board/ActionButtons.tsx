@@ -10,8 +10,8 @@ import {
   View,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
-import { IS_UI_TESTING } from '../../env';
 import { ActionButtonProps } from '../../types/components';
+import { IS_UI_TESTING } from '../../utils/constants';
 
 type ActionButtonsProps = {
   noteMode: boolean;

@@ -20,7 +20,6 @@ import Header from '../../components/commons/Header';
 import NewGameMenu from '../../components/Main/NewGameMenu';
 import { QuoteBox } from '../../components/Main/QuoteBox';
 import { useTheme } from '../../context/ThemeContext';
-import { IS_UI_TESTING } from '../../env';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
 import { InitGameCoreEvent } from '../../events/types';
@@ -28,7 +27,11 @@ import { useDailyBackground } from '../../hooks/useDailyBackground';
 import { useDailyQuote } from '../../hooks/useDailyQuote';
 import { BoardService } from '../../services/BoardService';
 import { Level } from '../../types/index';
-import { SCREENS, SHOW_UNSPLASH_IMAGE_INFO } from '../../utils/constants';
+import {
+  IS_UI_TESTING,
+  SCREENS,
+  SHOW_UNSPLASH_IMAGE_INFO,
+} from '../../utils/constants';
 
 const MainScreen = () => {
   const { mode, theme } = useTheme();
@@ -96,13 +99,14 @@ const MainScreen = () => {
         >
           {SHOW_UNSPLASH_IMAGE_INFO && (
             <View style={styles.attributionContainer}>
-              <Text style={styles.attributionText}>
+              <Text style={[styles.attributionText, { color: theme.text }]}>
                 Photo by{' '}
                 <Text
-                  style={styles.linkText}
+                  style={[styles.linkText, { color: theme.secondary }]}
                   onPress={() =>
                     Linking.openURL(
-                      background.photographerLink ?? 'https://unsplash.com',
+                      (background.photographerLink ?? 'https://unsplash.com/') +
+                        '?utm_source=sudoku-classic&utm_medium=referral',
                     )
                   }
                 >
@@ -110,8 +114,13 @@ const MainScreen = () => {
                 </Text>{' '}
                 on{' '}
                 <Text
-                  style={styles.linkText}
-                  onPress={() => Linking.openURL('https://unsplash.com')}
+                  style={[styles.linkText, { color: theme.secondary }]}
+                  onPress={() =>
+                    Linking.openURL(
+                      'https://unsplash.com/' +
+                        '?utm_source=sudoku-classic&utm_medium=referral',
+                    )
+                  }
                 >
                   Unsplash
                 </Text>
@@ -152,7 +161,7 @@ const MainScreen = () => {
 
         <NewGameMenu handleNewGame={handleNewGame} />
 
-        {__DEV__ && IS_UI_TESTING !== 'true' && (
+        {__DEV__ && !IS_UI_TESTING && (
           <TouchableOpacity
             style={[
               styles.button,
@@ -186,12 +195,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   attributionText: {
-    color: 'white',
     fontSize: 12,
   },
   linkText: {
     textDecorationLine: 'underline',
-    color: '#ccc',
   },
 
   middle: {

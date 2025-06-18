@@ -47,6 +47,22 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     'expo-localization',
+    [
+      'expo-build-properties',
+      {
+        android: {
+          minSdkVersion: 24,
+          compileSdkVersion: 35,
+          targetSdkVersion: 35,
+          buildToolsVersion: '35.0.0',
+          usesCleartextTraffic: true,
+        },
+        ios: {
+          useFrameworks: 'static',
+          deploymentTarget: '15.1',
+        },
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,

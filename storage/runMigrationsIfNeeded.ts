@@ -3,7 +3,7 @@ import { appStorage } from './appStorage';
 export const CURRENT_MIGRATION_VERSION = 0;
 
 export async function runMigrationsIfNeeded() {
-  // if (IS_UI_TESTING === 'true') {
+  // if (IS_UI_TESTING) {
   //   console.log('[MIGRATION] Mock game logs for UI testing');
   //   statsMock.saveMockGameLogs();
   // }

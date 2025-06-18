@@ -1,5 +1,7 @@
 import { AppSettings, Level } from '../types';
 
+export * from './buildConstants';
+
 export const LEVELS = ['easy', 'medium', 'hard', 'expert', 'master'] as Level[];
 
 export const SCREENS = {
@@ -82,5 +84,3 @@ export const UNSPLASH_KEYWORDS_DARK = [
   'moody blurred background',
   'dark blurry night',
 ];
-
-export const SHOW_UNSPLASH_IMAGE_INFO = false;

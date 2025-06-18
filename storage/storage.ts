@@ -1,5 +1,5 @@
-import { Storage } from 'expo-storage';
 import { Platform } from 'react-native';
+import { storage } from './mmkv';
 
 const isWeb = Platform.OS === 'web';
 
@@ -10,7 +10,7 @@ export const saveItem = async (key: string, value: any) => {
     if (isWeb && localStorageAvailable) {
       localStorage.setItem(key, value);
     } else {
-      await Storage.setItem({ key, value });
+      storage.set(key, value);
     }
   } catch (error) {
     console.error(`Error saving ${key}`, error);
@@ -19,24 +19,42 @@ export const saveItem = async (key: string, value: any) => {
 
 export const getItem = async <T>(key: string): Promise<T | null> => {
   try {
-    let value;
     if (isWeb && localStorageAvailable) {
-      value = localStorage.getItem(key);
-    } else {
-      value = await Storage.getItem({ key });
-    }
-    // If T is string type, return value directly
-    if (value) {
+      const raw = localStorage.getItem(key);
+      if (raw == null) return null;
+
+      // boolean?
+      if (raw === 'true' || raw === 'false') return (raw === 'true') as T;
+
+      // number?
+      const num = Number(raw);
+      if (!isNaN(num) && raw.trim() !== '') return num as T;
+
+      // JSON object?
       try {
-        // Attempt to parse as JSON first
-        const parsed = JSON.parse(value);
-        return parsed as T;
+        return JSON.parse(raw) as T;
       } catch {
-        // If parsing fails, return as string type
-        return value as T;
+        return raw as T; // plain string
       }
     }
-    return null;
+    const strVal = storage.getString(key);
+    if (strVal == null) return null;
+
+    try {
+      return JSON.parse(strVal) as T;
+    } catch {
+      // Nếu không phải object thì kiểm tra kiểu nguyên thủy
+      if (strVal === 'true' || strVal === 'false') {
+        return (strVal === 'true') as T;
+      }
+
+      const num = Number(strVal);
+      if (!isNaN(num) && strVal.trim() !== '') {
+        return num as T;
+      }
+
+      return strVal as T; // fallback string
+    }
   } catch (error) {
     console.error(`Error reading ${key}`, error);
     return null;
@@ -48,7 +66,7 @@ export const deleteItem = async (key: string) => {
     if (isWeb && localStorageAvailable) {
       localStorage.removeItem(key);
     } else {
-      await Storage.removeItem({ key });
+      storage.delete(key);
     }
   } catch (error) {
     console.error(`Error deleting ${key}`, error);

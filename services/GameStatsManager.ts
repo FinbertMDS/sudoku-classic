@@ -134,6 +134,7 @@ export const GameStatsManager = {
   async saveLog(log: GameLogEntry, override: boolean = true) {
     try {
       const existing = await this.getLogs();
+      console.log('saveLog', existing);
       if (override) {
         const index = existing.findIndex((_log) => _log.id === log.id);
         if (index !== -1) {
