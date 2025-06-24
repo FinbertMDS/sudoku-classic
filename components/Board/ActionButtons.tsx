@@ -87,7 +87,7 @@ const ActionButtons = ({
         onPress: handleHint,
       },
     ];
-    if (__DEV__ && IS_UI_TESTING !== 'true') {
+    if (__DEV__ && !IS_UI_TESTING) {
       allButtons.push({
         id: 'solve',
         label: t('solve'),
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     marginTop:
       Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
         ? 10
-        : 30,
+        : 20,
   },
   actionButton: {
     alignItems: 'center' as const,

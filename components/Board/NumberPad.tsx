@@ -87,7 +87,11 @@ const styles = StyleSheet.create({
     marginTop:
       Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
         ? 10
-        : 30,
+        : 20,
+    paddingHorizontal:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 0
+        : 32,
   },
   button: {
     borderRadius: 8,

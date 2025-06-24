@@ -73,12 +73,9 @@ const OptionsScreen = () => {
   };
 
   const menuItems: OptionMenuItem[] = [
+    { icon: 'account-group', label: t('players'), screen: SCREENS.PLAYERS },
     { icon: 'cog', label: t('settings'), onPress: handleGoToSettings },
-    {
-      icon: 'school',
-      label: t('howToPlay'),
-      screen: SCREENS.HOW_TO_PLAY as any,
-    },
+    { icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY },
     { icon: 'star-outline', label: t('rateApp'), onPress: handleRateApp },
     { icon: 'share-variant', label: t('shareApp'), onPress: handleShareApp },
     {

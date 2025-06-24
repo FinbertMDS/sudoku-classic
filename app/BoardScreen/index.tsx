@@ -10,8 +10,11 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import { hint } from 'sudoku-core';
 import ActionButtons from '../../components/Board/ActionButtons';
 import { BannerAdSafe } from '../../components/Board/BannerAdSafe';
@@ -28,8 +31,8 @@ import eventBus from '../../events/eventBus';
 import { GameEndedCoreEvent } from '../../events/types';
 import { useAppPause } from '../../hooks/useAppPause';
 import { useHintCounter } from '../../hooks/useHintCounter';
+import { useInterstitialAdSafe } from '../../hooks/useInterstitialAdSafe';
 import { useMistakeCounter } from '../../hooks/useMistakeCounter';
-import { useRewardedAdSafe } from '../../hooks/useRewardedAdSafe';
 import { BoardService } from '../../services/BoardService';
 import { SettingsService } from '../../services/SettingsService';
 import {
@@ -181,7 +184,7 @@ const BoardScreen = () => {
     isClosed: isClosedRewarded,
     load: loadRewarded,
     show: showRewarded,
-  } = useRewardedAdSafe(getAdUnit('rewarded'));
+  } = useInterstitialAdSafe(getAdUnit('interstitial'));
   useEffect(() => {
     loadRewarded();
   }, [loadRewarded]);
@@ -550,6 +553,9 @@ const BoardScreen = () => {
     }, []),
   );
 
+  const insets = useSafeAreaInsets();
+  const bannerHeight = 70;
+
   useEffect(() => {
     if (limitMistakeReached && !isLoadedRewarded && !isClosedRewarded) {
       alert(
@@ -592,6 +598,17 @@ const BoardScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limitHintReached, isLoadedRewarded]);
 
+  if (isLoading) {
+    return (
+      <SafeAreaView
+        edges={['top']}
+        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
+      >
+        <ActivityIndicator size="large" color={theme.primary} />
+      </SafeAreaView>
+    );
+  }
+
   if (showHowToPlay) {
     return (
       <SafeAreaView
@@ -605,17 +622,6 @@ const BoardScreen = () => {
           showTheme={false}
         />
         <HowToPlay onClose={handleAfterCheckHasPlayed} />
-      </SafeAreaView>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <SafeAreaView
-        edges={['top']}
-        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
-      >
-        <ActivityIndicator size="large" color={theme.primary} />
       </SafeAreaView>
     );
   }
@@ -634,39 +640,49 @@ const BoardScreen = () => {
           onBack={handleBackPress}
           onSettings={handleGoToSettings}
         />
-        <InfoPanel
-          isPlaying={isPlaying}
-          level={level}
-          mistakes={mistakes}
-          score={score}
-          secondsRef={secondsRef}
-          isPaused={isPaused}
-          settings={settings}
-          onPause={handlePause}
-          onLimitTimeReached={handleLimitTimeReached}
-        />
-        <Grid
-          board={board}
-          notes={notes}
-          solvedBoard={solvedBoard}
-          selectedCell={selectedCell}
-          settings={settings}
-          onPress={handleCellPress}
-        />
-        <ActionButtons
-          noteMode={noteMode}
-          hintCount={hintCount}
-          onNote={setNoteMode}
-          onUndo={handleUndo}
-          onErase={handleErase}
-          onHint={handleHint}
-          onSolve={handleSolve}
-        />
-        <NumberPad
-          board={board}
-          settings={settings}
-          onSelectNumber={handleNumberPress}
-        />
+        <View
+          style={[
+            styles.contentContainerNoAd,
+            {
+              paddingTop: insets.top,
+              paddingBottom: insets.bottom + bannerHeight,
+            },
+          ]}
+        >
+          <InfoPanel
+            isPlaying={isPlaying}
+            level={level}
+            mistakes={mistakes}
+            score={score}
+            secondsRef={secondsRef}
+            isPaused={isPaused}
+            settings={settings}
+            onPause={handlePause}
+            onLimitTimeReached={handleLimitTimeReached}
+          />
+          <Grid
+            board={board}
+            notes={notes}
+            solvedBoard={solvedBoard}
+            selectedCell={selectedCell}
+            settings={settings}
+            onPress={handleCellPress}
+          />
+          <ActionButtons
+            noteMode={noteMode}
+            hintCount={hintCount}
+            onNote={setNoteMode}
+            onUndo={handleUndo}
+            onErase={handleErase}
+            onHint={handleHint}
+            onSolve={handleSolve}
+          />
+          <NumberPad
+            board={board}
+            settings={settings}
+            onSelectNumber={handleNumberPress}
+          />
+        </View>
         <BannerAdSafe />
       </SafeAreaView>
       {showPauseModal && (
@@ -684,6 +700,7 @@ const BoardScreen = () => {
           message={t('mistakeWarning.message', { max: MAX_MISTAKES })}
           cancelText={t('ad.cancel')}
           confirmText={t('ad.confirm')}
+          disableBackdropClose={true}
           onCancel={() => {
             handleLimitMistakeReached();
           }}
@@ -698,6 +715,7 @@ const BoardScreen = () => {
           message={t('hintWarning.message', { max: MAX_HINTS })}
           cancelText={t('ad.cancel')}
           confirmText={t('ad.confirm')}
+          disableBackdropClose={true}
           onCancel={() => {
             handleLimitHintReached(true);
           }}
@@ -713,7 +731,11 @@ const BoardScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
+  },
+  contentContainerNoAd: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingContainer: {
     flex: 1,

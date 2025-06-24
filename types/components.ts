@@ -10,6 +10,7 @@ export type RootStackParamList = {
   AboutGame: undefined;
   Licenses: undefined;
   SkWebView: SkWebViewParamProps;
+  Players: undefined;
 };
 
 export type BoardScreenRouteProp = RouteProp<RootStackParamList, 'Board'>;

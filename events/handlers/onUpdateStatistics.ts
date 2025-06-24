@@ -1,4 +1,5 @@
 import { GameStatsManager } from '../../services/GameStatsManager';
+import { playerProfileStorage } from '../../storage';
 import { StatisticsUpdatedCoreEvent } from '../types';
 
 export const handleUpdateStatistics = async (
@@ -13,6 +14,10 @@ export const handleUpdateStatistics = async (
   //   'all',
   // ]);
   if (payload.logs.length > 0) {
-    await GameStatsManager.updateStatsWithCache(allLogs, payload.logs);
+    await GameStatsManager.updateStatsWithCache(
+      allLogs,
+      payload.logs,
+      playerProfileStorage.getCurrentPlayerId(),
+    );
   }
 };

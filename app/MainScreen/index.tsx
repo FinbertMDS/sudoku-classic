@@ -1,6 +1,7 @@
 // src/screens/MainScreen/index.tsx
 import { useFocusEffect } from '@react-navigation/native';
-import { router } from 'expo-router';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { router, useNavigation } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -25,12 +26,16 @@ import eventBus from '../../events/eventBus';
 import { InitGameCoreEvent } from '../../events/types';
 import { useDailyBackground } from '../../hooks/useDailyBackground';
 import { useDailyQuote } from '../../hooks/useDailyQuote';
+import { usePlayerProfile } from '../../hooks/usePlayerProfile';
 import { BoardService } from '../../services/BoardService';
-import { Level } from '../../types/index';
+import { PlayerService } from '../../services/PlayerService';
+import { Level, RootStackParamList } from '../../types/index';
 import {
   IS_UI_TESTING,
   SCREENS,
   SHOW_UNSPLASH_IMAGE_INFO,
+  UNSPLASH_URL,
+  UNSPLASH_UTM,
 } from '../../utils/constants';
 
 const MainScreen = () => {
@@ -39,10 +44,14 @@ const MainScreen = () => {
   const [hasSavedGame, setHasSavedGame] = useState(false);
   const { background, loadBackgrounds } = useDailyBackground(mode);
   const { quote, loadQuote } = useDailyQuote();
+  const { player, reloadPlayer } = usePlayerProfile();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
     useCallback(() => {
+      reloadPlayer();
       checkSavedGame();
       loadBackgrounds();
       loadQuote();
@@ -82,6 +91,7 @@ const MainScreen = () => {
   const handleClearStorage = async () => {
     eventBus.emit(CORE_EVENTS.clearStorage);
     BoardService.clear().then(checkSavedGame);
+    PlayerService.clear().then(reloadPlayer);
   };
   const insets = useSafeAreaInsets();
 
@@ -105,8 +115,8 @@ const MainScreen = () => {
                   style={[styles.linkText, { color: theme.secondary }]}
                   onPress={() =>
                     Linking.openURL(
-                      (background.photographerLink ?? 'https://unsplash.com/') +
-                        '?utm_source=sudoku-classic&utm_medium=referral',
+                      (background.photographerLink ?? UNSPLASH_URL) +
+                        UNSPLASH_UTM,
                     )
                   }
                 >
@@ -115,12 +125,7 @@ const MainScreen = () => {
                 on{' '}
                 <Text
                   style={[styles.linkText, { color: theme.secondary }]}
-                  onPress={() =>
-                    Linking.openURL(
-                      'https://unsplash.com/' +
-                        '?utm_source=sudoku-classic&utm_medium=referral',
-                    )
-                  }
+                  onPress={() => Linking.openURL(UNSPLASH_URL + UNSPLASH_UTM)}
                 >
                   Unsplash
                 </Text>
@@ -134,12 +139,23 @@ const MainScreen = () => {
         showBack={false}
         showSettings={true}
         showTheme={true}
+        showSwitchPlayer={true}
+        onSwitchPlayer={() => {
+          navigation.navigate(SCREENS.PLAYERS as any);
+        }}
       />
       {quote && <QuoteBox q={quote.q} a={quote.a} />}
       <View style={styles.middle}>
         <Text style={[styles.title, { color: theme.text }]}>
           {t('welcomeTitle', { appName: t('appName') })}
         </Text>
+        {player && (
+          <Text style={[styles.title, { color: theme.text }]}>
+            {t('welcomeUser', {
+              playerName: player.name,
+            })}
+          </Text>
+        )}
       </View>
       <View style={[styles.footer]}>
         {hasSavedGame && (
@@ -190,17 +206,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 10,
-    right: 10,
-    padding: 6,
-    borderRadius: 6,
   },
   attributionText: {
-    fontSize: 12,
+    fontSize: 14,
   },
   linkText: {
     textDecorationLine: 'underline',
   },
-
   middle: {
     flex: 1,
     justifyContent: 'center',

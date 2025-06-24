@@ -2,9 +2,9 @@
 
 import uuid from 'react-native-uuid';
 import { GameEndedCoreEvent } from '../events/types';
-import { statsStorage } from '../storage';
+import { playerProfileStorage, statsStorage } from '../storage';
 import {
-  GameLogEntry,
+  GameLogEntryV2,
   GameStats,
   GameStatsCache,
   InitGame,
@@ -17,6 +17,12 @@ import { getStatsFromLogs } from '../utils/statsUtil';
 export const GameStatsManager = {
   async shouldUpdateStatsCache(): Promise<boolean> {
     const lastUpdateStr = await statsStorage.getLastStatsCacheUpdate();
+    const lastUpdateUserId = await statsStorage.getLastStatsCacheUpdateUserId();
+    const currentPlayerId = await playerProfileStorage.getCurrentPlayerId();
+
+    if (lastUpdateUserId !== currentPlayerId) {
+      return true;
+    }
 
     const today = getTodayDateString(); // e.g., '2025-04-30'
     const isUpdatedToday = lastUpdateStr === today;
@@ -24,8 +30,9 @@ export const GameStatsManager = {
   },
 
   async getStatsWithCache(
-    logs: GameLogEntry[],
+    logs: GameLogEntryV2[],
     filter: TimeRange,
+    userId: string,
   ): Promise<Record<Level, GameStats>> {
     try {
       const cache: GameStatsCache = await statsStorage.getStatsCache();
@@ -34,7 +41,7 @@ export const GameStatsManager = {
         return cache[filter]!;
       }
 
-      const computedStats = getStatsFromLogs(logs, filter);
+      const computedStats = getStatsFromLogs(logs, filter, userId);
       const updatedCache = { ...cache, [filter]: computedStats };
 
       await statsStorage.saveStatsCache(updatedCache);
@@ -42,13 +49,14 @@ export const GameStatsManager = {
       return computedStats;
     } catch (error) {
       console.warn('Failed to get stats with cache:', error);
-      return getStatsFromLogs(logs, filter); // fallback
+      return getStatsFromLogs(logs, filter, userId); // fallback
     }
   },
 
   async updateStatsWithAllCache(
-    logs: GameLogEntry[],
+    logs: GameLogEntryV2[],
     affectedRanges: TimeRange[],
+    userId: string,
   ): Promise<void> {
     try {
       const cache: GameStatsCache = await statsStorage.getStatsCache();
@@ -56,7 +64,7 @@ export const GameStatsManager = {
       const updatedCache: GameStatsCache = { ...cache };
 
       for (const range of affectedRanges) {
-        const updatedStats = getStatsFromLogs(logs, range);
+        const updatedStats = getStatsFromLogs(logs, range, userId);
         updatedCache[range] = updatedStats;
       }
 
@@ -66,9 +74,17 @@ export const GameStatsManager = {
     }
   },
 
+  async updateStatsDone(): Promise<void> {
+    await statsStorage.setLastStatsCacheUpdate();
+    await statsStorage.setLastStatsCacheUpdateUserId(
+      playerProfileStorage.getCurrentPlayerId(),
+    );
+  },
+
   async updateStatsWithCache(
-    logs: GameLogEntry[],
-    updatedLogs: GameLogEntry[],
+    logs: GameLogEntryV2[],
+    updatedLogs: GameLogEntryV2[],
+    userId: string,
   ): Promise<void> {
     try {
       const cache: GameStatsCache = await statsStorage.getStatsCache();
@@ -95,7 +111,7 @@ export const GameStatsManager = {
       const updatedCache = { ...cache };
 
       for (const range of rangesToUpdate) {
-        updatedCache[range] = getStatsFromLogs(logs, range);
+        updatedCache[range] = getStatsFromLogs(logs, range, userId);
       }
 
       await statsStorage.saveStatsCache(updatedCache);
@@ -104,7 +120,7 @@ export const GameStatsManager = {
     }
   },
 
-  async getLog(id: string): Promise<GameLogEntry | null> {
+  async getLog(id: string): Promise<GameLogEntryV2 | null> {
     try {
       const logs = await this.getLogs();
       const log = logs.find((_log) => _log.id === id);
@@ -117,9 +133,18 @@ export const GameStatsManager = {
     return null;
   },
 
-  async getLogs(): Promise<GameLogEntry[]> {
+  async getLogs(): Promise<GameLogEntryV2[]> {
     try {
       return statsStorage.getGameLogs();
+    } catch (error) {
+      console.error('Error loading logs:', error);
+    }
+    return [];
+  },
+
+  async getLogsByPlayerId(playerId: string): Promise<GameLogEntryV2[]> {
+    try {
+      return await statsStorage.getGameLogsV2ByPlayerId(playerId);
     } catch (error) {
       console.error('Error loading logs:', error);
     }
@@ -131,10 +156,9 @@ export const GameStatsManager = {
    * If override is true, it will replace the existing log with the same ID.
    * If override is false, it will append the new log to the existing logs.
    */
-  async saveLog(log: GameLogEntry, override: boolean = true) {
+  async saveLog(log: GameLogEntryV2, override: boolean = true) {
     try {
       const existing = await this.getLogs();
-      console.log('saveLog', existing);
       if (override) {
         const index = existing.findIndex((_log) => _log.id === log.id);
         if (index !== -1) {
@@ -158,9 +182,9 @@ export const GameStatsManager = {
    * If append is true, it will append the new logs to the existing logs.
    * If append is false, it will replace the existing logs with the new logs.
    */
-  async saveLogs(logs: GameLogEntry[], append: boolean = true) {
+  async saveLogs(logs: GameLogEntryV2[], append: boolean = true) {
     try {
-      let updated: GameLogEntry[] = logs;
+      let updated: GameLogEntryV2[] = logs;
       if (append) {
         const existing = await this.getLogs();
         const sortedLogs = logs.sort(
@@ -176,8 +200,8 @@ export const GameStatsManager = {
     }
   },
 
-  async recordGameStart(initGame: InitGame): Promise<GameLogEntry> {
-    const newEntry: GameLogEntry = {
+  async recordGameStart(initGame: InitGame): Promise<GameLogEntryV2> {
+    const newEntry: GameLogEntryV2 = {
       id: initGame.id,
       level: initGame.savedLevel,
       completed: false,
@@ -186,6 +210,7 @@ export const GameStatsManager = {
       durationSeconds: 0,
       mistakes: 0,
       hintCount: 0,
+      playerId: playerProfileStorage.getCurrentPlayerId(),
     };
 
     await this.saveLog(newEntry, false);
@@ -195,7 +220,7 @@ export const GameStatsManager = {
   async recordGameWin(payload: GameEndedCoreEvent) {
     // 👉 Record daily log
     const oldEntry = await this.getLog(payload.id);
-    let newEntry: GameLogEntry;
+    let newEntry: GameLogEntryV2;
     if (oldEntry) {
       newEntry = {
         ...oldEntry,
@@ -208,6 +233,7 @@ export const GameStatsManager = {
     } else {
       newEntry = {
         id: uuid.v4().toString(),
+        playerId: playerProfileStorage.getCurrentPlayerId(),
         level: payload.level,
         completed: true,
         startTime: new Date().toISOString(),

@@ -13,7 +13,7 @@ export const useDailyQuote = () => {
       }
       setQuote(dailyQuote);
     } catch (error) {
-      console.log('Failed to fetch quote:', error);
+      console.error('Failed to fetch quote:', error);
     }
   };
 

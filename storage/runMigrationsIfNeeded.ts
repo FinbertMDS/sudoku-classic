@@ -8,10 +8,10 @@ export async function runMigrationsIfNeeded() {
   //   statsMock.saveMockGameLogs();
   // }
 
-  const storedVersion = (await appStorage.getMigrationVersion()) ?? 0;
+  const storedVersion = appStorage.getMigrationVersion() ?? 0;
 
   if (storedVersion >= CURRENT_MIGRATION_VERSION) {
-    console.log('[MIGRATION] No migration needed');
+    console.log('[MIGRATION] No migration needed: v =', storedVersion);
     return;
   }
 
@@ -21,7 +21,7 @@ export async function runMigrationsIfNeeded() {
 
   // Các bước migrate theo version
   // if (storedVersion < 1) {
-  // await migrateGameLogs();
+  //   await migrateGameLogsEntryV2();
   // }
 
   // Cập nhật version sau khi migrate xong

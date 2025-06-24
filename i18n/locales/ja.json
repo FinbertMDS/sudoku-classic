@@ -46,13 +46,13 @@
   "backToMain": "メイン画面に戻る",
 
   "welcomeTitle": "🎯\nようこそ、\n{{appName}}へ",
+  "welcomeUser": "👋 {{playerName}}",
   "continueGame": "ゲームを続ける",
   "newGame": "新しいゲーム",
   "clearStorage": "保存したデータを削除",
 
   "levelStats": "レベル統計",
   "chartsStats": "チャート統計",
-  "chartsStats.noticeUtc": "統計はUTC基準。UTC{{utcOffset}}では{{offset}}以降に更新されます。",
 
   "options": "オプション",
   "settings": "設定",
@@ -135,5 +135,22 @@
   "mistakeWarning.messageNotAd": "{{max}}回以上のミスがあります！",
   "hintWarning.title": "ヒントがありません",
   "hintWarning.message": "すべてのヒントを使い切りました。\n広告を見るとヒントがリセットされ、続けてプレイできます。",
-  "hintWarning.messageNotAd": "すべてのヒントを使い切りました。"
+  "hintWarning.messageNotAd": "すべてのヒントを使い切りました。",
+
+  "players": "プレイヤー",
+  "selectPlayerTitle": "プレイヤーを選択",
+  "addPlayerBtn": "プレイヤーを追加",
+  "playerNameLabel": "プレイヤー名",
+  "playerNamePlaceholder": "名前を入力...",
+  "cancelBtn": "キャンセル",
+  "createBtn": "作成",
+  "gamesCount": "🕹️ {{count}} ゲーム",
+  "deletePlayerTitle": "プレイヤーを削除しますか？",
+  "deletePlayerMessage": "このプレイヤーを削除しますか？",
+  "deleteBtn": "削除",
+  "defaultPlayer": "(デフォルト)",
+  "editPlayerTitle": "プレイヤーを編集",
+  "saveBtn": "保存",
+  "cannotDeletePlayerTitle": "プレイヤーを削除できません",
+  "cannotDeletePlayerMessage": "デフォルトのプレイヤーは削除できません"
 }

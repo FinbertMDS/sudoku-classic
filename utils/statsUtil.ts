@@ -3,7 +3,7 @@ import { TFunction } from 'i18next';
 import { ColorSchemeName } from 'react-native';
 import {
   DailyStats,
-  GameLogEntry,
+  GameLogEntryV2,
   GameStats,
   Level,
   TimeRange,
@@ -23,8 +23,9 @@ export function createEmptyStats(): GameStats {
 }
 
 export function getStatsFromLogs(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   filter: TimeRange,
+  userId: string,
 ): Record<Level, GameStats> {
   const statsByLevel: Record<Level, GameStats> = {
     easy: createEmptyStats(),
@@ -34,7 +35,9 @@ export function getStatsFromLogs(
     master: createEmptyStats(),
   };
 
-  const filtered = logs.filter((log) => isInTimeRange(log.endTime, filter));
+  const filtered = logs.filter(
+    (log) => isInTimeRange(log.endTime, filter) && log.playerId === userId,
+  );
   for (const log of filtered) {
     const level = log.level;
     const stats = statsByLevel[level];
@@ -67,7 +70,7 @@ export function getStatsFromLogs(
 }
 
 export function getDailyStatsFromLogs(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   filter: TimeRange,
 ): DailyStats[] {
   if (logs.length === 0) {
@@ -103,7 +106,7 @@ export function getDailyStatsFromLogs(
 }
 
 export function convertToPieData(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   scheme: ColorSchemeName = 'light',
   t: TFunction,
   filter: TimeRange,
@@ -139,7 +142,7 @@ export function convertToPieData(
 }
 
 export function convertToStackedData(
-  logs: GameLogEntry[],
+  logs: GameLogEntryV2[],
   scheme: ColorSchemeName = 'light',
   t: TFunction,
   filter: TimeRange,

@@ -8,142 +8,155 @@ import {
   STORAGE_KEY_QUOTES,
   STORAGE_KEY_SETTINGS,
 } from '../utils/constants';
-import { deleteItem, getItem, saveItem } from './storage';
+import { storage } from './mmkv';
 
 // STORAGE_KEY_LANG_KEY_DEFAULT
 const getLangKeyDefault = async (): Promise<string | null> => {
   try {
-    return await getItem<string>(STORAGE_KEY_LANG_KEY_DEFAULT);
+    return storage.getString(STORAGE_KEY_LANG_KEY_DEFAULT) || null;
   } catch (_) {
     return null;
   }
 };
-const saveLangKeyDefault = async (key: string) => {
+const saveLangKeyDefault = (key: string) => {
   try {
-    await saveItem(STORAGE_KEY_LANG_KEY_DEFAULT, key);
+    storage.set(STORAGE_KEY_LANG_KEY_DEFAULT, key);
   } catch (_) {}
 };
-const clearLangKeyDefault = async () => {
+const clearLangKeyDefault = () => {
   try {
-    await deleteItem(STORAGE_KEY_LANG_KEY_DEFAULT);
+    storage.delete(STORAGE_KEY_LANG_KEY_DEFAULT);
   } catch (_) {}
 };
 
 // STORAGE_KEY_LANG_KEY_PREFERRED
-const getLangKeyPreferred = async (): Promise<string | null> => {
+const getLangKeyPreferred = (): string | null => {
   try {
-    return await getItem<string>(STORAGE_KEY_LANG_KEY_PREFERRED);
+    return storage.getString(STORAGE_KEY_LANG_KEY_PREFERRED) || null;
   } catch (_) {
     return null;
   }
 };
-const saveLangKeyPreferred = async (key: string) => {
+const saveLangKeyPreferred = (key: string) => {
   try {
-    await saveItem(STORAGE_KEY_LANG_KEY_PREFERRED, key);
+    storage.set(STORAGE_KEY_LANG_KEY_PREFERRED, key);
   } catch (_) {}
 };
-const clearLangKeyPreferred = async () => {
+const clearLangKeyPreferred = () => {
   try {
-    await deleteItem(STORAGE_KEY_LANG_KEY_PREFERRED);
+    storage.delete(STORAGE_KEY_LANG_KEY_PREFERRED);
   } catch (_) {}
 };
 
 // STORAGE_KEY_SETTINGS
-const getSettings = async (): Promise<AppSettings | null> => {
+const getSettings = (): AppSettings | null => {
   try {
-    return await getItem<AppSettings>(STORAGE_KEY_SETTINGS);
+    const json = storage.getString(STORAGE_KEY_SETTINGS);
+    return json ? JSON.parse(json) : null;
   } catch (_) {
     return null;
   }
 };
-const setSettings = async (data: AppSettings) => {
+const setSettings = (data: AppSettings) => {
   try {
-    await saveItem(STORAGE_KEY_SETTINGS, JSON.stringify(data));
+    storage.set(STORAGE_KEY_SETTINGS, JSON.stringify(data));
   } catch (_) {}
 };
-const clearSettings = async () => {
+const clearSettings = () => {
   try {
-    await deleteItem(STORAGE_KEY_SETTINGS);
+    storage.delete(STORAGE_KEY_SETTINGS);
   } catch (_) {}
 };
 
 // STORAGE_KEY_BACKGROUNDS
-const getBackgrounds = async (): Promise<DailyBackgrounds | null> => {
+const getBackgrounds = (): DailyBackgrounds | null => {
   try {
-    return await getItem<DailyBackgrounds>(STORAGE_KEY_BACKGROUNDS);
+    const json = storage.getString(STORAGE_KEY_BACKGROUNDS);
+    return json ? JSON.parse(json) : null;
   } catch (_) {
     return null;
   }
 };
-const setBackgrounds = async (data: DailyBackgrounds) => {
+const setBackgrounds = (data: DailyBackgrounds) => {
   try {
-    await saveItem(STORAGE_KEY_BACKGROUNDS, JSON.stringify(data));
+    storage.set(STORAGE_KEY_BACKGROUNDS, JSON.stringify(data));
   } catch (_) {}
 };
-const clearBackgrounds = async () => {
+const clearBackgrounds = () => {
   try {
-    await deleteItem(STORAGE_KEY_BACKGROUNDS);
+    storage.delete(STORAGE_KEY_BACKGROUNDS);
   } catch (_) {}
 };
 
 // STORAGE_KEY_QUOTES
-const getQuotes = async (): Promise<DailyQuotes | null> => {
+const getQuotes = (): DailyQuotes | null => {
   try {
-    return await getItem<DailyQuotes>(STORAGE_KEY_QUOTES);
+    const json = storage.getString(STORAGE_KEY_QUOTES);
+    return json ? JSON.parse(json) : null;
   } catch (_) {
     return null;
   }
 };
-const setQuotes = async (data: DailyQuotes) => {
+const setQuotes = (data: DailyQuotes) => {
   try {
-    await saveItem(STORAGE_KEY_QUOTES, JSON.stringify(data));
+    storage.set(STORAGE_KEY_QUOTES, JSON.stringify(data));
   } catch (_) {}
 };
-const clearQuotes = async () => {
+const clearQuotes = () => {
   try {
-    await deleteItem(STORAGE_KEY_QUOTES);
+    storage.delete(STORAGE_KEY_QUOTES);
   } catch (_) {}
 };
 
 // STORAGE_KEY_HAS_PLAYED
-const getHasPlayed = async (): Promise<boolean | null> => {
+const getHasPlayed = (): boolean => {
   try {
-    return await getItem<boolean>(STORAGE_KEY_HAS_PLAYED);
+    return storage.getBoolean(STORAGE_KEY_HAS_PLAYED) || false;
   } catch (_) {
     return false;
   }
 };
-const setHasPlayed = async (value: boolean) => {
+const setHasPlayed = (value: boolean) => {
   try {
-    await saveItem(STORAGE_KEY_HAS_PLAYED, value);
+    storage.set(STORAGE_KEY_HAS_PLAYED, value);
   } catch (_) {}
 };
-const clearHasPlayed = async () => {
+const clearHasPlayed = () => {
   try {
-    await deleteItem(STORAGE_KEY_HAS_PLAYED);
+    storage.delete(STORAGE_KEY_HAS_PLAYED);
   } catch (_) {}
 };
 
 // STORAGE_KEY_MIGRATION_VERSION
-const getMigrationVersion = async (): Promise<number | null> => {
+const getMigrationVersion = (): number => {
   try {
-    return (await getItem<number>(STORAGE_KEY_MIGRATION_VERSION)) || 0;
+    return storage.getNumber(STORAGE_KEY_MIGRATION_VERSION) || 0;
   } catch (_) {
     return 0;
   }
 };
-const setMigrationVersion = async (version: number) => {
+const setMigrationVersion = (version: number) => {
   try {
-    await saveItem(STORAGE_KEY_MIGRATION_VERSION, version);
+    storage.set(STORAGE_KEY_MIGRATION_VERSION, version);
+  } catch (_) {}
+};
+const clearMigrationVersion = () => {
+  try {
+    storage.delete(STORAGE_KEY_MIGRATION_VERSION);
   } catch (_) {}
 };
 
-const clearAll = async () => {
-  await clearLangKeyDefault();
-  await clearLangKeyPreferred();
-  await clearSettings();
-  await clearQuotes();
-  await clearHasPlayed();
+const clearAll = () => {
+  clearLangKeyDefault();
+  clearLangKeyPreferred();
+  clearSettings();
+  clearHasPlayed();
+};
+
+const clearAllForDev = () => {
+  clearBackgrounds();
+  clearQuotes();
+  clearMigrationVersion();
 };
 
 export const appStorage = {
@@ -168,4 +181,6 @@ export const appStorage = {
   clearAll,
   getMigrationVersion,
   setMigrationVersion,
+  clearMigrationVersion,
+  clearAllForDev,
 };

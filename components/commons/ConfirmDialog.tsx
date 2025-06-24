@@ -8,6 +8,7 @@ type ConfirmDialogProps = {
   message: string;
   cancelText: string;
   confirmText: string;
+  disableBackdropClose?: boolean;
   onCancel: () => void;
   onConfirm: () => void;
 };
@@ -17,6 +18,7 @@ const ConfirmDialog = ({
   message,
   cancelText,
   confirmText,
+  disableBackdropClose = false,
   onCancel,
   onConfirm,
 }: ConfirmDialogProps) => {
@@ -30,8 +32,18 @@ const ConfirmDialog = ({
         animationOut="zoomOut"
         backdropOpacity={0.5}
         useNativeDriver
-        onBackButtonPress={() => onCancel()}
-        onBackdropPress={() => onCancel()}
+        onBackButtonPress={() => {
+          if (disableBackdropClose) {
+            return;
+          }
+          onCancel();
+        }}
+        onBackdropPress={() => {
+          if (disableBackdropClose) {
+            return;
+          }
+          onCancel();
+        }}
         onDismiss={() => onCancel()}
       >
         <View

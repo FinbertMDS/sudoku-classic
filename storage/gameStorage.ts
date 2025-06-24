@@ -1,54 +1,63 @@
+import { storage } from '.';
 import { InitGame, SavedGame } from '../types';
 import {
   STORAGE_KEY_INIT_GAME,
   STORAGE_KEY_SAVED_GAME,
 } from '../utils/constants';
-import { deleteItem, getItem, saveItem } from './storage';
 
-const saveInitGame = async (game: InitGame) => {
+const saveInitGame = (game: InitGame) => {
   try {
-    await saveItem(STORAGE_KEY_INIT_GAME, JSON.stringify(game));
+    storage.set(STORAGE_KEY_INIT_GAME, JSON.stringify(game));
   } catch (_) {}
 };
 
-const getInitGame = async (): Promise<InitGame | null> => {
+const getInitGame = (): InitGame | null => {
   try {
-    return await getItem<InitGame>(STORAGE_KEY_INIT_GAME);
+    const json = storage.getString(STORAGE_KEY_INIT_GAME);
+    return json ? JSON.parse(json) : null;
   } catch (_) {
     return null;
   }
 };
 
-const saveSavedGame = async (game: SavedGame) => {
+const clearInitGame = () => {
   try {
-    await saveItem(STORAGE_KEY_SAVED_GAME, JSON.stringify(game));
+    storage.delete(STORAGE_KEY_INIT_GAME);
   } catch (_) {}
 };
 
-const getSavedGame = async (): Promise<SavedGame | null> => {
+const saveSavedGame = (game: SavedGame) => {
   try {
-    return await getItem<SavedGame>(STORAGE_KEY_SAVED_GAME);
+    storage.set(STORAGE_KEY_SAVED_GAME, JSON.stringify(game));
+  } catch (_) {}
+};
+
+const getSavedGame = (): SavedGame | null => {
+  try {
+    const json = storage.getString(STORAGE_KEY_SAVED_GAME);
+    return json ? JSON.parse(json) : null;
   } catch (_) {
     return null;
   }
 };
 
-const clearGameData = async () => {
+const clearSavedGameData = () => {
   try {
-    await deleteItem(STORAGE_KEY_INIT_GAME);
-    await deleteItem(STORAGE_KEY_SAVED_GAME);
+    storage.delete(STORAGE_KEY_SAVED_GAME);
   } catch (_) {}
 };
 
-const clearSavedGameData = async () => {
+const clearGameData = () => {
   try {
-    await deleteItem(STORAGE_KEY_SAVED_GAME);
+    clearInitGame();
+    clearSavedGameData();
   } catch (_) {}
 };
 
 export const gameStorage = {
   saveInitGame,
   getInitGame,
+  clearInitGame,
   saveSavedGame,
   getSavedGame,
   clearGameData,

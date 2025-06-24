@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
@@ -35,7 +35,7 @@ const TimeFilterDropdown: React.FC<Props> = ({
 
   return (
     <Modal transparent onRequestClose={onClose}>
-      <TouchableWithoutFeedback onPress={onClose}>
+      <Pressable onPress={onClose}>
         <View style={styles.overlay}>
           <View
             style={[styles.container, { backgroundColor: theme.background }]}
@@ -70,7 +70,7 @@ const TimeFilterDropdown: React.FC<Props> = ({
             ))}
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </Modal>
   );
 };
