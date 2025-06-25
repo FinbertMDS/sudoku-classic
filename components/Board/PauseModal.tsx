@@ -1,18 +1,12 @@
 import * as Device from 'expo-device';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
-import { useTheme } from '../../context/ThemeContext';
-import { AppSettings, Level } from '../../types';
-import { MAX_MISTAKES } from '../../utils/constants';
-import { formatTime } from '../../utils/dateUtil';
+import {useTheme} from '../../context/ThemeContext';
+import {AppSettings, Level} from '../../types';
+import {MAX_MISTAKES} from '../../utils/constants';
+import {formatTime} from '../../utils/dateUtil';
 
 type PauseModalProps = {
   level: Level;
@@ -29,8 +23,8 @@ const PauseModal = ({
   settings,
   onResume,
 }: PauseModalProps) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
 
   return (
     <View style={StyleSheet.absoluteFillObject}>
@@ -45,9 +39,9 @@ const PauseModal = ({
         onBackdropPress={() => onResume()}
         onDismiss={() => onResume()}
       >
-        <View style={[styles.modalBox, { backgroundColor: theme.background }]}>
+        <View style={[styles.modalBox, {backgroundColor: theme.background}]}>
           {/* Header */}
-          <Text style={[styles.modalHeader, { color: theme.text }]}>
+          <Text style={[styles.modalHeader, {color: theme.text}]}>
             {t('paused')}
           </Text>
 
@@ -55,14 +49,14 @@ const PauseModal = ({
           <View style={styles.modalBoardInfo}>
             <View style={styles.infoBlock}>
               <Text style={styles.infoTitle}>{t('level')}</Text>
-              <Text style={[styles.infoValue, { color: theme.text }]}>
+              <Text style={[styles.infoValue, {color: theme.text}]}>
                 {t(`level.${level}`)}
               </Text>
             </View>
             {settings.mistakeLimit && (
               <View style={styles.infoBlock}>
                 <Text style={styles.infoTitle}>{t('mistakes')}</Text>
-                <Text style={[styles.infoValue, { color: theme.text }]}>
+                <Text style={[styles.infoValue, {color: theme.text}]}>
                   {mistake}/{MAX_MISTAKES}
                 </Text>
               </View>
@@ -70,7 +64,7 @@ const PauseModal = ({
             {settings.timer && (
               <View style={styles.infoBlock}>
                 <Text style={styles.infoTitle}>{t('time')}</Text>
-                <Text style={[styles.infoValue, { color: theme.text }]}>
+                <Text style={[styles.infoValue, {color: theme.text}]}>
                   {formatTime(time)}
                 </Text>
               </View>
@@ -79,12 +73,10 @@ const PauseModal = ({
 
           {/* Button Tiếp tục */}
           <TouchableOpacity
-            style={[styles.resumeButton, { backgroundColor: theme.primary }]}
+            style={[styles.resumeButton, {backgroundColor: theme.primary}]}
             onPress={onResume}
           >
-            <Text
-              style={[styles.resumeButtonText, { color: theme.buttonText }]}
-            >
+            <Text style={[styles.resumeButtonText, {color: theme.buttonText}]}>
               {t('continue')}
             </Text>
           </TouchableOpacity>

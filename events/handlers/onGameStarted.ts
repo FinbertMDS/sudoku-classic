@@ -1,8 +1,8 @@
-import { CORE_EVENTS } from '..';
-import { BoardService } from '../../services/BoardService';
-import { GameStatsManager } from '../../services/GameStatsManager';
+import {CORE_EVENTS} from '..';
+import {BoardService} from '../../services/BoardService';
+import {GameStatsManager} from '../../services/GameStatsManager';
 import eventBus from '../eventBus';
-import { StatisticsUpdatedCoreEvent } from '../types';
+import {StatisticsUpdatedCoreEvent} from '../types';
 
 export const handleGameStarted = async () => {
   const initGame = await BoardService.loadInit();

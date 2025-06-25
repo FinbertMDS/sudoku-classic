@@ -1,18 +1,18 @@
 // screens/GameHistoryScreen/index.tsx
-import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import GameLogCard from '../../components/GameHistory/GameLogCard';
-import { useTheme } from '../../context/ThemeContext';
-import { useAppPause } from '../../hooks/useAppPause';
-import { GameStatsManager } from '../../services/GameStatsManager';
-import { PlayerService } from '../../services/PlayerService';
-import { GameLogEntryV2 } from '../../types';
+import {useTheme} from '../../context/ThemeContext';
+import {useAppPause} from '../../hooks/useAppPause';
+import {GameStatsManager} from '../../services/GameStatsManager';
+import {PlayerService} from '../../services/PlayerService';
+import {GameLogEntryV2} from '../../types';
 
 const GameHistoryScreen = () => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const [logs, setLogs] = useState<GameLogEntryV2[]>([]);
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
@@ -50,18 +50,18 @@ const GameHistoryScreen = () => {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       {logs.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={[styles.emptyText, { color: theme.secondary }]}>
+          <Text style={[styles.emptyText, {color: theme.secondary}]}>
             {t('noGameHistory')}
           </Text>
         </View>
       ) : (
         <ScrollView
           contentContainerStyle={styles.scrollContent}
-          style={{ backgroundColor: theme.background }}
+          style={{backgroundColor: theme.background}}
         >
           {logs.map((log) => (
             <GameLogCard key={log.id} log={log} />

@@ -1,6 +1,6 @@
-import { BoardService } from '../../services/BoardService';
-import { GameStatsManager } from '../../services/GameStatsManager';
-import { TimeRange } from '../../types';
+import {BoardService} from '../../services/BoardService';
+import {GameStatsManager} from '../../services/GameStatsManager';
+import {TimeRange} from '../../types';
 
 export const handleSwitchPlayer = async (playerId: string) => {
   await BoardService.clear();

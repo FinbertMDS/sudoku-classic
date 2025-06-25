@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
+import {useTheme} from '../../context/ThemeContext';
 
 type PlayerModalProps = {
   onClose: () => void;
@@ -27,8 +27,8 @@ const PlayerModal = ({
   initialName,
 }: PlayerModalProps) => {
   const [name, setName] = useState(initialName ?? '');
-  const { t } = useTranslation();
-  const { theme } = useTheme();
+  const {t} = useTranslation();
+  const {theme} = useTheme();
 
   useEffect(() => {
     setName(initialName ?? '');
@@ -36,14 +36,14 @@ const PlayerModal = ({
 
   const renderModal = () => {
     return (
-      <View style={[styles.modal, { backgroundColor: theme.modalBg }]}>
-        <Text style={[styles.title, { color: theme.text }]}>
+      <View style={[styles.modal, {backgroundColor: theme.modalBg}]}>
+        <Text style={[styles.title, {color: theme.text}]}>
           {mode === 'create' ? t('playerNameLabel') : t('editPlayerTitle')}
         </Text>
         <TextInput
           style={[
             styles.input,
-            { color: theme.secondary, borderColor: theme.inputBorder },
+            {color: theme.secondary, borderColor: theme.inputBorder},
           ]}
           placeholderTextColor={theme.placeholder}
           placeholder={t('playerNamePlaceholder')}
@@ -54,23 +54,23 @@ const PlayerModal = ({
           <TouchableOpacity
             style={[
               styles.cancelButton,
-              { backgroundColor: theme.cancelButtonBg },
+              {backgroundColor: theme.cancelButtonBg},
             ]}
             onPress={onClose}
           >
-            <Text style={[styles.cancelText, { color: theme.text }]}>
+            <Text style={[styles.cancelText, {color: theme.text}]}>
               {t('cancelBtn')}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.createButton, { backgroundColor: theme.buttonBlue }]}
+            style={[styles.createButton, {backgroundColor: theme.buttonBlue}]}
             onPress={() => {
               onClose();
               onSubmit(mode, name);
             }}
           >
-            <Text style={[styles.createText, { color: theme.text }]}>
+            <Text style={[styles.createText, {color: theme.text}]}>
               {mode === 'create' ? t('createBtn') : t('saveBtn')}
             </Text>
           </TouchableOpacity>
@@ -84,7 +84,7 @@ const PlayerModal = ({
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+    <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
       <KeyboardAvoidingView
         style={styles.keyboardAvoiding}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

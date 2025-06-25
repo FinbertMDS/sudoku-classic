@@ -1,9 +1,9 @@
-import { useSafeGoBack } from '@/hooks/useSafeGoBack';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import {useSafeGoBack} from '@/hooks/useSafeGoBack';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {router} from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
 
 type HeaderProps = {
   title?: string;
@@ -32,7 +32,7 @@ const Header = ({
   showSwitchPlayer = false,
   onSwitchPlayer = undefined,
 }: HeaderProps) => {
-  const { theme, toggleTheme, mode } = useTheme();
+  const {theme, toggleTheme, mode} = useTheme();
   const goBack = useSafeGoBack();
 
   const defaultOnSettings = () => {
@@ -71,7 +71,7 @@ const Header = ({
   };
 
   return (
-    <View style={[styles.header, { backgroundColor: theme.background }]}>
+    <View style={[styles.header, {backgroundColor: theme.background}]}>
       {getLeftSideCount() > 0 && (
         <View style={[styles.side, styles.left]}>
           {showBack && (
@@ -100,12 +100,12 @@ const Header = ({
       )}
       {/* nếu số icon ít của bên trái ít hơn bên phải, thì thêm các icon trống để cân bằng giữa 2 bên. số icon trống được thêm bằng số icon bên phải trừ số icon bên trái */}
       {getLeftSideCount() < getRightSideCount() &&
-        Array.from({ length: getRightSideCount() - getLeftSideCount() }).map(
+        Array.from({length: getRightSideCount() - getLeftSideCount()}).map(
           (_, index) => <View key={index} style={styles.iconButton} />,
         )}
       {title && (
         <View style={styles.center}>
-          <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
+          <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
         </View>
       )}
       {/* Right side */}
@@ -144,7 +144,7 @@ const Header = ({
       )}
       {/* nếu số icon ít của bên phải ít hơn bên trái, thì thêm các icon trống để cân bằng giữa 2 bên. số icon trống được thêm bằng số icon bên trái trừ số icon bên phải */}
       {getRightSideCount() < getLeftSideCount() &&
-        Array.from({ length: getLeftSideCount() - getRightSideCount() }).map(
+        Array.from({length: getLeftSideCount() - getRightSideCount()}).map(
           (_, index) => <View key={index} style={styles.side} />,
         )}
     </View>

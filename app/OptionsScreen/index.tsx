@@ -1,10 +1,10 @@
-import { useAlert } from '@/hooks/useAlert';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { router } from 'expo-router';
+import {useAlert} from '@/hooks/useAlert';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {router} from 'expo-router';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   Linking,
   ScrollView,
@@ -13,24 +13,24 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { appConfig } from '../../appConfig';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {appConfig} from '../../appConfig';
 import Header from '../../components/commons/Header';
-import { useTheme } from '../../context/ThemeContext';
-import { OptionMenuItem, RootStackParamList } from '../../types';
-import { SCREENS } from '../../utils/constants';
+import {useTheme} from '../../context/ThemeContext';
+import {OptionMenuItem, RootStackParamList} from '../../types';
+import {SCREENS} from '../../utils/constants';
 
 const OptionsScreen = () => {
-  const { theme } = useTheme();
+  const {theme} = useTheme();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { t } = useTranslation();
-  const { alert } = useAlert();
+  const {t} = useTranslation();
+  const {alert} = useAlert();
 
   const handleGoToSettings = () => {
     router.push({
       pathname: '/SettingsScreen',
-      params: { showAdvancedSettings: '1' },
+      params: {showAdvancedSettings: '1'},
     });
   };
 
@@ -61,7 +61,7 @@ const OptionsScreen = () => {
     } else {
       alert(
         t('mailNotSupported'),
-        t('mailNotSupportedMsg', { mail: appConfig.developerMail }),
+        t('mailNotSupportedMsg', {mail: appConfig.developerMail}),
       );
     }
   };
@@ -73,17 +73,17 @@ const OptionsScreen = () => {
   };
 
   const menuItems: OptionMenuItem[] = [
-    { icon: 'account-group', label: t('players'), screen: SCREENS.PLAYERS },
-    { icon: 'cog', label: t('settings'), onPress: handleGoToSettings },
-    { icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY },
-    { icon: 'star-outline', label: t('rateApp'), onPress: handleRateApp },
-    { icon: 'share-variant', label: t('shareApp'), onPress: handleShareApp },
+    {icon: 'account-group', label: t('players'), screen: SCREENS.PLAYERS},
+    {icon: 'cog', label: t('settings'), onPress: handleGoToSettings},
+    {icon: 'school', label: t('howToPlay'), screen: SCREENS.HOW_TO_PLAY},
+    {icon: 'star-outline', label: t('rateApp'), onPress: handleRateApp},
+    {icon: 'share-variant', label: t('shareApp'), onPress: handleShareApp},
     {
       icon: 'email-outline',
       label: t('sendFeedback'),
       onPress: handleSendFeedback,
     },
-    { icon: 'information', label: t('aboutGame'), screen: SCREENS.ABOUT_GAME },
+    {icon: 'information', label: t('aboutGame'), screen: SCREENS.ABOUT_GAME},
     {
       icon: 'coffee',
       label: t('support'),
@@ -98,7 +98,7 @@ const OptionsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={t('options')}
@@ -109,15 +109,15 @@ const OptionsScreen = () => {
       <ScrollView
         style={[
           styles.contentContainer,
-          { backgroundColor: theme.backgroundSecondary },
+          {backgroundColor: theme.backgroundSecondary},
         ]}
       >
-        {menuItems.map(({ icon, label, screen, onPress }) => (
+        {menuItems.map(({icon, label, screen, onPress}) => (
           <TouchableOpacity
             key={label}
             style={[
               styles.item,
-              { backgroundColor: theme.settingItemBackground },
+              {backgroundColor: theme.settingItemBackground},
             ]}
             onPress={() =>
               screen
@@ -133,7 +133,7 @@ const OptionsScreen = () => {
               color={theme.iconColor}
               style={styles.icon}
             />
-            <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
+            <Text style={[styles.label, {color: theme.text}]}>{label}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>

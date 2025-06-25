@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   Modal,
   StyleSheet,
@@ -8,8 +8,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { TimeFilter } from '../../types';
+import {useTheme} from '../../context/ThemeContext';
+import {TimeFilter} from '../../types';
 
 type TimeFilterDropdownProps = {
   selected: TimeFilter;
@@ -22,24 +22,22 @@ const TimeFilterDropdown = ({
   onSelect,
   onClose,
 }: TimeFilterDropdownProps) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
 
-  const options: { label: string; value: TimeFilter }[] = [
-    { label: t('filter.allTime'), value: 'all' },
-    { label: t('filter.today'), value: 'today' },
-    { label: t('filter.thisWeek'), value: 'week' },
-    { label: t('filter.thisMonth'), value: 'month' },
-    { label: t('filter.thisYear'), value: 'year' },
+  const options: {label: string; value: TimeFilter}[] = [
+    {label: t('filter.allTime'), value: 'all'},
+    {label: t('filter.today'), value: 'today'},
+    {label: t('filter.thisWeek'), value: 'week'},
+    {label: t('filter.thisMonth'), value: 'month'},
+    {label: t('filter.thisYear'), value: 'year'},
   ];
 
   return (
     <Modal transparent onRequestClose={onClose}>
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
-          <View
-            style={[styles.container, { backgroundColor: theme.background }]}
-          >
+          <View style={[styles.container, {backgroundColor: theme.background}]}>
             {options.map((option, index) => (
               <TouchableOpacity
                 key={option.value}
@@ -63,7 +61,7 @@ const TimeFilterDropdown = ({
                   onClose();
                 }}
               >
-                <Text style={[styles.label, { color: theme.text }]}>
+                <Text style={[styles.label, {color: theme.text}]}>
                   {option.label}
                 </Text>
               </TouchableOpacity>

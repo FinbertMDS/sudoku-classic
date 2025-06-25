@@ -1,11 +1,11 @@
 // SettingsService.ts
-import { appStorage } from '../storage';
-import { AppSettings } from '../types';
-import { DEFAULT_SETTINGS } from '../utils/constants';
+import {appStorage} from '../storage';
+import {AppSettings} from '../types';
+import {DEFAULT_SETTINGS} from '../utils/constants';
 
 export const SettingsService = {
   normalizeSettings(settings: AppSettings): AppSettings {
-    const normalized = { ...settings };
+    const normalized = {...settings};
 
     // Nếu mistakeLimit bị tắt ➝ autoCheckMistake cũng phải tắt
     if (!normalized.mistakeLimit) {
@@ -37,7 +37,7 @@ export const SettingsService = {
 
   async update(partial: Partial<AppSettings>): Promise<void> {
     const current = await SettingsService.load();
-    const updated = { ...current, ...partial };
+    const updated = {...current, ...partial};
     await SettingsService.save(updated);
   },
 

@@ -1,8 +1,8 @@
 // QuoteService.ts
 import axios from 'axios';
-import { Platform } from 'react-native';
-import { appStorage } from '../storage';
-import { DailyQuotes } from '../types';
+import {Platform} from 'react-native';
+import {appStorage} from '../storage';
+import {DailyQuotes} from '../types';
 
 export const QuoteService = {
   async load(): Promise<DailyQuotes | null> {

@@ -1,8 +1,8 @@
 // useHintCounter.ts
 
-import { useEffect, useState } from 'react';
-import { BoardService } from '../services/BoardService';
-import { MAX_HINTS } from '../utils/constants';
+import {useEffect, useState} from 'react';
+import {BoardService} from '../services/BoardService';
+import {MAX_HINTS} from '../utils/constants';
 
 interface HintOptions {
   maxHintCount?: number;

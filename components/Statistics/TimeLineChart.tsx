@@ -1,5 +1,5 @@
 import * as Device from 'expo-device';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   Dimensions,
   Platform,
@@ -8,12 +8,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
-import { AbstractChartConfig } from 'react-native-chart-kit/dist/AbstractChart';
-import { useTheme } from '../../context/ThemeContext';
-import { DailyStats } from '../../types';
-import { CHART_WIDTH } from '../../utils/constants';
-import { formatShortChartDate } from '../../utils/dateUtil';
+import {LineChart} from 'react-native-chart-kit';
+import {AbstractChartConfig} from 'react-native-chart-kit/dist/AbstractChart';
+import {useTheme} from '../../context/ThemeContext';
+import {DailyStats} from '../../types';
+import {CHART_WIDTH} from '../../utils/constants';
+import {formatShortChartDate} from '../../utils/dateUtil';
 
 let screenWidth = Dimensions.get('window').width;
 if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
@@ -25,17 +25,17 @@ type TimeLineChartProps = {
   chartConfig: AbstractChartConfig;
 };
 
-const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+const TimeLineChart = ({dailyStats, chartConfig}: TimeLineChartProps) => {
+  const {theme} = useTheme();
+  const {t} = useTranslation();
 
   if (dailyStats.length === 0) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.background }]}>
-        <Text style={[styles.title, { color: theme.text }]}>
+      <View style={[styles.container, {backgroundColor: theme.background}]}>
+        <Text style={[styles.title, {color: theme.text}]}>
           {t('timesPerDay')}
         </Text>
-        <Text style={[{ color: theme.text }]}>{t('noDataAvailable')}</Text>
+        <Text style={[{color: theme.text}]}>{t('noDataAvailable')}</Text>
       </View>
     );
   }
@@ -45,15 +45,15 @@ const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
   const chartWidth = Math.max(dailyStats.length * CHART_WIDTH, screenWidth);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <Text style={[styles.title, {color: theme.text}]}>
         {t('timesPerDay')}
       </Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <LineChart
           data={{
             labels,
-            datasets: [{ data: timeData }],
+            datasets: [{data: timeData}],
           }}
           width={chartWidth}
           height={220}
@@ -64,7 +64,7 @@ const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
           yLabelsOffset={32}
           style={styles.chart}
           bezier
-          renderDotContent={({ x, y, index }) => (
+          renderDotContent={({x, y, index}) => (
             <View
               key={index}
               style={[
@@ -75,7 +75,7 @@ const TimeLineChart = ({ dailyStats, chartConfig }: TimeLineChartProps) => {
                 },
               ]}
             >
-              <Text style={[styles.dotText, { color: theme.secondary }]}>
+              <Text style={[styles.dotText, {color: theme.secondary}]}>
                 {timeData[index]}
               </Text>
             </View>

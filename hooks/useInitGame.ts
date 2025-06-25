@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { BoardService } from '../services/BoardService';
-import { InitGame } from '../types';
+import {useEffect, useState} from 'react';
+import {BoardService} from '../services/BoardService';
+import {InitGame} from '../types';
 
 interface UseInitGameResult {
   solvedBoard: InitGame['solvedBoard'] | null;

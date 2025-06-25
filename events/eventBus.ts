@@ -1,7 +1,7 @@
 type EventCallback = (...args: any[]) => void;
 
 class EventBus {
-  private events: { [key: string]: EventCallback[] } = {};
+  private events: {[key: string]: EventCallback[]} = {};
 
   on(event: string, callback: EventCallback) {
     if (!this.events[event]) {

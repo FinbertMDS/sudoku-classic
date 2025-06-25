@@ -2,7 +2,7 @@
 
 import * as Device from 'expo-device';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
   Dimensions,
@@ -12,11 +12,11 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { GameStats, Level } from '../../types';
-import { getLevelColor } from '../../utils/colorUtil';
-import { LEVELS } from '../../utils/constants';
-import { formatTime } from '../../utils/dateUtil';
+import {useTheme} from '../../context/ThemeContext';
+import {GameStats, Level} from '../../types';
+import {getLevelColor} from '../../utils/colorUtil';
+import {LEVELS} from '../../utils/constants';
+import {formatTime} from '../../utils/dateUtil';
 
 let SCREEN_WIDTH = Dimensions.get('window').width;
 if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
@@ -27,14 +27,14 @@ type LevelStatsProps = {
   stats: Record<Level, GameStats> | null;
 };
 
-const LevelStats = ({ stats }: LevelStatsProps) => {
-  const { mode, theme } = useTheme();
-  const { t } = useTranslation();
+const LevelStats = ({stats}: LevelStatsProps) => {
+  const {mode, theme} = useTheme();
+  const {t} = useTranslation();
 
   if (!stats) {
     return (
       <View
-        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
+        style={[styles.loadingContainer, {backgroundColor: theme.background}]}
       >
         <ActivityIndicator size="large" color={theme.secondary} />
         <Text style={styles.title}>{t('loading')}</Text>
@@ -43,10 +43,8 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
   }
 
   return (
-    <View
-      style={[styles.cardsContainer, { backgroundColor: theme.background }]}
-    >
-      <ScrollView style={{ backgroundColor: theme.background }}>
+    <View style={[styles.cardsContainer, {backgroundColor: theme.background}]}>
+      <ScrollView style={{backgroundColor: theme.background}}>
         {LEVELS.map((level) => (
           <View
             key={level}
@@ -58,38 +56,38 @@ const LevelStats = ({ stats }: LevelStatsProps) => {
               },
             ]}
           >
-            <Text style={[styles.level, { color: theme.text }]}>
+            <Text style={[styles.level, {color: theme.text}]}>
               {t(`level.${level}`)}
             </Text>
             <View style={styles.row}>
-              <Text style={[styles.label, { color: theme.secondary }]}>
+              <Text style={[styles.label, {color: theme.secondary}]}>
                 {t('gamesStarted')}
               </Text>
-              <Text style={[styles.value, { color: theme.text }]}>
+              <Text style={[styles.value, {color: theme.text}]}>
                 {stats[level].gamesStarted}
               </Text>
             </View>
             <View style={styles.row}>
-              <Text style={[styles.label, { color: theme.secondary }]}>
+              <Text style={[styles.label, {color: theme.secondary}]}>
                 {t('gamesCompleted')}
               </Text>
-              <Text style={[styles.value, { color: theme.text }]}>
+              <Text style={[styles.value, {color: theme.text}]}>
                 {stats[level].gamesCompleted}
               </Text>
             </View>
             <View style={styles.row}>
-              <Text style={[styles.label, { color: theme.secondary }]}>
+              <Text style={[styles.label, {color: theme.secondary}]}>
                 {t('bestTime')}
               </Text>
-              <Text style={[styles.value, { color: theme.text }]}>
+              <Text style={[styles.value, {color: theme.text}]}>
                 {formatTime(stats[level].bestTimeSeconds)}
               </Text>
             </View>
             <View style={styles.row}>
-              <Text style={[styles.label, { color: theme.secondary }]}>
+              <Text style={[styles.label, {color: theme.secondary}]}>
                 {t('averageTime')}
               </Text>
-              <Text style={[styles.value, { color: theme.text }]}>
+              <Text style={[styles.value, {color: theme.text}]}>
                 {formatTime(stats[level].averageTimeSeconds)}
               </Text>
             </View>
@@ -127,7 +125,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 6,
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.05,
     shadowRadius: 4,
   },

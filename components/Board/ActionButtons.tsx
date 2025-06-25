@@ -1,17 +1,11 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import * as Device from 'expo-device';
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { ActionButtonProps } from '../../types/components';
-import { IS_UI_TESTING } from '../../utils/constants';
+import React, {useCallback} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
+import {ActionButtonProps} from '../../types/components';
+import {IS_UI_TESTING} from '../../utils/constants';
 
 type ActionButtonsProps = {
   noteMode: boolean;
@@ -32,8 +26,8 @@ const ActionButtons = ({
   onHint,
   onSolve,
 }: ActionButtonsProps) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
 
   const handleNote = useCallback(
     (mode: boolean) => {
@@ -108,7 +102,7 @@ const ActionButtons = ({
   ]);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       {buttons.map((btn, idx) => (
         <TouchableOpacity
           key={idx}
@@ -135,10 +129,8 @@ const ActionButtons = ({
               }
             />
             {btn.showBadge && (
-              <View
-                style={[styles.hintBadge, { backgroundColor: theme.danger }]}
-              >
-                <Text style={[styles.hintBadgeText, { color: theme.onError }]}>
+              <View style={[styles.hintBadge, {backgroundColor: theme.danger}]}>
+                <Text style={[styles.hintBadgeText, {color: theme.onError}]}>
                   {btn.badgeCount}
                 </Text>
               </View>

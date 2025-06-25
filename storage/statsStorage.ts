@@ -1,5 +1,5 @@
-import { storage } from '.';
-import { DailyStats, GameLogEntryV2, GameStatsCache } from '../types';
+import {storage} from '.';
+import {DailyStats, GameLogEntryV2, GameStatsCache} from '../types';
 import {
   STORAGE_KEY_DAILY_STATS,
   STORAGE_KEY_GAME_LOGS,
@@ -7,7 +7,7 @@ import {
   STORAGE_KEY_LAST_STATS_CACHE_UPDATE,
   STORAGE_KEY_LAST_STATS_CACHE_UPDATE_USER_ID,
 } from '../utils/constants';
-import { getTodayDateString } from '../utils/dateUtil';
+import {getTodayDateString} from '../utils/dateUtil';
 
 const saveGameLogs = (logs: GameLogEntryV2[]) => {
   try {

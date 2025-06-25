@@ -1,5 +1,5 @@
 import * as Device from 'expo-device';
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import {
   Dimensions,
   Platform,
@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { useNumberCounts } from '../../hooks/useNumberCounts';
-import { AppSettings, CellValue } from '../../types';
-import { BOARD_SIZE } from '../../utils/constants';
+import {useTheme} from '../../context/ThemeContext';
+import {useNumberCounts} from '../../hooks/useNumberCounts';
+import {AppSettings, CellValue} from '../../types';
+import {BOARD_SIZE} from '../../utils/constants';
 
 type NumberPadProps = {
   board: CellValue[][];
@@ -19,12 +19,12 @@ type NumberPadProps = {
   onSelectNumber: (num: number) => void;
 };
 
-const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
-  const { theme } = useTheme();
+const NumberPad = ({board, settings, onSelectNumber}: NumberPadProps) => {
+  const {theme} = useTheme();
   const counts = useNumberCounts(board, settings);
 
   // Tính toán kích thước button dựa trên width màn hình
-  const { buttonWidth, buttonHeight } = useMemo(() => {
+  const {buttonWidth, buttonHeight} = useMemo(() => {
     const screenWidth = Dimensions.get('window').width;
     const containerPadding =
       Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
@@ -45,12 +45,12 @@ const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
 
   // Tạo mảng số từ 1-9 một lần duy nhất
   const numbers = useMemo(
-    () => Array.from({ length: BOARD_SIZE }, (_, i) => i + 1),
+    () => Array.from({length: BOARD_SIZE}, (_, i) => i + 1),
     [],
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       {numbers.map((num) => (
         <TouchableOpacity
           key={num}
@@ -67,7 +67,7 @@ const NumberPad = ({ board, settings, onSelectNumber }: NumberPadProps) => {
           <Text
             style={[
               // eslint-disable-next-line react-native/no-inline-styles
-              { color: theme.text, fontSize: buttonWidth > 50 ? 48 : 32 },
+              {color: theme.text, fontSize: buttonWidth > 50 ? 48 : 32},
             ]}
           >
             {counts[num] === BOARD_SIZE ? ' ' : num}

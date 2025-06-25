@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   Modal,
   Pressable,
@@ -8,17 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { Level } from '../../types';
-import { LEVELS } from '../../utils/constants';
+import {useTheme} from '../../context/ThemeContext';
+import {Level} from '../../types';
+import {LEVELS} from '../../utils/constants';
 
 interface NewGameMenuProps {
   handleNewGame: (level: Level) => void;
 }
 
-const NewGameMenu: React.FC<NewGameMenuProps> = ({ handleNewGame }) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const [visible, setVisible] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({ handleNewGame }) => {
         accessibilityLabel="NewGameButton"
         onPress={() => setVisible(true)}
       >
-        <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+        <Text style={[styles.buttonText, {color: theme.buttonText}]}>
           {t('newGame')}
         </Text>
       </TouchableOpacity>
@@ -46,7 +46,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({ handleNewGame }) => {
               <View
                 style={[
                   styles.modalContainer,
-                  { backgroundColor: theme.background },
+                  {backgroundColor: theme.background},
                 ]}
               >
                 {LEVELS.map((level, index) => (
@@ -70,7 +70,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({ handleNewGame }) => {
                       handleNewGame(level);
                     }}
                   >
-                    <Text style={[styles.label, { color: theme.text }]}>
+                    <Text style={[styles.label, {color: theme.text}]}>
                       {t(`level.${level}`)}
                     </Text>
                   </TouchableOpacity>

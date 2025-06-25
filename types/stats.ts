@@ -1,4 +1,4 @@
-import { Level } from './game';
+import {Level} from './game';
 
 export interface GameLogEntry {
   id: string; // unique ID (UUID)

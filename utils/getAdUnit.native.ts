@@ -6,8 +6,8 @@ import {
   AD_UNIT_REWARDED_ANDROID,
   AD_UNIT_REWARDED_IOS,
 } from '@/env';
-import { Platform } from 'react-native';
-import { TestIds } from 'react-native-google-mobile-ads';
+import {Platform} from 'react-native';
+import {TestIds} from 'react-native-google-mobile-ads';
 
 type AdType = 'banner' | 'interstitial' | 'rewarded';
 

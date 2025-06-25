@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next';
-import { Alert, AlertButton, AlertOptions, Platform } from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {Alert, AlertButton, AlertOptions, Platform} from 'react-native';
 
 export const useAlert = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const alert = (
     title: string,
@@ -50,5 +50,5 @@ export const useAlert = () => {
     }
   };
 
-  return { alert };
+  return {alert};
 };

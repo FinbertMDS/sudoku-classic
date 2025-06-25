@@ -1,5 +1,5 @@
-import { CORE_EVENTS } from '..';
-import { PlayerService } from '../../services/PlayerService';
+import {CORE_EVENTS} from '..';
+import {PlayerService} from '../../services/PlayerService';
 import eventBus from '../eventBus';
 
 export const handleDefaultPlayerUpdated = async (playerId: string) => {

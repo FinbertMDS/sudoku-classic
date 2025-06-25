@@ -6,7 +6,7 @@ import {
   AD_UNIT_REWARDED_ANDROID,
   AD_UNIT_REWARDED_IOS,
 } from '@/env';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 type AdType = 'banner' | 'interstitial' | 'rewarded';
 

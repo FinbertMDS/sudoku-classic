@@ -1,9 +1,9 @@
 // useGameTimer.ts
 
-import { useEffect, useRef } from 'react';
-import { BoardService } from '../services/BoardService';
-import { MAX_TIMEPLAYED } from '../utils/constants';
-import { useAppPause } from './useAppPause';
+import {useEffect, useRef} from 'react';
+import {BoardService} from '../services/BoardService';
+import {MAX_TIMEPLAYED} from '../utils/constants';
+import {useAppPause} from './useAppPause';
 
 interface TimePlayedOptions {
   maxTimePlayed?: number;

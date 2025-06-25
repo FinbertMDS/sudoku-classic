@@ -1,11 +1,11 @@
 // StatisticsScreen.tsx
 
-import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {Ionicons} from '@expo/vector-icons';
+import {useFocusEffect} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from 'expo-router';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   ScrollView,
   StyleSheet,
@@ -13,16 +13,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
 import ChartsStats from '../../components/Statistics/ChartsStats';
 import LevelStats from '../../components/Statistics/LevelStats';
 import TimeFilterDropdown from '../../components/Statistics/TimeFilterDropdown';
-import { useTheme } from '../../context/ThemeContext';
-import { useAppPause } from '../../hooks/useAppPause';
-import { useEnsureStatsCache } from '../../hooks/useEnsureStatsCache';
-import { GameStatsManager } from '../../services/GameStatsManager';
-import { PlayerService } from '../../services/PlayerService';
+import {useTheme} from '../../context/ThemeContext';
+import {useAppPause} from '../../hooks/useAppPause';
+import {useEnsureStatsCache} from '../../hooks/useEnsureStatsCache';
+import {GameStatsManager} from '../../services/GameStatsManager';
+import {PlayerService} from '../../services/PlayerService';
 import {
   GameLogEntryV2,
   GameStats,
@@ -31,14 +31,14 @@ import {
   StatsTab,
   TimeFilter,
 } from '../../types';
-import { DEFAULT_PLAYER_ID, SCREENS } from '../../utils/constants';
+import {DEFAULT_PLAYER_ID, SCREENS} from '../../utils/constants';
 import GameHistoryScreen from '../GameHistoryScreen';
 
 const StatisticsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const [stats, setStats] = useState<Record<Level, GameStats> | null>(null);
   const [logs, setLogs] = useState<GameLogEntryV2[]>([]);
   const [activeTab, setActiveTab] = useState<'level' | 'chart'>('level');
@@ -64,7 +64,7 @@ const StatisticsScreen = () => {
     },
   ];
 
-  const { updateStatsCache } = useEnsureStatsCache();
+  const {updateStatsCache} = useEnsureStatsCache();
 
   // Sau khi navigation.goBack() sẽ gọi hàm này
   useFocusEffect(
@@ -113,7 +113,7 @@ const StatisticsScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={t('statistics')}

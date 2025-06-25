@@ -1,4 +1,4 @@
-import { AppSettings, DailyBackgrounds, DailyQuotes } from '../types';
+import {AppSettings, DailyBackgrounds, DailyQuotes} from '../types';
 import {
   STORAGE_KEY_BACKGROUNDS,
   STORAGE_KEY_HAS_PLAYED,
@@ -8,7 +8,7 @@ import {
   STORAGE_KEY_QUOTES,
   STORAGE_KEY_SETTINGS,
 } from '../utils/constants';
-import { storage } from './mmkv';
+import {storage} from './mmkv';
 
 // STORAGE_KEY_LANG_KEY_DEFAULT
 const getLangKeyDefault = (): string | null => {

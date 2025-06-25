@@ -1,4 +1,4 @@
-import { Level } from '../types';
+import {Level} from '../types';
 
 export const LEVELS = ['easy', 'medium', 'hard', 'expert', 'master'] as Level[];
 export const SHOW_UNSPLASH_IMAGE_INFO = false;
@@ -9,7 +9,7 @@ export const MAX_MISTAKES = 5;
 export const MAX_HINTS = 5;
 
 export const LANGUAGES = [
-  { code: 'en', label: 'English' },
-  { code: 'vi', label: 'Tiếng Việt' },
-  { code: 'ja', label: '日本語' },
+  {code: 'en', label: 'English'},
+  {code: 'vi', label: 'Tiếng Việt'},
+  {code: 'ja', label: '日本語'},
 ];

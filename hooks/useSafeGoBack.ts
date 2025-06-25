@@ -1,5 +1,5 @@
 // hooks/useSafeGoBack.ts
-import { router, useNavigation } from 'expo-router';
+import {router, useNavigation} from 'expo-router';
 
 export const useSafeGoBack = () => {
   const navigation = useNavigation();

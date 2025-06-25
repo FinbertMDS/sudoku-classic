@@ -1,5 +1,5 @@
 // utils/navigation.ts
-import { router, useNavigation } from 'expo-router';
+import {router, useNavigation} from 'expo-router';
 
 export const safeGoBack = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks

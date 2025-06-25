@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Modal from 'react-native-modal';
-import { useTheme } from '../../context/ThemeContext';
+import {useTheme} from '../../context/ThemeContext';
 
 type ConfirmDialogProps = {
   title: string;
@@ -22,7 +22,7 @@ const ConfirmDialog = ({
   onCancel,
   onConfirm,
 }: ConfirmDialogProps) => {
-  const { theme } = useTheme();
+  const {theme} = useTheme();
 
   return (
     <View style={StyleSheet.absoluteFillObject}>
@@ -47,11 +47,11 @@ const ConfirmDialog = ({
         onDismiss={() => onCancel()}
       >
         <View
-          style={[styles.dialogWrapper, { backgroundColor: theme.background }]}
+          style={[styles.dialogWrapper, {backgroundColor: theme.background}]}
         >
           <View style={styles.dialog}>
-            <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
-            <Text style={[styles.message, { color: theme.secondary }]}>
+            <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
+            <Text style={[styles.message, {color: theme.secondary}]}>
               {message}
             </Text>
           </View>
@@ -61,12 +61,12 @@ const ConfirmDialog = ({
               onPress={() => onCancel()}
               style={[styles.button, styles.borderRight]}
             >
-              <Text style={[styles.cancelText, { color: theme.text }]}>
+              <Text style={[styles.cancelText, {color: theme.text}]}>
                 {cancelText}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => onConfirm()} style={styles.button}>
-              <Text style={[styles.confirmText, { color: theme.danger }]}>
+              <Text style={[styles.confirmText, {color: theme.danger}]}>
                 {confirmText}
               </Text>
             </TouchableOpacity>

@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import { ConfigContext, ExpoConfig } from 'expo/config';
+import {ConfigContext, ExpoConfig} from 'expo/config';
 
-export default ({ config }: ConfigContext): ExpoConfig => ({
+export default ({config}: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'sudoku-classic',
   slug: 'sudoku-classic',

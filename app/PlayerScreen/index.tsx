@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   Alert,
   Modal,
@@ -10,22 +10,22 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
 import PlayerCard from '../../components/Player/PlayerCard';
 import PlayerModal from '../../components/Player/PlayerModal';
-import { useTheme } from '../../context/ThemeContext';
-import { CORE_EVENTS } from '../../events';
+import {useTheme} from '../../context/ThemeContext';
+import {CORE_EVENTS} from '../../events';
 import eventBus from '../../events/eventBus';
-import { usePlayerProfile } from '../../hooks/usePlayerProfile';
-import { PlayerService } from '../../services/PlayerService';
-import { PlayerProfile } from '../../types/player';
-import { DEFAULT_PLAYER_ID } from '../../utils/constants';
-import { createNewPlayer } from '../../utils/playerUtil';
+import {usePlayerProfile} from '../../hooks/usePlayerProfile';
+import {PlayerService} from '../../services/PlayerService';
+import {PlayerProfile} from '../../types/player';
+import {DEFAULT_PLAYER_ID} from '../../utils/constants';
+import {createNewPlayer} from '../../utils/playerUtil';
 
 const PlayerScreen = () => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const {
     allPlayers,
     switchPlayer,
@@ -106,7 +106,7 @@ const PlayerScreen = () => {
       return;
     }
     Alert.alert(t('deletePlayerTitle'), t('deletePlayerMessage'), [
-      { text: t('cancelBtn'), style: 'cancel' },
+      {text: t('cancelBtn'), style: 'cancel'},
       {
         text: t('deleteBtn'),
         style: 'destructive',
@@ -121,7 +121,7 @@ const PlayerScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={t('players')}
@@ -132,7 +132,7 @@ const PlayerScreen = () => {
       <Text
         style={[
           styles.title,
-          { color: theme.text, backgroundColor: theme.backgroundSecondary },
+          {color: theme.text, backgroundColor: theme.backgroundSecondary},
         ]}
       >
         {t('selectPlayerTitle')}
@@ -141,7 +141,7 @@ const PlayerScreen = () => {
         <View
           style={[
             styles.selectedPlayerContainer,
-            { backgroundColor: theme.backgroundSecondary },
+            {backgroundColor: theme.backgroundSecondary},
           ]}
         >
           <PlayerCard
@@ -158,7 +158,7 @@ const PlayerScreen = () => {
       <ScrollView
         style={[
           styles.contentContainer,
-          { backgroundColor: theme.backgroundSecondary },
+          {backgroundColor: theme.backgroundSecondary},
         ]}
       >
         {otherPlayers.map((p) => (
@@ -173,12 +173,12 @@ const PlayerScreen = () => {
           />
         ))}
       </ScrollView>
-      <View style={{ backgroundColor: theme.backgroundSecondary }}>
+      <View style={{backgroundColor: theme.backgroundSecondary}}>
         <TouchableOpacity
           onPress={() => setShowCreateModal(true)}
-          style={[styles.button, { borderColor: theme.buttonBlue }]}
+          style={[styles.button, {borderColor: theme.buttonBlue}]}
         >
-          <Text style={[styles.buttonText, { color: theme.buttonBlue }]}>
+          <Text style={[styles.buttonText, {color: theme.buttonBlue}]}>
             {t('addPlayerBtn')}
           </Text>
         </TouchableOpacity>

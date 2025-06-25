@@ -2,21 +2,21 @@
 
 import * as Localization from 'expo-localization';
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import { LANGUAGES } from '../utils/constants';
+import {initReactI18next} from 'react-i18next';
+import {LANGUAGES} from '../utils/constants';
 
-import { appStorage } from '../storage';
+import {appStorage} from '../storage';
 import en from './locales/en.json';
 import ja from './locales/ja.json';
 import vi from './locales/vi.json';
 
 const resources = {
-  en: { translation: en },
-  vi: { translation: vi },
-  ja: { translation: ja },
+  en: {translation: en},
+  vi: {translation: vi},
+  ja: {translation: ja},
 };
 
-const fallback = { languageTag: LANGUAGES[0].code };
+const fallback = {languageTag: LANGUAGES[0].code};
 const getBestLanguage = () => {
   const deviceLocale = Localization.locale; // ví dụ: 'en-US', 'vi-VN'
   const deviceLanguage = deviceLocale.split('-')[0]; // lấy 'en', 'vi', 'ja'

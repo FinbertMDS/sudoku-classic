@@ -1,12 +1,12 @@
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import {useFonts} from 'expo-font';
+import {Stack} from 'expo-router';
+import {StatusBar} from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { ThemeProvider } from '@/context/ThemeContext';
-import { setupEventListeners } from '@/events/setupEventListeners';
-import { SCREENS } from '@/utils/constants';
-import { useEffect } from 'react';
+import {ThemeProvider} from '@/context/ThemeContext';
+import {setupEventListeners} from '@/events/setupEventListeners';
+import {SCREENS} from '@/utils/constants';
+import {useEffect} from 'react';
 
 export default function RootLayout() {
   useEffect(() => {

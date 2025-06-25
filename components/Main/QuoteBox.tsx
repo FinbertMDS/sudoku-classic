@@ -1,20 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
+import {StyleSheet, Text, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
 
 type QuoteProps = {
   q: string;
   a: string;
 };
 
-export const QuoteBox = ({ q, a }: QuoteProps) => {
-  const { theme } = useTheme();
+export const QuoteBox = ({q, a}: QuoteProps) => {
+  const {theme} = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.quoteText, { color: theme.text }]} selectable={true}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
+      <Text style={[styles.quoteText, {color: theme.text}]} selectable={true}>
         “{q}” —{'\n'}
-        <Text style={[styles.authorText, { color: theme.text }]}>{a}</Text>
+        <Text style={[styles.authorText, {color: theme.text}]}>{a}</Text>
       </Text>
     </View>
   );

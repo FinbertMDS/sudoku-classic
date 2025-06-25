@@ -1,7 +1,7 @@
-import { useSafeGoBack } from '@/hooks/useSafeGoBack';
-import { useLocalSearchParams } from 'expo-router';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {useSafeGoBack} from '@/hooks/useSafeGoBack';
+import {useLocalSearchParams} from 'expo-router';
+import React, {useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   ScrollView,
   StyleSheet,
@@ -10,23 +10,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import ConfirmDialog from '../../components/commons/ConfirmDialog';
 import Header from '../../components/commons/Header';
-import { useTheme } from '../../context/ThemeContext';
-import { CORE_EVENTS } from '../../events';
+import {useTheme} from '../../context/ThemeContext';
+import {CORE_EVENTS} from '../../events';
 import eventBus from '../../events/eventBus';
 import LanguageSwitcher from '../../i18n/LanguageSwitcher';
-import { SettingsService } from '../../services/SettingsService';
-import { AppSettings, SettingsParamProps } from '../../types';
-import { DEFAULT_SETTINGS, MAX_MISTAKES } from '../../utils/constants';
+import {SettingsService} from '../../services/SettingsService';
+import {AppSettings, SettingsParamProps} from '../../types';
+import {DEFAULT_SETTINGS, MAX_MISTAKES} from '../../utils/constants';
 
 const SettingsScreen = () => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const rawParams = useLocalSearchParams();
 
-  const { showAdvancedSettings } = useMemo(() => {
+  const {showAdvancedSettings} = useMemo(() => {
     return {
       showAdvancedSettings:
         typeof rawParams.showAdvancedSettings === 'string'
@@ -81,7 +81,7 @@ const SettingsScreen = () => {
   const descriptions = {
     // statisticsMsg: t('desc.statisticsMsg'),
     // numberFirst: t('desc.numberFirst'),
-    mistakeLimit: t('desc.mistakeLimit', { limit: MAX_MISTAKES }),
+    mistakeLimit: t('desc.mistakeLimit', {limit: MAX_MISTAKES}),
     autoCheckMistake: t('desc.autoCheckMistake'),
     highlightDuplicates: t('desc.highlightDuplicates'),
     highlightAreas: t('desc.highlightAreas'),
@@ -98,7 +98,7 @@ const SettingsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={t('settings')}
@@ -120,7 +120,7 @@ const SettingsScreen = () => {
       <ScrollView
         style={[
           styles.contentContainer,
-          { backgroundColor: theme.backgroundSecondary },
+          {backgroundColor: theme.backgroundSecondary},
         ]}
       >
         {Object.entries(labels).map(([key, label]) => (
@@ -128,13 +128,13 @@ const SettingsScreen = () => {
             key={key}
             style={[
               styles.settingRow,
-              { backgroundColor: theme.settingItemBackground },
+              {backgroundColor: theme.settingItemBackground},
             ]}
           >
             <View style={styles.labelContainer}>
-              <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
+              <Text style={[styles.label, {color: theme.text}]}>{label}</Text>
               {descriptions[key as keyof typeof descriptions] && (
-                <Text style={[styles.desc, { color: theme.secondary }]}>
+                <Text style={[styles.desc, {color: theme.secondary}]}>
                   {descriptions[key as keyof typeof descriptions]}
                 </Text>
               )}
@@ -157,7 +157,7 @@ const SettingsScreen = () => {
             ]}
             onPress={() => setShowConfirmDialog(true)}
           >
-            <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+            <Text style={[styles.buttonText, {color: theme.buttonText}]}>
               {t('clearStorage')}
             </Text>
           </TouchableOpacity>

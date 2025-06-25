@@ -1,6 +1,6 @@
-import { Ionicons } from '@expo/vector-icons';
-import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {Ionicons} from '@expo/vector-icons';
+import React, {useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   Dimensions,
   FlatList,
@@ -11,8 +11,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { getTutorialImage } from '../../utils/tutorialImages';
+import {useTheme} from '../../context/ThemeContext';
+import {getTutorialImage} from '../../utils/tutorialImages';
 
 const SLIDE_WIDTH = Dimensions.get('window').width;
 
@@ -20,12 +20,12 @@ type HowToPlayProps = {
   onClose: () => void;
 };
 
-const HowToPlay = ({ onClose }: HowToPlayProps) => {
-  const { width } = useWindowDimensions();
+const HowToPlay = ({onClose}: HowToPlayProps) => {
+  const {width} = useWindowDimensions();
   const flatListRef = useRef<FlatList>(null);
   const [index, setIndex] = useState(0);
-  const { mode, theme } = useTheme();
-  const { t } = useTranslation();
+  const {mode, theme} = useTheme();
+  const {t} = useTranslation();
 
   const slides = [
     {
@@ -47,7 +47,7 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
 
   const onNext = () => {
     if (index < slides.length - 1) {
-      flatListRef.current?.scrollToIndex({ index: index + 1 });
+      flatListRef.current?.scrollToIndex({index: index + 1});
     } else {
       onClose();
     }
@@ -55,11 +55,11 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
 
   const onBack = () => {
     if (index > 0) {
-      flatListRef.current?.scrollToIndex({ index: index - 1 });
+      flatListRef.current?.scrollToIndex({index: index - 1});
     }
   };
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+  const onViewableItemsChanged = useRef(({viewableItems}: any) => {
     if (viewableItems.length > 0) {
       setIndex(viewableItems[0].index);
     }
@@ -67,7 +67,7 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
 
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.backgroundSecondary }]}
+      style={[styles.container, {backgroundColor: theme.backgroundSecondary}]}
     >
       <FlatList
         ref={flatListRef}
@@ -77,14 +77,14 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}
-        renderItem={({ item }) => (
-          <View style={[styles.slide, { width }]}>
+        renderItem={({item}) => (
+          <View style={[styles.slide, {width}]}>
             <Image
               source={item.image}
               style={styles.image}
               resizeMode="contain"
             />
-            <Text style={[styles.description, { color: theme.secondary }]}>
+            <Text style={[styles.description, {color: theme.secondary}]}>
               {t(item.text)}
             </Text>
           </View>
@@ -115,7 +115,7 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
         {index > 0 ? (
           <TouchableOpacity
             onPress={onBack}
-            style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
+            style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}
           >
             <Ionicons name="arrow-back" size={24} color={theme.iconColor} />
           </TouchableOpacity>
@@ -127,7 +127,7 @@ const HowToPlay = ({ onClose }: HowToPlayProps) => {
           accessibilityLabel="HowToPlayNextButton"
           testID="HowToPlayNextButton"
           onPress={onNext}
-          style={[styles.navBtn, { backgroundColor: theme.buttonBlue }]}
+          style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}
         >
           <Ionicons
             name={index === slides.length - 1 ? 'checkmark' : 'arrow-forward'}

@@ -1,7 +1,7 @@
-import { GameStatsManager } from '../../services/GameStatsManager';
-import { GameLogEntryV2, TimeRange } from '../../types';
-import { DEFAULT_PLAYER_ID } from '../../utils/constants';
-import { statsStorage } from '../statsStorage';
+import {GameStatsManager} from '../../services/GameStatsManager';
+import {GameLogEntryV2, TimeRange} from '../../types';
+import {DEFAULT_PLAYER_ID} from '../../utils/constants';
+import {statsStorage} from '../statsStorage';
 
 const gameLog = [
   {

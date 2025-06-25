@@ -1,9 +1,9 @@
 // SettingsService.ts
-import { UNSPLASH_ACCESS_KEY } from '@/env';
+import {UNSPLASH_ACCESS_KEY} from '@/env';
 import axios from 'axios';
-import { Platform } from 'react-native';
-import { appStorage } from '../storage';
-import { DailyBackgrounds, UnsplashImageData } from '../types';
+import {Platform} from 'react-native';
+import {appStorage} from '../storage';
+import {DailyBackgrounds, UnsplashImageData} from '../types';
 
 export const BackgroundService = {
   async load(): Promise<DailyBackgrounds | null> {

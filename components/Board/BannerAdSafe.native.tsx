@@ -1,18 +1,18 @@
 // BannerAdSafe.tsx
-import { useTheme } from '@/context/ThemeContext';
-import { useRef } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import {useTheme} from '@/context/ThemeContext';
+import {useRef} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {
   BannerAd,
   BannerAdSize,
   useForeground,
 } from 'react-native-google-mobile-ads';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AD_REQUEST_OPTIONS } from '../../hooks/useRewardedAdSafe.native';
-import { getAdUnit } from '../../utils/getAdUnit';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {AD_REQUEST_OPTIONS} from '../../hooks/useRewardedAdSafe.native';
+import {getAdUnit} from '../../utils/getAdUnit';
 
 export const BannerAdSafe = () => {
-  const { theme } = useTheme();
+  const {theme} = useTheme();
   const insets = useSafeAreaInsets();
   const bannerRef = useRef<BannerAd>(null);
   const bannerId = getAdUnit('banner');

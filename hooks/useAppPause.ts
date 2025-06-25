@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import {useEffect, useRef} from 'react';
+import {AppState, AppStateStatus} from 'react-native';
 
 export const useAppPause = (onPause: () => void, onResume: () => void) => {
   const appState = useRef(AppState.currentState);

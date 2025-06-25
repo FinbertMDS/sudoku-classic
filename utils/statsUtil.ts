@@ -1,6 +1,6 @@
-import { format, parseISO } from 'date-fns';
-import { TFunction } from 'i18next';
-import { ColorSchemeName } from 'react-native';
+import {format, parseISO} from 'date-fns';
+import {TFunction} from 'i18next';
+import {ColorSchemeName} from 'react-native';
 import {
   DailyStats,
   GameLogEntryV2,
@@ -8,9 +8,9 @@ import {
   Level,
   TimeRange,
 } from '../types';
-import { getLevelColor, levelColors } from './colorUtil';
-import { DAILY_STATS_DATE_FORMAT, LEVELS } from './constants';
-import { formatShortChartDate, isInTimeRange } from './dateUtil';
+import {getLevelColor, levelColors} from './colorUtil';
+import {DAILY_STATS_DATE_FORMAT, LEVELS} from './constants';
+import {formatShortChartDate, isInTimeRange} from './dateUtil';
 
 export function createEmptyStats(): GameStats {
   return {
@@ -77,7 +77,7 @@ export function getDailyStatsFromLogs(
     return [];
   }
 
-  const map = new Map<string, { games: number; totalTimeSeconds: number }>();
+  const map = new Map<string, {games: number; totalTimeSeconds: number}>();
   const filtered = logs.filter(
     (log) => log.completed && isInTimeRange(log.endTime, filter),
   );
@@ -86,7 +86,7 @@ export function getDailyStatsFromLogs(
     const durationSeconds = log.durationSeconds;
 
     if (!map.has(date)) {
-      map.set(date, { games: 1, totalTimeSeconds: durationSeconds });
+      map.set(date, {games: 1, totalTimeSeconds: durationSeconds});
     } else {
       const current = map.get(date)!;
       current.games += 1;
@@ -98,7 +98,7 @@ export function getDailyStatsFromLogs(
     b.localeCompare(a),
   );
 
-  return sorted.map(([date, { games, totalTimeSeconds }]) => ({
+  return sorted.map(([date, {games, totalTimeSeconds}]) => ({
     date,
     games,
     totalTimeSeconds,

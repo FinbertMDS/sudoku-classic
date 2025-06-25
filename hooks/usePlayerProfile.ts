@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { playerProfileStorage } from '../storage';
-import { PlayerProfile } from '../types/player';
+import {useEffect, useState} from 'react';
+import {playerProfileStorage} from '../storage';
+import {PlayerProfile} from '../types/player';
 
 export const usePlayerProfile = () => {
   const [player, setPlayer] = useState<PlayerProfile | null>(null);
@@ -35,7 +35,7 @@ export const usePlayerProfile = () => {
   const updatePlayerName = (id: string, name: string) => {
     const all = playerProfileStorage.getAllPlayers();
     const updated = all.map((_player) =>
-      _player.id === id ? { ..._player, name } : _player,
+      _player.id === id ? {..._player, name} : _player,
     );
     playerProfileStorage.savePlayers(updated);
     setAllPlayers(updated);

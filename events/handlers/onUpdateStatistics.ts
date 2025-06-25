@@ -1,6 +1,6 @@
-import { GameStatsManager } from '../../services/GameStatsManager';
-import { playerProfileStorage } from '../../storage';
-import { StatisticsUpdatedCoreEvent } from '../types';
+import {GameStatsManager} from '../../services/GameStatsManager';
+import {playerProfileStorage} from '../../storage';
+import {StatisticsUpdatedCoreEvent} from '../types';
 
 export const handleUpdateStatistics = async (
   payload: StatisticsUpdatedCoreEvent,

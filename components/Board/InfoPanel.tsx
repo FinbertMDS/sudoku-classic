@@ -1,20 +1,14 @@
-import { useAlert } from '@/hooks/useAlert';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {useAlert} from '@/hooks/useAlert';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import * as Device from 'expo-device';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { useGameTimer } from '../../hooks/useGameTimer';
-import { AppSettings } from '../../types';
-import { MAX_MISTAKES, MAX_TIMEPLAYED } from '../../utils/constants';
-import { formatTime } from '../../utils/dateUtil';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
+import {useGameTimer} from '../../hooks/useGameTimer';
+import {AppSettings} from '../../types';
+import {MAX_MISTAKES, MAX_TIMEPLAYED} from '../../utils/constants';
+import {formatTime} from '../../utils/dateUtil';
 
 type InfoPanelProps = {
   isPlaying: boolean;
@@ -39,17 +33,17 @@ const InfoPanel = ({
   onPause,
   onLimitTimeReached,
 }: InfoPanelProps) => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
-  const { alert } = useAlert();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
+  const {alert} = useAlert();
 
-  const { getSeconds, stopTimer } = useGameTimer(isPlaying, {
+  const {getSeconds, stopTimer} = useGameTimer(isPlaying, {
     maxTimePlayed: MAX_TIMEPLAYED,
     onLimitReached: async () => {
       stopTimer();
       alert(
         t('timeWarning'),
-        t('playedLimit', { limit: formatTime(MAX_TIMEPLAYED) }),
+        t('playedLimit', {limit: formatTime(MAX_TIMEPLAYED)}),
         [
           {
             text: t('ok'),
@@ -77,20 +71,20 @@ const InfoPanel = ({
   }, []);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.infoBlock}>
-        <Text style={[styles.title, { color: theme.text }]}>{t('level')}</Text>
-        <Text style={[styles.value, { color: theme.text }]}>
+        <Text style={[styles.title, {color: theme.text}]}>{t('level')}</Text>
+        <Text style={[styles.value, {color: theme.text}]}>
           {t(`level.${level}`)}
         </Text>
       </View>
 
       {settings.mistakeLimit && (
         <View style={styles.infoBlock}>
-          <Text style={[styles.title, { color: theme.text }]}>
+          <Text style={[styles.title, {color: theme.text}]}>
             {t('mistakes')}
           </Text>
-          <Text style={[styles.value, { color: theme.text }]}>
+          <Text style={[styles.value, {color: theme.text}]}>
             {mistakes}/{MAX_MISTAKES}
           </Text>
         </View>
@@ -98,15 +92,15 @@ const InfoPanel = ({
 
       {settings.timer && (
         <View style={styles.infoBlock}>
-          <Text style={[styles.title, { color: theme.text }]}>{t('time')}</Text>
-          <Text style={[styles.value, { color: theme.text }]}>
+          <Text style={[styles.title, {color: theme.text}]}>{t('time')}</Text>
+          <Text style={[styles.value, {color: theme.text}]}>
             {tick > 0 ? formatTime(getSeconds()) : '-'}
           </Text>
         </View>
       )}
       <View style={styles.infoBlock}>
-        <Text style={[styles.title, { color: theme.text }]}>{t('score')}</Text>
-        <Text style={[styles.value, { color: theme.text }]}>
+        <Text style={[styles.title, {color: theme.text}]}>{t('score')}</Text>
+        <Text style={[styles.value, {color: theme.text}]}>
           {Math.round(score)}
         </Text>
       </View>

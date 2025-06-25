@@ -1,5 +1,5 @@
-import { storage } from '.';
-import { InitGame, SavedGame } from '../types';
+import {storage} from '.';
+import {InitGame, SavedGame} from '../types';
 import {
   STORAGE_KEY_INIT_GAME,
   STORAGE_KEY_SAVED_GAME,

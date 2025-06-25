@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { DailyQuotes } from '../types';
-import { getDailyQuote } from '../utils/getDailyQuote';
+import {useEffect, useState} from 'react';
+import {DailyQuotes} from '../types';
+import {getDailyQuote} from '../utils/getDailyQuote';
 
 export const useDailyQuote = () => {
   const [quote, setQuote] = useState<DailyQuotes | null>(null);
@@ -21,5 +21,5 @@ export const useDailyQuote = () => {
     loadQuote();
   }, []);
 
-  return { quote, loadQuote };
+  return {quote, loadQuote};
 };

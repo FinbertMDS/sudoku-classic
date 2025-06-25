@@ -1,9 +1,9 @@
-import { playerProfileStorage, statsStorage } from '../storage';
-import { GameLogEntryV2 } from '../types';
-import { PlayerProfile } from '../types/player';
-import { DEFAULT_PLAYER_ID } from '../utils/constants';
-import { createDefaultPlayer } from '../utils/playerUtil';
-import { GameStatsManager } from './GameStatsManager';
+import {playerProfileStorage, statsStorage} from '../storage';
+import {GameLogEntryV2} from '../types';
+import {PlayerProfile} from '../types/player';
+import {DEFAULT_PLAYER_ID} from '../utils/constants';
+import {createDefaultPlayer} from '../utils/playerUtil';
+import {GameStatsManager} from './GameStatsManager';
 
 export const PlayerService = {
   async createDefaultPlayerIfNeeded(): Promise<void> {

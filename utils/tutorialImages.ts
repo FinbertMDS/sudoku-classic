@@ -1,4 +1,4 @@
-import { ColorSchemeName } from 'react-native';
+import {ColorSchemeName} from 'react-native';
 
 export const tutorialImages = {
   slide1: {

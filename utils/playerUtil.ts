@@ -1,7 +1,7 @@
 import uuid from 'react-native-uuid';
-import { PlayerProfile } from '../types/player';
-import { getRandomColorKey } from './colorUtil';
-import { DEFAULT_PLAYER_ID, DEFAULT_PLAYER_NAME } from './constants';
+import {PlayerProfile} from '../types/player';
+import {getRandomColorKey} from './colorUtil';
+import {DEFAULT_PLAYER_ID, DEFAULT_PLAYER_NAME} from './constants';
 
 const generatePlayerId = () => {
   let id = uuid.v4().toString();

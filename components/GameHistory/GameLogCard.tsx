@@ -1,28 +1,28 @@
 // components/GameHistory/GameLogCard.tsx
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { GameLogEntryV2 } from '../../types';
-import { getLevelColor } from '../../utils/colorUtil';
-import { formatDateTime, formatDuration } from '../../utils/dateUtil';
+import {useTranslation} from 'react-i18next';
+import {StyleSheet, Text, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
+import {GameLogEntryV2} from '../../types';
+import {getLevelColor} from '../../utils/colorUtil';
+import {formatDateTime, formatDuration} from '../../utils/dateUtil';
 
-const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
-  const { t } = useTranslation();
-  const { mode, theme } = useTheme();
+const GameLogCard = ({log}: {log: GameLogEntryV2}) => {
+  const {t} = useTranslation();
+  const {mode, theme} = useTheme();
 
   return (
-    <View style={[styles.card, { backgroundColor: theme.card }]}>
+    <View style={[styles.card, {backgroundColor: theme.card}]}>
       <View style={styles.rowBetween}>
-        <Text style={[styles.level, { color: getLevelColor(log.level, mode) }]}>
+        <Text style={[styles.level, {color: getLevelColor(log.level, mode)}]}>
           {t(`level.${log.level}`)}
         </Text>
         <Text
           style={[
             styles.status,
-            { color: log.completed ? theme.success : theme.error },
+            {color: log.completed ? theme.success : theme.error},
           ]}
         >
           {log.completed ? t('completed') : t('incomplete')}
@@ -37,7 +37,7 @@ const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
             size={18}
             color={theme.secondary}
           />
-          <Text style={[styles.item, { color: theme.text }]}>
+          <Text style={[styles.item, {color: theme.text}]}>
             {formatDuration(log.durationSeconds)}
           </Text>
         </View>
@@ -48,7 +48,7 @@ const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
             size={18}
             color={theme.secondary}
           />
-          <Text style={[styles.item, { color: theme.text }]}>
+          <Text style={[styles.item, {color: theme.text}]}>
             {log.mistakes ?? 0}
           </Text>
         </View>
@@ -59,7 +59,7 @@ const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
             size={18}
             color={theme.secondary}
           />
-          <Text style={[styles.item, { color: theme.text }]}>
+          <Text style={[styles.item, {color: theme.text}]}>
             {log.hintCount ?? 0}
           </Text>
         </View>
@@ -72,7 +72,7 @@ const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
           size={14}
           color={theme.secondary}
         />
-        <Text style={[styles.timeLabel, { color: theme.secondary }]}>
+        <Text style={[styles.timeLabel, {color: theme.secondary}]}>
           {t('startTime')}: {formatDateTime(log.startTime)}
         </Text>
       </View>
@@ -83,7 +83,7 @@ const GameLogCard = ({ log }: { log: GameLogEntryV2 }) => {
           size={14}
           color={theme.secondary}
         />
-        <Text style={[styles.timeLabel, { color: theme.secondary }]}>
+        <Text style={[styles.timeLabel, {color: theme.secondary}]}>
           {t('endTime')}: {formatDateTime(log.endTime)}
         </Text>
       </View>

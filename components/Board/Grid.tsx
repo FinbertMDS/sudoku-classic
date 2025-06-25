@@ -1,5 +1,5 @@
 import * as Device from 'expo-device';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {
   Dimensions,
   Platform,
@@ -14,8 +14,8 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
-import { useTheme } from '../../context/ThemeContext';
-import { AppSettings, Cell, CellValue } from '../../types';
+import {useTheme} from '../../context/ThemeContext';
+import {AppSettings, Cell, CellValue} from '../../types';
 import {
   getFontSizesFromCellSize,
   isColFilled,
@@ -44,27 +44,27 @@ const Grid = ({
   settings,
   onPress,
 }: GridProps) => {
-  const { theme } = useTheme();
+  const {theme} = useTheme();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const rowScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
+  const rowScales = Array.from({length: BOARD_SIZE}, () => useSharedValue(1));
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const colScales = Array.from({ length: BOARD_SIZE }, () => useSharedValue(1));
+  const colScales = Array.from({length: BOARD_SIZE}, () => useSharedValue(1));
 
   const isTablet =
     Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET;
 
-  const { height } = Dimensions.get('window');
+  const {height} = Dimensions.get('window');
   const cellSize = isTablet && height > 950 ? 60 : 40;
 
-  const { cellText, noteText, noteWidth } = getFontSizesFromCellSize(cellSize);
+  const {cellText, noteText, noteWidth} = getFontSizesFromCellSize(cellSize);
 
   const animatedStyles = useRef(
-    Array.from({ length: BOARD_SIZE }, (_, row) =>
-      Array.from({ length: BOARD_SIZE }, (__, col) =>
+    Array.from({length: BOARD_SIZE}, (_, row) =>
+      Array.from({length: BOARD_SIZE}, (__, col) =>
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useAnimatedStyle(() => ({
-          transform: [{ scale: rowScales[row].value * colScales[col].value }],
+          transform: [{scale: rowScales[row].value * colScales[col].value}],
         })),
       ),
     ),
@@ -91,8 +91,8 @@ const Grid = ({
       animationType === ANIMATION_TYPE.ROW_COL
     ) {
       rowScales[row].value = withSequence(
-        withTiming(0.3, { duration: ANIMATION_DURATION / 3 }),
-        withTiming(1, { duration: ANIMATION_DURATION / 3 }),
+        withTiming(0.3, {duration: ANIMATION_DURATION / 3}),
+        withTiming(1, {duration: ANIMATION_DURATION / 3}),
       );
     }
     if (
@@ -100,8 +100,8 @@ const Grid = ({
       animationType === ANIMATION_TYPE.ROW_COL
     ) {
       colScales[col].value = withSequence(
-        withTiming(0.3, { duration: ANIMATION_DURATION / 3 }),
-        withTiming(1, { duration: ANIMATION_DURATION / 3 }),
+        withTiming(0.3, {duration: ANIMATION_DURATION / 3}),
+        withTiming(1, {duration: ANIMATION_DURATION / 3}),
       );
     }
   };
@@ -205,21 +205,21 @@ const Grid = ({
           ]}
         >
           {overlayColor && (
-            <View style={[styles.overlay, { backgroundColor: overlayColor }]} />
+            <View style={[styles.overlay, {backgroundColor: overlayColor}]} />
           )}
 
           <TouchableOpacity
             style={[
               styles.cell,
               borderStyle,
-              { width: cellSize, height: cellSize },
+              {width: cellSize, height: cellSize},
             ]}
-            onPress={() => onPress({ row, col, value: cellValue })}
+            onPress={() => onPress({row, col, value: cellValue})}
             activeOpacity={0.8}
           >
             {cellNotes.length > 0 && (
               <View style={styles.notesContainerTop}>
-                {Array.from({ length: BOARD_SIZE }, (_, i) => {
+                {Array.from({length: BOARD_SIZE}, (_, i) => {
                   const noteValue = (i + 1).toString();
                   return (
                     <Text
@@ -244,7 +244,7 @@ const Grid = ({
               style={[
                 styles.cell,
                 animatedStyle,
-                { width: cellSize, height: cellSize },
+                {width: cellSize, height: cellSize},
               ]}
               pointerEvents="box-none"
             >
@@ -252,8 +252,8 @@ const Grid = ({
                 <Text
                   style={[
                     styles.cellText,
-                    { color: theme.text, fontSize: cellText },
-                    showMistake && { color: theme.danger },
+                    {color: theme.text, fontSize: cellText},
+                    showMistake && {color: theme.danger},
                   ]}
                 >
                   {cellValue}

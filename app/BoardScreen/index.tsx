@@ -1,23 +1,14 @@
-import { useAlert } from '@/hooks/useAlert';
-import { useSafeGoBack } from '@/hooks/useSafeGoBack';
-import { useFocusEffect } from '@react-navigation/native';
-import { router, useLocalSearchParams } from 'expo-router';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-import { hint } from 'sudoku-core';
+import {useAlert} from '@/hooks/useAlert';
+import {useSafeGoBack} from '@/hooks/useSafeGoBack';
+import {useFocusEffect} from '@react-navigation/native';
+import {router, useLocalSearchParams} from 'expo-router';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {hint} from 'sudoku-core';
 import ActionButtons from '../../components/Board/ActionButtons';
-import { BannerAdSafe } from '../../components/Board/BannerAdSafe';
+import {BannerAdSafe} from '../../components/Board/BannerAdSafe';
 import Grid from '../../components/Board/Grid';
 import InfoPanel from '../../components/Board/InfoPanel';
 import NumberPad from '../../components/Board/NumberPad';
@@ -25,16 +16,16 @@ import PauseModal from '../../components/Board/PauseModal';
 import ConfirmDialog from '../../components/commons/ConfirmDialog';
 import Header from '../../components/commons/Header';
 import HowToPlay from '../../components/HowToPlay';
-import { useTheme } from '../../context/ThemeContext';
-import { CORE_EVENTS } from '../../events';
+import {useTheme} from '../../context/ThemeContext';
+import {CORE_EVENTS} from '../../events';
 import eventBus from '../../events/eventBus';
-import { GameEndedCoreEvent } from '../../events/types';
-import { useAppPause } from '../../hooks/useAppPause';
-import { useHintCounter } from '../../hooks/useHintCounter';
-import { useInterstitialAdSafe } from '../../hooks/useInterstitialAdSafe';
-import { useMistakeCounter } from '../../hooks/useMistakeCounter';
-import { BoardService } from '../../services/BoardService';
-import { SettingsService } from '../../services/SettingsService';
+import {GameEndedCoreEvent} from '../../events/types';
+import {useAppPause} from '../../hooks/useAppPause';
+import {useHintCounter} from '../../hooks/useHintCounter';
+import {useInterstitialAdSafe} from '../../hooks/useInterstitialAdSafe';
+import {useMistakeCounter} from '../../hooks/useMistakeCounter';
+import {BoardService} from '../../services/BoardService';
+import {SettingsService} from '../../services/SettingsService';
 import {
   AppSettings,
   BoardParamProps,
@@ -53,18 +44,14 @@ import {
   getCellFromIndex,
   removeNoteFromPeers,
 } from '../../utils/boardUtil';
-import {
-  DEFAULT_SETTINGS,
-  MAX_HINTS,
-  MAX_MISTAKES,
-} from '../../utils/constants';
-import { getAdUnit } from '../../utils/getAdUnit';
+import {DEFAULT_SETTINGS, MAX_HINTS, MAX_MISTAKES} from '../../utils/constants';
+import {getAdUnit} from '../../utils/getAdUnit';
 
 const BoardScreen = () => {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const rawParams = useLocalSearchParams();
-  const { id, level, type } = useMemo(() => {
+  const {id, level, type} = useMemo(() => {
     return {
       id: rawParams.id,
       level: rawParams.level,
@@ -73,7 +60,7 @@ const BoardScreen = () => {
   }, [rawParams]);
 
   const goBack = useSafeGoBack();
-  const { alert } = useAlert();
+  const {alert} = useAlert();
 
   const [showHowToPlay, setShowHowToPlay] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -320,7 +307,7 @@ const BoardScreen = () => {
     setIsPaused(true);
     router.push({
       pathname: '/SettingsScreen',
-      params: { showAdvancedSettings: '0' },
+      params: {showAdvancedSettings: '0'},
     });
   };
 
@@ -374,7 +361,7 @@ const BoardScreen = () => {
     if (!selectedCell) {
       return;
     }
-    const { row, col } = selectedCell;
+    const {row, col} = selectedCell;
     if (initialBoard[row][col]) {
       return;
     }
@@ -386,7 +373,7 @@ const BoardScreen = () => {
     }
     const newBoard = deepCloneBoard(board);
     newBoard[row][col] = null;
-    setSelectedCell({ ...selectedCell, value: null });
+    setSelectedCell({...selectedCell, value: null});
     setBoard(newBoard);
     saveHistory(newBoard);
   };
@@ -414,7 +401,7 @@ const BoardScreen = () => {
           },
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   };
 
@@ -431,10 +418,10 @@ const BoardScreen = () => {
 
     decrementHintCount();
     const solvedNum = hintBoard.steps[0].updates[0].filledValue;
-    const { row, col } = getCellFromIndex(hintBoard.steps[0].updates[0].index);
+    const {row, col} = getCellFromIndex(hintBoard.steps[0].updates[0].index);
     const newBoard = deepCloneBoard(board);
     newBoard[row][col] = solvedNum;
-    setSelectedCell({ row, col, value: solvedNum });
+    setSelectedCell({row, col, value: solvedNum});
     setBoard(newBoard);
     setNotes((prevNotes) =>
       removeNoteFromPeers(prevNotes, row, col, solvedNum),
@@ -450,7 +437,7 @@ const BoardScreen = () => {
    * Kiểm tra board đã được giải quyết chưa
    */
   const handleSolve = () => {
-    alert(t('solution'), t('allDone'), [{ text: t('ok') }], {
+    alert(t('solution'), t('allDone'), [{text: t('ok')}], {
       cancelable: false,
     });
 
@@ -470,7 +457,7 @@ const BoardScreen = () => {
     if (!selectedCell) {
       return;
     }
-    const { row, col } = selectedCell;
+    const {row, col} = selectedCell;
     if (initialBoard[row][col] != null) {
       return;
     }
@@ -500,7 +487,7 @@ const BoardScreen = () => {
       const newBoard = deepCloneBoard(board);
       newBoard[row][col] = num;
       setBoard(newBoard);
-      setSelectedCell({ ...selectedCell, value: num });
+      setSelectedCell({...selectedCell, value: num});
 
       if (settings.autoRemoveNotes) {
         setNotes((prevNotes) => removeNoteFromPeers(prevNotes, row, col, num));
@@ -513,7 +500,7 @@ const BoardScreen = () => {
     }
   };
 
-  const timeoutRefs = useRef<{ [key: string]: NodeJS.Timeout }>({});
+  const timeoutRefs = useRef<{[key: string]: NodeJS.Timeout}>({});
   useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -560,7 +547,7 @@ const BoardScreen = () => {
     if (limitMistakeReached && !isLoadedRewarded && !isClosedRewarded) {
       alert(
         t('mistakeWarning.title'),
-        t('mistakeWarning.messageNotAd', { max: MAX_MISTAKES }),
+        t('mistakeWarning.messageNotAd', {max: MAX_MISTAKES}),
         [
           {
             text: t('ok'),
@@ -602,7 +589,7 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top']}
-        style={[styles.loadingContainer, { backgroundColor: theme.background }]}
+        style={[styles.loadingContainer, {backgroundColor: theme.background}]}
       >
         <ActivityIndicator size="large" color={theme.primary} />
       </SafeAreaView>
@@ -613,7 +600,7 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top', 'bottom']}
-        style={[styles.container, { backgroundColor: theme.background }]}
+        style={[styles.container, {backgroundColor: theme.background}]}
       >
         <Header
           title={t('appName')}
@@ -630,7 +617,7 @@ const BoardScreen = () => {
     <>
       <SafeAreaView
         edges={['top', 'bottom']}
-        style={[styles.container, { backgroundColor: theme.background }]}
+        style={[styles.container, {backgroundColor: theme.background}]}
       >
         <Header
           title={t('appName')}
@@ -697,7 +684,7 @@ const BoardScreen = () => {
       {limitMistakeReached && isLoadedRewarded && (
         <ConfirmDialog
           title={t('mistakeWarning.title')}
-          message={t('mistakeWarning.message', { max: MAX_MISTAKES })}
+          message={t('mistakeWarning.message', {max: MAX_MISTAKES})}
           cancelText={t('ad.cancel')}
           confirmText={t('ad.confirm')}
           disableBackdropClose={true}
@@ -712,7 +699,7 @@ const BoardScreen = () => {
       {limitHintReached && isLoadedRewarded && (
         <ConfirmDialog
           title={t('hintWarning.title')}
-          message={t('hintWarning.message', { max: MAX_HINTS })}
+          message={t('hintWarning.message', {max: MAX_HINTS})}
           cancelText={t('ad.cancel')}
           confirmText={t('ad.confirm')}
           disableBackdropClose={true}

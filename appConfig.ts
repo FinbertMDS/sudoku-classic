@@ -1,6 +1,6 @@
-import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application';
+import {nativeApplicationVersion, nativeBuildVersion} from 'expo-application';
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 export const appConfig = {
   iosAppId: '1234567890',

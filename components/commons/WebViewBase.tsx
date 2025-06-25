@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
-import { useTheme } from '../../context/ThemeContext';
+import React, {useEffect, useRef} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {WebView} from 'react-native-webview';
+import {useTheme} from '../../context/ThemeContext';
 import Header from './Header';
 
 type WebViewBaseProps = {
@@ -16,7 +16,7 @@ export default function WebViewBase({
   source,
   needPadding = false,
 }: WebViewBaseProps) {
-  const { theme, mode } = useTheme();
+  const {theme, mode} = useTheme();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const darkModeStyle = `
@@ -85,7 +85,7 @@ export default function WebViewBase({
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={title}
@@ -95,11 +95,11 @@ export default function WebViewBase({
       />
 
       {Platform.OS === 'web' ? (
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <iframe
             src={source}
             ref={iframeRef}
-            style={{ width: '100%', height: '100%', border: 'none' }}
+            style={{width: '100%', height: '100%', border: 'none'}}
           />
         </View>
       ) : (

@@ -1,5 +1,5 @@
 // hooks/useRewardedAdSafe.ts
-import { RequestOptions, useRewardedAd } from 'react-native-google-mobile-ads';
+import {RequestOptions, useRewardedAd} from 'react-native-google-mobile-ads';
 
 export const AD_REQUEST_OPTIONS: RequestOptions = {
   requestNonPersonalizedAdsOnly: true,

@@ -1,10 +1,4 @@
-import {
-  isThisMonth,
-  isThisWeek,
-  isThisYear,
-  isToday,
-  parseISO,
-} from 'date-fns';
+import {isThisMonth, isThisWeek, isThisYear, isToday, parseISO} from 'date-fns';
 
 export const formatTime = (seconds: number | null) => {
   if (seconds == null) {
@@ -24,7 +18,7 @@ export function isInTimeRange(dateStr: string, range: string): boolean {
     case 'today':
       return isToday(date);
     case 'week':
-      return isThisWeek(date, { weekStartsOn: 1 }); // ISO week (starts Monday)
+      return isThisWeek(date, {weekStartsOn: 1}); // ISO week (starts Monday)
     case 'month':
       return isThisMonth(date);
     case 'year':

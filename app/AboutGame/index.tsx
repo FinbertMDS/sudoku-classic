@@ -1,8 +1,8 @@
-import { RootStackParamList } from '@/types';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {RootStackParamList} from '@/types';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import {
   ScrollView,
   StyleSheet,
@@ -10,15 +10,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { appConfig } from '../../appConfig';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {appConfig} from '../../appConfig';
 import Header from '../../components/commons/Header';
-import { ThemeType, useTheme } from '../../context/ThemeContext';
-import { SCREENS } from '../../utils/constants';
+import {ThemeType, useTheme} from '../../context/ThemeContext';
+import {SCREENS} from '../../utils/constants';
 
 export default function AboutGame() {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
+  const {theme} = useTheme();
+  const {t} = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -28,7 +28,7 @@ export default function AboutGame() {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, {backgroundColor: theme.background}]}
     >
       <Header
         title={t('aboutGame')}
@@ -39,25 +39,25 @@ export default function AboutGame() {
       <ScrollView
         contentContainerStyle={[
           styles.contentContainer,
-          { backgroundColor: theme.backgroundSecondary },
+          {backgroundColor: theme.backgroundSecondary},
         ]}
       >
-        <View style={[styles.card, { backgroundColor: theme.background }]}>
-          <Text style={[styles.title, { color: theme.text }]}>
+        <View style={[styles.card, {backgroundColor: theme.background}]}>
+          <Text style={[styles.title, {color: theme.text}]}>
             {t('appNameWithAuthor', {
               appName: t('appName'),
               author: t('author'),
             })}
           </Text>
-          <Text style={[styles.version, { color: theme.secondary }]}>
-            {t('version', { version: appConfig.version })}
+          <Text style={[styles.version, {color: theme.secondary}]}>
+            {t('version', {version: appConfig.version})}
           </Text>
-          <Text style={[styles.copyright, { color: theme.secondary }]}>
-            {t('copyright', { year: copyrightYear, appName: t('appName') })}
+          <Text style={[styles.copyright, {color: theme.secondary}]}>
+            {t('copyright', {year: copyrightYear, appName: t('appName')})}
           </Text>
         </View>
 
-        <View style={[styles.section, { backgroundColor: theme.background }]}>
+        <View style={[styles.section, {backgroundColor: theme.background}]}>
           <Item
             theme={theme}
             label={t('termsOfService')}
@@ -120,7 +120,7 @@ const Item = ({
       },
     ]}
   >
-    <Text style={[styles.itemText, { color: theme.text }]}>{label}</Text>
+    <Text style={[styles.itemText, {color: theme.text}]}>{label}</Text>
   </TouchableOpacity>
 );
 

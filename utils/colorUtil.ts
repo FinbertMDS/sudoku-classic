@@ -1,8 +1,8 @@
 // getLevelColor.ts
 
-import { ColorSchemeName } from 'react-native';
-import { Level } from '../types';
-import { LEVELS } from './constants';
+import {ColorSchemeName} from 'react-native';
+import {Level} from '../types';
+import {LEVELS} from './constants';
 
 export const playerColors = {
   red: {
@@ -41,7 +41,7 @@ export const getAvatarColor = (
   return playerColors[colorKey][mode === 'dark' ? 'dark' : 'light'];
 };
 
-export const levelColors: Record<Level, { light: string; dark: string }> = {
+export const levelColors: Record<Level, {light: string; dark: string}> = {
   easy: {
     light: '#4ade80', // green-400
     dark: '#22c55e', // green-500

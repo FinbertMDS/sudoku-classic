@@ -1,12 +1,12 @@
 // components/Player/PlayerCard.tsx
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../context/ThemeContext';
-import { PlayerProfile } from '../../types/player';
-import { getAvatarColor, PlayerColorKey } from '../../utils/colorUtil';
-import { DEFAULT_PLAYER_ID } from '../../utils/constants';
+import {useTranslation} from 'react-i18next';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useTheme} from '../../context/ThemeContext';
+import {PlayerProfile} from '../../types/player';
+import {getAvatarColor, PlayerColorKey} from '../../utils/colorUtil';
+import {DEFAULT_PLAYER_ID} from '../../utils/constants';
 
 type PlayerCardProps = {
   player: PlayerProfile;
@@ -25,15 +25,15 @@ const PlayerCard = ({
   onDelete,
   onEdit,
 }: PlayerCardProps) => {
-  const { t } = useTranslation();
-  const { mode, theme } = useTheme();
+  const {t} = useTranslation();
+  const {mode, theme} = useTheme();
   const bgColor = getAvatarColor(player.avatarColor as PlayerColorKey, mode);
 
   return (
     <TouchableOpacity
       style={[
         styles.card,
-        { backgroundColor: theme.background },
+        {backgroundColor: theme.background},
         isSelected && [
           {
             borderWidth: 1,
@@ -47,10 +47,10 @@ const PlayerCard = ({
       <View
         style={[
           styles.avatar,
-          { backgroundColor: bgColor },
+          {backgroundColor: bgColor},
           isSelected && [
             styles.selectedAvatar,
-            { borderColor: theme.buttonBlue },
+            {borderColor: theme.buttonBlue},
           ],
         ]}
       >
@@ -60,11 +60,11 @@ const PlayerCard = ({
       </View>
 
       <View style={styles.info}>
-        <Text style={[styles.name, { color: theme.text }]}>
+        <Text style={[styles.name, {color: theme.text}]}>
           {player.name} {player.id === DEFAULT_PLAYER_ID && t('defaultPlayer')}
         </Text>
-        <Text style={[styles.subtext, { color: theme.secondary }]}>
-          {t('gamesCount', { count: player.totalGames })}
+        <Text style={[styles.subtext, {color: theme.secondary}]}>
+          {t('gamesCount', {count: player.totalGames})}
         </Text>
       </View>
       <TouchableOpacity style={[styles.button]} onPress={() => onEdit(player)}>
@@ -83,10 +83,10 @@ const PlayerCard = ({
           style={[
             styles.checkMark,
             styles.button,
-            { backgroundColor: theme.buttonBlue },
+            {backgroundColor: theme.buttonBlue},
           ]}
         >
-          <Text style={[styles.checkText, { color: theme.text }]}>✓</Text>
+          <Text style={[styles.checkText, {color: theme.text}]}>✓</Text>
         </View>
       )}
     </TouchableOpacity>

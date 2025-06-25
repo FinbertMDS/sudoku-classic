@@ -1,8 +1,8 @@
 // GameStatsManager.ts
 
 import uuid from 'react-native-uuid';
-import { GameEndedCoreEvent } from '../events/types';
-import { playerProfileStorage, statsStorage } from '../storage';
+import {GameEndedCoreEvent} from '../events/types';
+import {playerProfileStorage, statsStorage} from '../storage';
 import {
   GameLogEntryV2,
   GameStats,
@@ -11,8 +11,8 @@ import {
   Level,
   TimeRange,
 } from '../types';
-import { getTodayDateString, isInTimeRange } from '../utils/dateUtil';
-import { getStatsFromLogs } from '../utils/statsUtil';
+import {getTodayDateString, isInTimeRange} from '../utils/dateUtil';
+import {getStatsFromLogs} from '../utils/statsUtil';
 
 export const GameStatsManager = {
   async shouldUpdateStatsCache(): Promise<boolean> {
@@ -42,7 +42,7 @@ export const GameStatsManager = {
       }
 
       const computedStats = getStatsFromLogs(logs, filter, userId);
-      const updatedCache = { ...cache, [filter]: computedStats };
+      const updatedCache = {...cache, [filter]: computedStats};
 
       statsStorage.saveStatsCache(updatedCache);
 
@@ -61,7 +61,7 @@ export const GameStatsManager = {
     try {
       const cache: GameStatsCache = statsStorage.getStatsCache();
 
-      const updatedCache: GameStatsCache = { ...cache };
+      const updatedCache: GameStatsCache = {...cache};
 
       for (const range of affectedRanges) {
         const updatedStats = getStatsFromLogs(logs, range, userId);
@@ -108,7 +108,7 @@ export const GameStatsManager = {
       });
       rangesToUpdate.add('all'); // luôn luôn cập nhật all
 
-      const updatedCache = { ...cache };
+      const updatedCache = {...cache};
 
       for (const range of rangesToUpdate) {
         updatedCache[range] = getStatsFromLogs(logs, range, userId);

@@ -1,6 +1,6 @@
-import { gameStorage } from '../storage';
-import { InitGame, SavedGame, SavedHintCount, SavedMistake } from '../types';
-import { MAX_HINTS } from '../utils/constants';
+import {gameStorage} from '../storage';
+import {InitGame, SavedGame, SavedHintCount, SavedMistake} from '../types';
+import {MAX_HINTS} from '../utils/constants';
 
 export const BoardService = {
   async save(state: SavedGame | InitGame) {

@@ -1,4 +1,4 @@
-import { appStorage } from './appStorage';
+import {appStorage} from './appStorage';
 
 export const CURRENT_MIGRATION_VERSION = 0;
 

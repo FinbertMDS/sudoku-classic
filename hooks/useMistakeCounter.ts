@@ -1,8 +1,8 @@
 // useMistakeCounter.ts
 
-import { useEffect, useState } from 'react';
-import { BoardService } from '../services/BoardService';
-import { MAX_MISTAKES } from '../utils/constants';
+import {useEffect, useState} from 'react';
+import {BoardService} from '../services/BoardService';
+import {MAX_MISTAKES} from '../utils/constants';
 
 interface MistakeOptions {
   maxMistakes?: number;
