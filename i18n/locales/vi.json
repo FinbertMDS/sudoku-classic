@@ -53,6 +53,7 @@
 
   "levelStats": "Thống kê mức độ",
   "chartsStats": "Biểu đồ thống kê",
+  "gameHistoryTitle": "Lịch sử trò chơi",
 
   "options": "Tùy chọn",
   "settings": "Cài đặt",
@@ -152,5 +153,11 @@
   "editPlayerTitle": "Sửa người chơi",
   "saveBtn": "Lưu",
   "cannotDeletePlayerTitle": "Không thể xoá người chơi",
-  "cannotDeletePlayerMessage": "Bạn không thể xoá người chơi mặc định"
+  "cannotDeletePlayerMessage": "Bạn không thể xoá người chơi mặc định",
+
+  "noGameHistory": "Không có lịch sử trò chơi",
+  "completed": "Hoàn thành",
+  "incomplete": "Chưa hoàn thành",
+  "startTime": "Bắt đầu ",
+  "endTime": "Kết thúc"
 }

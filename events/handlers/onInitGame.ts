@@ -1,7 +1,7 @@
+import { CORE_EVENTS } from '..';
 import { BoardService } from '../../services/BoardService';
 import { generateBoard } from '../../utils/boardUtil';
 import eventBus from '../eventBus';
-import { CORE_EVENTS } from '../index';
 import { InitGameCoreEvent } from '../types';
 
 export const handleInitGame = async (payload: InitGameCoreEvent) => {

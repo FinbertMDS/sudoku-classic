@@ -150,7 +150,11 @@ const MainScreen = () => {
           {t('welcomeTitle', { appName: t('appName') })}
         </Text>
         {player && (
-          <Text style={[styles.title, { color: theme.text }]}>
+          <Text
+            numberOfLines={3}
+            ellipsizeMode="tail"
+            style={[styles.title, { color: theme.text }]}
+          >
             {t('welcomeUser', {
               playerName: player.name,
             })}

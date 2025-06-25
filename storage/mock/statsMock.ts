@@ -117,7 +117,7 @@ const gameLog = [
 ] as GameLogEntryV2[];
 
 const saveMockGameLogs = async () => {
-  const oldLogs = await statsStorage.getGameLogs();
+  const oldLogs = statsStorage.getGameLogs();
   if (oldLogs.length > 0) {
     return;
   }
@@ -132,7 +132,7 @@ const saveMockGameLogs = async () => {
     DEFAULT_PLAYER_ID,
   );
 
-  await statsStorage.setLastStatsCacheUpdate();
+  statsStorage.setLastStatsCacheUpdate();
 };
 
 export const statsMock = {

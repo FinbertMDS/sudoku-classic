@@ -1,3 +1,4 @@
+import { CORE_EVENTS } from '.';
 import eventBus from './eventBus';
 import { handleClearStorage } from './handlers/onClearStorage';
 import { handleDeletePlayer } from './handlers/onDeletePlayer';
@@ -7,7 +8,6 @@ import { handleInitGame } from './handlers/onInitGame';
 import { handleDefaultPlayerUpdated } from './handlers/onPlayerDefaultUpdated';
 import { handleSwitchPlayer } from './handlers/onPlayerSwitched';
 import { handleUpdateStatistics } from './handlers/onUpdateStatistics';
-import { CORE_EVENTS } from './index';
 
 export const setupEventListeners = () => {
   eventBus.on(CORE_EVENTS.initGame, handleInitGame);

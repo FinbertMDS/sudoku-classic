@@ -6,13 +6,13 @@ import { DailyQuotes } from '../types';
 
 export const QuoteService = {
   async load(): Promise<DailyQuotes | null> {
-    const cached = await appStorage.getQuotes();
+    const cached = appStorage.getQuotes();
     return cached;
   },
 
   async save(data: DailyQuotes) {
     try {
-      await appStorage.setQuotes(data);
+      appStorage.setQuotes(data);
     } catch (err) {
       console.error('Failed to save quote', err);
     }
@@ -20,7 +20,7 @@ export const QuoteService = {
 
   async clear(): Promise<void> {
     try {
-      await appStorage.clearQuotes();
+      appStorage.clearQuotes();
     } catch (err) {
       console.error('Failed to clear quote', err);
     }

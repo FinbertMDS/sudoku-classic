@@ -1,6 +1,7 @@
 // SettingsService.ts
 import { UNSPLASH_ACCESS_KEY } from '@/env';
 import axios from 'axios';
+import { Platform } from 'react-native';
 import { appStorage } from '../storage';
 import { DailyBackgrounds, UnsplashImageData } from '../types';
 
@@ -27,6 +28,9 @@ export const BackgroundService = {
   },
 
   async fetchUnsplashImage(query: string): Promise<UnsplashImageData | null> {
+    if (__DEV__ && Platform.OS === 'web') {
+      return null;
+    }
     try {
       const res = await axios.get('https://api.unsplash.com/photos/random', {
         params: {
@@ -41,7 +45,6 @@ export const BackgroundService = {
       if (!res || !res.data || !res.data.urls) {
         return null;
       }
-
       // return res.data?.urls?.regular ?? null;
       return {
         url: res.data?.urls?.regular ?? null,

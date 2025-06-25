@@ -1,20 +1,19 @@
 // storage/playerProfileStorage.ts
+import { storage } from '.';
 import { PlayerProfile } from '../types/player';
 import {
   DEFAULT_PLAYER_ID,
   STORAGE_KEY_CURRENT_PLAYER_ID,
   STORAGE_KEY_PLAYERS,
 } from '../utils/constants';
-import { storage } from './mmkv';
 
 const getAllPlayers = (): PlayerProfile[] => {
   try {
     const raw = storage.getString(STORAGE_KEY_PLAYERS);
     return raw ? JSON.parse(raw) : [];
-  } catch (error) {
-    console.error(error);
+  } catch (_) {
+    return [];
   }
-  return [];
 };
 
 const savePlayers = (players: PlayerProfile[]) => {

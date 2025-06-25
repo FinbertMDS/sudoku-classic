@@ -34,7 +34,7 @@ export default function LanguageSwitcher() {
 
   const changeLanguage = async (code: string) => {
     await i18n.changeLanguage(code);
-    await appStorage.saveLangKeyPreferred(code);
+    appStorage.saveLangKeyPreferred(code);
     setSelectedLang(code);
   };
 

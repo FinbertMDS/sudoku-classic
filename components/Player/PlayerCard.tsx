@@ -67,16 +67,25 @@ const PlayerCard = ({
           {t('gamesCount', { count: player.totalGames })}
         </Text>
       </View>
-      <TouchableOpacity style={styles.editBtn} onPress={() => onEdit(player)}>
+      <TouchableOpacity style={[styles.button]} onPress={() => onEdit(player)}>
         <Ionicons name="pencil" size={20} color={theme.text} />
       </TouchableOpacity>
       {!isSelected && canDelete && (
-        <TouchableOpacity onPress={() => onDelete(player.id)}>
+        <TouchableOpacity
+          onPress={() => onDelete(player.id)}
+          style={styles.button}
+        >
           <Ionicons name="trash" size={20} color={theme.danger} />
         </TouchableOpacity>
       )}
       {isSelected && (
-        <View style={[styles.checkMark, { backgroundColor: theme.buttonBlue }]}>
+        <View
+          style={[
+            styles.checkMark,
+            styles.button,
+            { backgroundColor: theme.buttonBlue },
+          ]}
+        >
           <Text style={[styles.checkText, { color: theme.text }]}>✓</Text>
         </View>
       )}
@@ -120,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   checkMark: {
-    borderRadius: 12,
+    borderRadius: 16,
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
@@ -128,8 +137,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  editBtn: {
-    marginRight: 16,
+  button: {
+    width: 32,
+    height: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

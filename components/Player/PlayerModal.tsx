@@ -13,19 +13,19 @@ import {
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 
-type CreatePlayerModalProps = {
+type PlayerModalProps = {
   onClose: () => void;
   onSubmit: (mode: 'create' | 'edit', name: string) => void;
   mode: 'create' | 'edit';
   initialName?: string;
 };
 
-const CreatePlayerModal = ({
+const PlayerModal = ({
   onClose,
   onSubmit,
   mode,
   initialName,
-}: CreatePlayerModalProps) => {
+}: PlayerModalProps) => {
   const [name, setName] = useState(initialName ?? '');
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(CreatePlayerModal);
+export default React.memo(PlayerModal);

@@ -30,8 +30,6 @@ export const usePlayerProfile = () => {
     const updated = [...all, profile];
     playerProfileStorage.savePlayers(updated);
     setAllPlayers(updated);
-    playerProfileStorage.setCurrentPlayerId(profile.id);
-    setPlayer(profile);
   };
 
   const updatePlayerName = (id: string, name: string) => {
@@ -47,13 +45,18 @@ export const usePlayerProfile = () => {
     setPlayer(playerProfileStorage.getCurrentPlayer());
   };
 
+  const reloadAllPlayers = () => {
+    setAllPlayers(playerProfileStorage.getAllPlayers());
+  };
+
   return {
     player,
     allPlayers,
     switchPlayer,
     createPlayer,
     deletePlayer,
-    reloadPlayer,
     updatePlayerName,
+    reloadPlayer,
+    reloadAllPlayers,
   };
 };

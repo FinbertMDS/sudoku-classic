@@ -33,6 +33,7 @@ export const lightTheme = {
   placeholder: '#999',
   cancelButtonBg: '#f2f2f2',
   selectedCardBg: '#F0F8FF',
+  card: '#F4F4F5',
 };
 
 export const darkTheme = {
@@ -70,4 +71,5 @@ export const darkTheme = {
   placeholder: '#888',
   cancelButtonBg: '#3a3a3c',
   selectedCardBg: '#0c1a2f',
+  card: '#1E1E1E',
 };

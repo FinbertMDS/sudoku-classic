@@ -1,8 +1,6 @@
-import { AppSettings, Level } from '../types';
+import { AppSettings } from '../types';
 
 export * from './buildConstants';
-
-export const LEVELS = ['easy', 'medium', 'hard', 'expert', 'master'] as Level[];
 
 export const SCREENS = {
   HOME_TABS: '(tabs)',
@@ -10,8 +8,8 @@ export const SCREENS = {
   OPTIONS: 'OptionsScreen/index',
   SETTINGS: 'SettingsScreen/index',
   HOW_TO_PLAY: 'HowToPlayScreen/index',
-  PLAYERS: 'PlayerScreen/index',
   ABOUT_GAME: 'AboutGame/index',
+  PLAYERS: 'PlayerScreen/index',
   SK_WEBVIEW: 'AboutGame/SkWebViewScreen/index',
   NOT_FOUND: '+not-found',
 } as const;

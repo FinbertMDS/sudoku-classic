@@ -59,3 +59,30 @@ export function getTodayDateString(): string {
   const day = String(now.getUTCDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
+
+export function formatDuration(seconds: number): string {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  if (hrs > 0) {
+    return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+  }
+  return `${pad(mins)}:${pad(secs)}`;
+}
+
+export function pad(num: number): string {
+  return num.toString().padStart(2, '0');
+}
+export function formatDateTime(isoString: string): string {
+  const date = new Date(isoString);
+
+  return date.toLocaleString(undefined, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+}

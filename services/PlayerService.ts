@@ -3,6 +3,7 @@ import { GameLogEntryV2 } from '../types';
 import { PlayerProfile } from '../types/player';
 import { DEFAULT_PLAYER_ID } from '../utils/constants';
 import { createDefaultPlayer } from '../utils/playerUtil';
+import { GameStatsManager } from './GameStatsManager';
 
 export const PlayerService = {
   async createDefaultPlayerIfNeeded(): Promise<void> {
@@ -46,6 +47,16 @@ export const PlayerService = {
       (_player) => _player.id !== DEFAULT_PLAYER_ID,
     );
     playerProfileStorage.savePlayers(updated);
+
+    // nếu đổi default player và đang chọn default player thì update stats cache
+    if (newPlayerId === playerProfileStorage.getCurrentPlayerId()) {
+      const allLogs = await GameStatsManager.getLogsByPlayerId(newPlayerId);
+      await GameStatsManager.updateStatsWithCache(
+        allLogs,
+        allLogs,
+        newPlayerId,
+      );
+    }
   },
 
   async clear(): Promise<void> {

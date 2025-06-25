@@ -16,9 +16,9 @@ import { getStatsFromLogs } from '../utils/statsUtil';
 
 export const GameStatsManager = {
   async shouldUpdateStatsCache(): Promise<boolean> {
-    const lastUpdateStr = await statsStorage.getLastStatsCacheUpdate();
-    const lastUpdateUserId = await statsStorage.getLastStatsCacheUpdateUserId();
-    const currentPlayerId = await playerProfileStorage.getCurrentPlayerId();
+    const lastUpdateStr = statsStorage.getLastStatsCacheUpdate();
+    const lastUpdateUserId = statsStorage.getLastStatsCacheUpdateUserId();
+    const currentPlayerId = playerProfileStorage.getCurrentPlayerId();
 
     if (lastUpdateUserId !== currentPlayerId) {
       return true;
@@ -35,7 +35,7 @@ export const GameStatsManager = {
     userId: string,
   ): Promise<Record<Level, GameStats>> {
     try {
-      const cache: GameStatsCache = await statsStorage.getStatsCache();
+      const cache: GameStatsCache = statsStorage.getStatsCache();
 
       if (cache[filter]) {
         return cache[filter]!;
@@ -44,7 +44,7 @@ export const GameStatsManager = {
       const computedStats = getStatsFromLogs(logs, filter, userId);
       const updatedCache = { ...cache, [filter]: computedStats };
 
-      await statsStorage.saveStatsCache(updatedCache);
+      statsStorage.saveStatsCache(updatedCache);
 
       return computedStats;
     } catch (error) {
@@ -59,7 +59,7 @@ export const GameStatsManager = {
     userId: string,
   ): Promise<void> {
     try {
-      const cache: GameStatsCache = await statsStorage.getStatsCache();
+      const cache: GameStatsCache = statsStorage.getStatsCache();
 
       const updatedCache: GameStatsCache = { ...cache };
 
@@ -68,15 +68,15 @@ export const GameStatsManager = {
         updatedCache[range] = updatedStats;
       }
 
-      await statsStorage.saveStatsCache(updatedCache);
+      statsStorage.saveStatsCache(updatedCache);
     } catch (error) {
       console.warn('Failed to update stats cache:', error);
     }
   },
 
   async updateStatsDone(): Promise<void> {
-    await statsStorage.setLastStatsCacheUpdate();
-    await statsStorage.setLastStatsCacheUpdateUserId(
+    statsStorage.setLastStatsCacheUpdate();
+    statsStorage.setLastStatsCacheUpdateUserId(
       playerProfileStorage.getCurrentPlayerId(),
     );
   },
@@ -87,7 +87,7 @@ export const GameStatsManager = {
     userId: string,
   ): Promise<void> {
     try {
-      const cache: GameStatsCache = await statsStorage.getStatsCache();
+      const cache: GameStatsCache = statsStorage.getStatsCache();
 
       // Xác định các khoảng thời gian cần cập nhật lại
       const rangesToUpdate = new Set<TimeRange>();
@@ -114,7 +114,7 @@ export const GameStatsManager = {
         updatedCache[range] = getStatsFromLogs(logs, range, userId);
       }
 
-      await statsStorage.saveStatsCache(updatedCache);
+      statsStorage.saveStatsCache(updatedCache);
     } catch (error) {
       console.warn('Failed to update stats with cache:', error);
     }
@@ -144,7 +144,7 @@ export const GameStatsManager = {
 
   async getLogsByPlayerId(playerId: string): Promise<GameLogEntryV2[]> {
     try {
-      return await statsStorage.getGameLogsV2ByPlayerId(playerId);
+      return statsStorage.getGameLogsV2ByPlayerId(playerId);
     } catch (error) {
       console.error('Error loading logs:', error);
     }
@@ -171,7 +171,7 @@ export const GameStatsManager = {
         existing.unshift(log);
       }
 
-      await statsStorage.saveGameLogs(existing);
+      statsStorage.saveGameLogs(existing);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -194,7 +194,7 @@ export const GameStatsManager = {
         updated = [...sortedLogs, ...existing];
       }
 
-      await statsStorage.saveGameLogs(updated);
+      statsStorage.saveGameLogs(updated);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -249,7 +249,7 @@ export const GameStatsManager = {
 
   async resetStatistics() {
     try {
-      await statsStorage.clearStatsData();
+      statsStorage.clearStatsData();
     } catch (error) {
       console.error('Error clearing all data:', error);
     }

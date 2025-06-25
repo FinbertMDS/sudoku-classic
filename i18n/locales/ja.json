@@ -53,6 +53,7 @@
 
   "levelStats": "レベル統計",
   "chartsStats": "チャート統計",
+  "gameHistoryTitle": "ゲーム履歴",
 
   "options": "オプション",
   "settings": "設定",
@@ -152,5 +153,11 @@
   "editPlayerTitle": "プレイヤーを編集",
   "saveBtn": "保存",
   "cannotDeletePlayerTitle": "プレイヤーを削除できません",
-  "cannotDeletePlayerMessage": "デフォルトのプレイヤーは削除できません"
+  "cannotDeletePlayerMessage": "デフォルトのプレイヤーは削除できません",
+
+  "noGameHistory": "ゲーム履歴がありません",
+  "completed": "完了",
+  "incomplete": "未完了",
+  "startTime": "開始",
+  "endTime": "終了"
 }

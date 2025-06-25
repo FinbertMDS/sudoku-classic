@@ -2,26 +2,26 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Modal,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { TimeFilter } from '../../types';
 
-interface Props {
+type TimeFilterDropdownProps = {
   selected: TimeFilter;
   onClose: () => void;
   onSelect: (filter: TimeFilter) => void;
-}
+};
 
-const TimeFilterDropdown: React.FC<Props> = ({
+const TimeFilterDropdown = ({
   selected,
   onSelect,
   onClose,
-}) => {
+}: TimeFilterDropdownProps) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
@@ -35,7 +35,7 @@ const TimeFilterDropdown: React.FC<Props> = ({
 
   return (
     <Modal transparent onRequestClose={onClose}>
-      <Pressable onPress={onClose}>
+      <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
           <View
             style={[styles.container, { backgroundColor: theme.background }]}
@@ -70,7 +70,7 @@ const TimeFilterDropdown: React.FC<Props> = ({
             ))}
           </View>
         </View>
-      </Pressable>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

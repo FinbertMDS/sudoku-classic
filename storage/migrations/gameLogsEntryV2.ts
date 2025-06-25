@@ -2,7 +2,7 @@ export async function migrateGameLogsEntryV2() {
   // console.log('[MIGRATION] Migrating game logs entry v2...');
   // await PlayerService.createDefaultPlayerIfNeeded();
   // const rawLogs = statsStorage.getGameLogs();
-  // const migrated = rawLogs.map(entry => {
+  // const migrated = rawLogs.map((entry) => {
   //   if (
   //     entry.playerId === undefined ||
   //     entry.playerId === null ||

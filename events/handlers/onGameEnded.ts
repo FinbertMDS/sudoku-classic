@@ -1,7 +1,7 @@
+import { CORE_EVENTS } from '..';
 import { GameStatsManager } from '../../services/GameStatsManager';
 import { PlayerService } from '../../services/PlayerService';
 import eventBus from '../eventBus';
-import { CORE_EVENTS } from '../index';
 import { GameEndedCoreEvent, StatisticsUpdatedCoreEvent } from '../types';
 
 export const handleGameEnded = async (payload: GameEndedCoreEvent) => {

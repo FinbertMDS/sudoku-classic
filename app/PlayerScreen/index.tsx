@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/commons/Header';
-import CreatePlayerModal from '../../components/Player/CreatePlayerModal';
 import PlayerCard from '../../components/Player/PlayerCard';
+import PlayerModal from '../../components/Player/PlayerModal';
 import { useTheme } from '../../context/ThemeContext';
 import { CORE_EVENTS } from '../../events';
 import eventBus from '../../events/eventBus';
 import { usePlayerProfile } from '../../hooks/usePlayerProfile';
-import { useSafeGoBack } from '../../hooks/useSafeGoBack';
 import { PlayerService } from '../../services/PlayerService';
 import { PlayerProfile } from '../../types/player';
 import { DEFAULT_PLAYER_ID } from '../../utils/constants';
@@ -31,41 +33,70 @@ const PlayerScreen = () => {
     deletePlayer,
     createPlayer,
     updatePlayerName,
+    reloadPlayer,
+    reloadAllPlayers,
   } = usePlayerProfile();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingPlayer, setEditingPlayer] = useState<PlayerProfile | null>(
     null,
   );
 
-  const goBack = useSafeGoBack();
+  const selectedPlayer = allPlayers.find((p) => p.id === player?.id);
+  const otherPlayers = allPlayers.filter((p) => p.id !== player?.id);
+
+  const handleDefaultPlayerUpdateDone = () => {
+    reloadPlayer();
+    reloadAllPlayers();
+  };
+
+  useEffect(() => {
+    eventBus.on(
+      CORE_EVENTS.defaultPlayerUpdated_Done,
+      handleDefaultPlayerUpdateDone,
+    );
+    return () =>
+      eventBus.off(
+        CORE_EVENTS.defaultPlayerUpdated_Done,
+        handleDefaultPlayerUpdateDone,
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSelect = (id: string) => {
     switchPlayer(id);
     eventBus.emit(CORE_EVENTS.switchPlayer, id);
-    goBack();
   };
+
   const handleEdit = (_player: PlayerProfile) => {
     setEditingPlayer(_player);
     setShowCreateModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowCreateModal(false);
+    setEditingPlayer(null);
   };
 
   const handleModalSubmit = (mode: 'create' | 'edit', newName: string) => {
     if (!newName.trim()) {
       return;
     }
-    if (mode === 'create' || editingPlayer?.id === DEFAULT_PLAYER_ID) {
+    if (mode === 'create') {
       const newPlayer: PlayerProfile = createNewPlayer(newName);
       createPlayer(newPlayer);
-      switchPlayer(newPlayer.id);
-      if (editingPlayer?.id === DEFAULT_PLAYER_ID) {
-        eventBus.emit(CORE_EVENTS.defaultPlayerUpdated, newPlayer.id);
-      }
-      goBack();
     } else {
       if (editingPlayer) {
-        updatePlayerName(editingPlayer.id, newName);
+        if (editingPlayer.id === DEFAULT_PLAYER_ID) {
+          const newPlayer: PlayerProfile = createNewPlayer(newName);
+          createPlayer(newPlayer);
+          if (player?.id === DEFAULT_PLAYER_ID) {
+            switchPlayer(newPlayer.id);
+          }
+          eventBus.emit(CORE_EVENTS.defaultPlayerUpdated, newPlayer.id);
+        } else {
+          updatePlayerName(editingPlayer.id, newName);
+        }
       }
-      goBack();
     }
   };
 
@@ -98,16 +129,39 @@ const PlayerScreen = () => {
         showSettings={false}
         showTheme={true}
       />
+      <Text
+        style={[
+          styles.title,
+          { color: theme.text, backgroundColor: theme.backgroundSecondary },
+        ]}
+      >
+        {t('selectPlayerTitle')}
+      </Text>
+      {selectedPlayer && (
+        <View
+          style={[
+            styles.selectedPlayerContainer,
+            { backgroundColor: theme.backgroundSecondary },
+          ]}
+        >
+          <PlayerCard
+            key={selectedPlayer.id}
+            player={selectedPlayer}
+            isSelected={selectedPlayer.id === player?.id}
+            canDelete={selectedPlayer.id !== DEFAULT_PLAYER_ID}
+            onPress={() => handleSelect(selectedPlayer.id)}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
+        </View>
+      )}
       <ScrollView
         style={[
           styles.contentContainer,
           { backgroundColor: theme.backgroundSecondary },
         ]}
       >
-        <Text style={[styles.title, { color: theme.text }]}>
-          {t('selectPlayerTitle')}
-        </Text>
-        {allPlayers.map((p) => (
+        {otherPlayers.map((p) => (
           <PlayerCard
             key={p.id}
             player={p}
@@ -118,25 +172,30 @@ const PlayerScreen = () => {
             onEdit={handleEdit}
           />
         ))}
+      </ScrollView>
+      <View style={{ backgroundColor: theme.backgroundSecondary }}>
         <TouchableOpacity
           onPress={() => setShowCreateModal(true)}
-          style={styles.button}
+          style={[styles.button, { borderColor: theme.buttonBlue }]}
         >
           <Text style={[styles.buttonText, { color: theme.buttonBlue }]}>
             {t('addPlayerBtn')}
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
       {showCreateModal && (
-        <CreatePlayerModal
-          onClose={() => {
-            setShowCreateModal(false);
-            setEditingPlayer(null);
-          }}
-          initialName={editingPlayer?.name ?? ''}
-          onSubmit={handleModalSubmit}
-          mode={editingPlayer ? 'edit' : 'create'}
-        />
+        <Modal transparent onRequestClose={handleCloseModal}>
+          <TouchableWithoutFeedback onPress={handleCloseModal}>
+            <View style={styles.overlay}>
+              <PlayerModal
+                onClose={handleCloseModal}
+                initialName={editingPlayer?.name ?? ''}
+                onSubmit={handleModalSubmit}
+                mode={editingPlayer ? 'edit' : 'create'}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       )}
     </SafeAreaView>
   );
@@ -146,25 +205,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  selectedPlayerContainer: {
+    paddingTop: 16,
+    paddingHorizontal: 16,
+  },
   contentContainer: {
     flex: 1,
-    paddingTop: 16,
     paddingHorizontal: 16,
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 16,
+    paddingTop: 16,
+    paddingLeft: 16,
   },
   button: {
     paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    paddingHorizontal: 24,
+    borderRadius: 24,
     alignItems: 'center',
+    alignSelf: 'center',
+    borderWidth: 1,
     marginVertical: 20,
   },
   buttonText: {
     fontSize: 18,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

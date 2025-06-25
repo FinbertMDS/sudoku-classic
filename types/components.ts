@@ -45,6 +45,12 @@ export type OptionMenuItem = {
   onPress?: () => void;
 };
 
+export type StatsTab = {
+  key: string;
+  label: string;
+  testID: string;
+};
+
 export type TimeFilter = 'all' | 'today' | 'week' | 'month' | 'year';
 
 export type DailyBackgrounds = {

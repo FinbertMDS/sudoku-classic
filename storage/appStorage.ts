@@ -11,7 +11,7 @@ import {
 import { storage } from './mmkv';
 
 // STORAGE_KEY_LANG_KEY_DEFAULT
-const getLangKeyDefault = async (): Promise<string | null> => {
+const getLangKeyDefault = (): string | null => {
   try {
     return storage.getString(STORAGE_KEY_LANG_KEY_DEFAULT) || null;
   } catch (_) {

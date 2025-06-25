@@ -6,7 +6,7 @@ export const BoardService = {
   async save(state: SavedGame | InitGame) {
     try {
       if ('initialBoard' in state) {
-        await gameStorage.saveInitGame(state);
+        gameStorage.saveInitGame(state);
       } else if ('savedBoard' in state) {
         const savedGame = await this.loadSaved();
         const updatedSavedGame: SavedGame = {
@@ -14,7 +14,7 @@ export const BoardService = {
           ...state,
           lastSaved: new Date(),
         };
-        await gameStorage.saveSavedGame(updatedSavedGame);
+        gameStorage.saveSavedGame(updatedSavedGame);
       }
     } catch (e) {
       console.error('Failed to save game:', e);
@@ -97,7 +97,7 @@ export const BoardService = {
 
   async clear() {
     try {
-      await gameStorage.clearGameData();
+      gameStorage.clearGameData();
     } catch (e) {
       console.error('Failed to clear saved game:', e);
     }
@@ -105,7 +105,7 @@ export const BoardService = {
 
   async clearSaved() {
     try {
-      await gameStorage.clearSavedGameData();
+      gameStorage.clearSavedGameData();
     } catch (e) {
       console.error('Failed to clear saved game:', e);
     }
