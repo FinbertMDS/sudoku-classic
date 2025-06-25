@@ -107,8 +107,7 @@ const ActionButtons = ({
         <TouchableOpacity
           key={idx}
           style={styles.actionButton}
-          onPress={btn.onPress}
-        >
+          onPress={btn.onPress}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons
               name={
@@ -144,8 +143,7 @@ const ActionButtons = ({
                       ? theme.buttonBlue
                       : theme.secondary,
                 },
-              ]}
-            >
+              ]}>
               {btn.label}
             </Text>
           </View>

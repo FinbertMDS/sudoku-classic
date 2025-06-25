@@ -34,8 +34,7 @@ const LevelStats = ({stats}: LevelStatsProps) => {
   if (!stats) {
     return (
       <View
-        style={[styles.loadingContainer, {backgroundColor: theme.background}]}
-      >
+        style={[styles.loadingContainer, {backgroundColor: theme.background}]}>
         <ActivityIndicator size="large" color={theme.secondary} />
         <Text style={styles.title}>{t('loading')}</Text>
       </View>
@@ -54,8 +53,7 @@ const LevelStats = ({stats}: LevelStatsProps) => {
                 backgroundColor: theme.background,
                 borderLeftColor: getLevelColor(level, mode),
               },
-            ]}
-          >
+            ]}>
             <Text style={[styles.level, {color: theme.text}]}>
               {t(`level.${level}`)}
             </Text>

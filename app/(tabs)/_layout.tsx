@@ -23,8 +23,7 @@ export default function TabLayout() {
           color: theme.text,
         },
         headerShown: false,
-      }}
-    >
+      }}>
       <Tabs.Screen
         name="index"
         options={{

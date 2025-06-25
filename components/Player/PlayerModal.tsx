@@ -56,8 +56,7 @@ const PlayerModal = ({
               styles.cancelButton,
               {backgroundColor: theme.cancelButtonBg},
             ]}
-            onPress={onClose}
-          >
+            onPress={onClose}>
             <Text style={[styles.cancelText, {color: theme.text}]}>
               {t('cancelBtn')}
             </Text>
@@ -68,8 +67,7 @@ const PlayerModal = ({
             onPress={() => {
               onClose();
               onSubmit(mode, name);
-            }}
-          >
+            }}>
             <Text style={[styles.createText, {color: theme.text}]}>
               {mode === 'create' ? t('createBtn') : t('saveBtn')}
             </Text>
@@ -87,8 +85,7 @@ const PlayerModal = ({
     <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
       <KeyboardAvoidingView
         style={styles.keyboardAvoiding}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         {renderModal()}
       </KeyboardAvoidingView>
     </Pressable>

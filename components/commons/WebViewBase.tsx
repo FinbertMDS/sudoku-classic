@@ -85,8 +85,7 @@ export default function WebViewBase({
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={title}
         showBack={true}

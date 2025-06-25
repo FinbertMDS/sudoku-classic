@@ -50,8 +50,7 @@ const GameHistoryScreen = () => {
 
   return (
     <SafeAreaView
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       {logs.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={[styles.emptyText, {color: theme.secondary}]}>
@@ -61,8 +60,7 @@ const GameHistoryScreen = () => {
       ) : (
         <ScrollView
           contentContainerStyle={styles.scrollContent}
-          style={{backgroundColor: theme.background}}
-        >
+          style={{backgroundColor: theme.background}}>
           {logs.map((log) => (
             <GameLogCard key={log.id} log={log} />
           ))}

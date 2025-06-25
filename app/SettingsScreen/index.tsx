@@ -98,8 +98,7 @@ const SettingsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('settings')}
         showBack={true}
@@ -121,16 +120,14 @@ const SettingsScreen = () => {
         style={[
           styles.contentContainer,
           {backgroundColor: theme.backgroundSecondary},
-        ]}
-      >
+        ]}>
         {Object.entries(labels).map(([key, label]) => (
           <View
             key={key}
             style={[
               styles.settingRow,
               {backgroundColor: theme.settingItemBackground},
-            ]}
-          >
+            ]}>
             <View style={styles.labelContainer}>
               <Text style={[styles.label, {color: theme.text}]}>{label}</Text>
               {descriptions[key as keyof typeof descriptions] && (
@@ -155,8 +152,7 @@ const SettingsScreen = () => {
                 borderColor: theme.buttonBorder,
               },
             ]}
-            onPress={() => setShowConfirmDialog(true)}
-          >
+            onPress={() => setShowConfirmDialog(true)}>
             <Text style={[styles.buttonText, {color: theme.buttonText}]}>
               {t('clearStorage')}
             </Text>

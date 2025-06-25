@@ -1,4 +1,3 @@
-import {RootStackParamList} from '@/types';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
@@ -14,6 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {appConfig} from '../../appConfig';
 import Header from '../../components/commons/Header';
 import {ThemeType, useTheme} from '../../context/ThemeContext';
+import {RootStackParamList} from '../../types';
 import {SCREENS} from '../../utils/constants';
 
 export default function AboutGame() {
@@ -28,8 +28,7 @@ export default function AboutGame() {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('aboutGame')}
         showBack={true}
@@ -40,8 +39,7 @@ export default function AboutGame() {
         contentContainerStyle={[
           styles.contentContainer,
           {backgroundColor: theme.backgroundSecondary},
-        ]}
-      >
+        ]}>
         <View style={[styles.card, {backgroundColor: theme.background}]}>
           <Text style={[styles.title, {color: theme.text}]}>
             {t('appNameWithAuthor', {
@@ -118,8 +116,7 @@ const Item = ({
         backgroundColor: theme.background,
         borderBottomColor: isLast ? 'transparent' : '#ccc',
       },
-    ]}
-  >
+    ]}>
     <Text style={[styles.itemText, {color: theme.text}]}>{label}</Text>
   </TouchableOpacity>
 );

@@ -32,8 +32,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
           },
         ]}
         accessibilityLabel="NewGameButton"
-        onPress={() => setVisible(true)}
-      >
+        onPress={() => setVisible(true)}>
         <Text style={[styles.buttonText, {color: theme.buttonText}]}>
           {t('newGame')}
         </Text>
@@ -47,8 +46,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
                 style={[
                   styles.modalContainer,
                   {backgroundColor: theme.background},
-                ]}
-              >
+                ]}>
                 {LEVELS.map((level, index) => (
                   <TouchableOpacity
                     key={level}
@@ -68,8 +66,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
                     onPress={() => {
                       setVisible(false);
                       handleNewGame(level);
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.label, {color: theme.text}]}>
                       {t(`level.${level}`)}
                     </Text>

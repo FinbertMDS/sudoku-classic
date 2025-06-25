@@ -59,8 +59,7 @@ const TimeFilterDropdown = ({
                 onPress={() => {
                   onSelect(option.value);
                   onClose();
-                }}
-              >
+                }}>
                 <Text style={[styles.label, {color: theme.text}]}>
                   {option.label}
                 </Text>

@@ -42,8 +42,7 @@ const PlayerCard = ({
           },
         ],
       ]}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <View
         style={[
           styles.avatar,
@@ -52,8 +51,7 @@ const PlayerCard = ({
             styles.selectedAvatar,
             {borderColor: theme.buttonBlue},
           ],
-        ]}
-      >
+        ]}>
         <Text style={styles.avatarText}>
           {player.name.charAt(0).toUpperCase()}
         </Text>
@@ -73,8 +71,7 @@ const PlayerCard = ({
       {!isSelected && canDelete && (
         <TouchableOpacity
           onPress={() => onDelete(player.id)}
-          style={styles.button}
-        >
+          style={styles.button}>
           <Ionicons name="trash" size={20} color={theme.danger} />
         </TouchableOpacity>
       )}
@@ -84,8 +81,7 @@ const PlayerCard = ({
             styles.checkMark,
             styles.button,
             {backgroundColor: theme.buttonBlue},
-          ]}
-        >
+          ]}>
           <Text style={[styles.checkText, {color: theme.text}]}>✓</Text>
         </View>
       )}

@@ -73,8 +73,7 @@ const TimeLineChart = ({dailyStats, chartConfig}: TimeLineChartProps) => {
                   top: y - 16,
                   left: x - 15,
                 },
-              ]}
-            >
+              ]}>
               <Text style={[styles.dotText, {color: theme.secondary}]}>
                 {timeData[index]}
               </Text>

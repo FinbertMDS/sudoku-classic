@@ -30,8 +30,7 @@ export const BannerAdSafe = () => {
           bottom: insets.bottom,
           backgroundColor: theme.background,
         },
-      ]}
-    >
+      ]}>
       <BannerAd
         ref={bannerRef}
         unitId={bannerId}

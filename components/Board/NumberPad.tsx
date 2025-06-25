@@ -62,14 +62,12 @@ const NumberPad = ({board, settings, onSelectNumber}: NumberPadProps) => {
             },
           ]}
           onPress={() => onSelectNumber(num)}
-          disabled={counts[num] === BOARD_SIZE}
-        >
+          disabled={counts[num] === BOARD_SIZE}>
           <Text
             style={[
               // eslint-disable-next-line react-native/no-inline-styles
               {color: theme.text, fontSize: buttonWidth > 50 ? 48 : 32},
-            ]}
-          >
+            ]}>
             {counts[num] === BOARD_SIZE ? ' ' : num}
           </Text>
         </TouchableOpacity>

@@ -98,8 +98,7 @@ const OptionsScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('options')}
         showBack={true}
@@ -110,8 +109,7 @@ const OptionsScreen = () => {
         style={[
           styles.contentContainer,
           {backgroundColor: theme.backgroundSecondary},
-        ]}
-      >
+        ]}>
         {menuItems.map(({icon, label, screen, onPress}) => (
           <TouchableOpacity
             key={label}
@@ -125,8 +123,7 @@ const OptionsScreen = () => {
                 : onPress
                   ? onPress()
                   : () => {}
-            }
-          >
+            }>
             <MaterialCommunityIcons
               name={icon as any}
               size={24}

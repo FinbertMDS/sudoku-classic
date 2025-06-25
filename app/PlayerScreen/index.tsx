@@ -121,8 +121,7 @@ const PlayerScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('players')}
         showBack={true}
@@ -133,8 +132,7 @@ const PlayerScreen = () => {
         style={[
           styles.title,
           {color: theme.text, backgroundColor: theme.backgroundSecondary},
-        ]}
-      >
+        ]}>
         {t('selectPlayerTitle')}
       </Text>
       {selectedPlayer && (
@@ -142,8 +140,7 @@ const PlayerScreen = () => {
           style={[
             styles.selectedPlayerContainer,
             {backgroundColor: theme.backgroundSecondary},
-          ]}
-        >
+          ]}>
           <PlayerCard
             key={selectedPlayer.id}
             player={selectedPlayer}
@@ -159,8 +156,7 @@ const PlayerScreen = () => {
         style={[
           styles.contentContainer,
           {backgroundColor: theme.backgroundSecondary},
-        ]}
-      >
+        ]}>
         {otherPlayers.map((p) => (
           <PlayerCard
             key={p.id}
@@ -176,8 +172,7 @@ const PlayerScreen = () => {
       <View style={{backgroundColor: theme.backgroundSecondary}}>
         <TouchableOpacity
           onPress={() => setShowCreateModal(true)}
-          style={[styles.button, {borderColor: theme.buttonBlue}]}
-        >
+          style={[styles.button, {borderColor: theme.buttonBlue}]}>
           <Text style={[styles.buttonText, {color: theme.buttonBlue}]}>
             {t('addPlayerBtn')}
           </Text>

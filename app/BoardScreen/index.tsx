@@ -589,8 +589,7 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top']}
-        style={[styles.loadingContainer, {backgroundColor: theme.background}]}
-      >
+        style={[styles.loadingContainer, {backgroundColor: theme.background}]}>
         <ActivityIndicator size="large" color={theme.primary} />
       </SafeAreaView>
     );
@@ -600,8 +599,7 @@ const BoardScreen = () => {
     return (
       <SafeAreaView
         edges={['top', 'bottom']}
-        style={[styles.container, {backgroundColor: theme.background}]}
-      >
+        style={[styles.container, {backgroundColor: theme.background}]}>
         <Header
           title={t('appName')}
           showBack={true}
@@ -617,8 +615,7 @@ const BoardScreen = () => {
     <>
       <SafeAreaView
         edges={['top', 'bottom']}
-        style={[styles.container, {backgroundColor: theme.background}]}
-      >
+        style={[styles.container, {backgroundColor: theme.background}]}>
         <Header
           title={t('appName')}
           showBack={true}
@@ -634,8 +631,7 @@ const BoardScreen = () => {
               paddingTop: insets.top,
               paddingBottom: insets.bottom + bannerHeight,
             },
-          ]}
-        >
+          ]}>
           <InfoPanel
             isPlaying={isPlaying}
             level={level}

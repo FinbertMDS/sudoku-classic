@@ -41,7 +41,7 @@ const StatisticsScreen = () => {
   const {t} = useTranslation();
   const [stats, setStats] = useState<Record<Level, GameStats> | null>(null);
   const [logs, setLogs] = useState<GameLogEntryV2[]>([]);
-  const [activeTab, setActiveTab] = useState<'level' | 'chart'>('level');
+  const [activeTab, setActiveTab] = useState<StatsTab['key']>('level');
 
   const [filter, setFilter] = useState<TimeFilter>('all');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -113,8 +113,7 @@ const StatisticsScreen = () => {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('statistics')}
         showBack={false}
@@ -129,8 +128,7 @@ const StatisticsScreen = () => {
         custom={
           <TouchableOpacity
             onPress={() => setShowDropdown(true)}
-            style={styles.iconButton}
-          >
+            style={styles.iconButton}>
             <Ionicons name="filter" size={24} color={theme.primary} />
           </TouchableOpacity>
         }
@@ -140,8 +138,7 @@ const StatisticsScreen = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.tabRow}
-        >
+          contentContainerStyle={styles.tabRow}>
           {statsTabs.map((tab) => {
             const isActive = activeTab === tab.key;
 
@@ -158,16 +155,14 @@ const StatisticsScreen = () => {
                       ? theme.primary
                       : theme.settingItemBackground,
                   },
-                ]}
-              >
+                ]}>
                 <Text
                   style={[
                     styles.chipText,
                     {
                       color: isActive ? theme.text : theme.secondary,
                     },
-                  ]}
-                >
+                  ]}>
                   {tab.label}
                 </Text>
               </TouchableOpacity>

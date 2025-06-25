@@ -67,8 +67,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
 
   return (
     <View
-      style={[styles.container, {backgroundColor: theme.backgroundSecondary}]}
-    >
+      style={[styles.container, {backgroundColor: theme.backgroundSecondary}]}>
       <FlatList
         ref={flatListRef}
         data={slides}
@@ -115,8 +114,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
         {index > 0 ? (
           <TouchableOpacity
             onPress={onBack}
-            style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}
-          >
+            style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}>
             <Ionicons name="arrow-back" size={24} color={theme.iconColor} />
           </TouchableOpacity>
         ) : (
@@ -127,8 +125,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
           accessibilityLabel="HowToPlayNextButton"
           testID="HowToPlayNextButton"
           onPress={onNext}
-          style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}
-        >
+          style={[styles.navBtn, {backgroundColor: theme.buttonBlue}]}>
           <Ionicons
             name={index === slides.length - 1 ? 'checkmark' : 'arrow-forward'}
             size={24}

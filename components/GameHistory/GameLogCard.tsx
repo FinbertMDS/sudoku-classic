@@ -23,8 +23,7 @@ const GameLogCard = ({log}: {log: GameLogEntryV2}) => {
           style={[
             styles.status,
             {color: log.completed ? theme.success : theme.error},
-          ]}
-        >
+          ]}>
           {log.completed ? t('completed') : t('incomplete')}
         </Text>
       </View>

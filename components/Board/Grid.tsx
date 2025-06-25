@@ -202,8 +202,7 @@ const Grid = ({
               width: cellSize,
               height: cellSize,
             },
-          ]}
-        >
+          ]}>
           {overlayColor && (
             <View style={[styles.overlay, {backgroundColor: overlayColor}]} />
           )}
@@ -215,8 +214,7 @@ const Grid = ({
               {width: cellSize, height: cellSize},
             ]}
             onPress={() => onPress({row, col, value: cellValue})}
-            activeOpacity={0.8}
-          >
+            activeOpacity={0.8}>
             {cellNotes.length > 0 && (
               <View style={styles.notesContainerTop}>
                 {Array.from({length: BOARD_SIZE}, (_, i) => {
@@ -231,8 +229,7 @@ const Grid = ({
                           fontSize: noteText,
                           width: noteWidth,
                         },
-                      ]}
-                    >
+                      ]}>
                       {cellNotes.includes(noteValue) ? i + 1 : ' '}
                     </Text>
                   );
@@ -246,16 +243,14 @@ const Grid = ({
                 animatedStyle,
                 {width: cellSize, height: cellSize},
               ]}
-              pointerEvents="box-none"
-            >
+              pointerEvents="box-none">
               {showValue && (
                 <Text
                   style={[
                     styles.cellText,
                     {color: theme.text, fontSize: cellText},
                     showMistake && {color: theme.danger},
-                  ]}
-                >
+                  ]}>
                   {cellValue}
                 </Text>
               )}
@@ -276,8 +271,7 @@ const Grid = ({
           style={{
             width: cellSize * BOARD_SIZE,
             height: cellSize * BOARD_SIZE,
-          }}
-        >
+          }}>
           <View style={styles.grid}>
             {board.map((row, i) => (
               <View key={i} style={styles.row}>

@@ -20,8 +20,7 @@ const LicensesScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('licenses')}
         showBack={true}

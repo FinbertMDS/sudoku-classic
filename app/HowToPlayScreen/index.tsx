@@ -15,8 +15,7 @@ const HowToPlayScreen = () => {
   return (
     <SafeAreaView
       edges={['top', 'bottom']}
-      style={[styles.container, {backgroundColor: theme.background}]}
-    >
+      style={[styles.container, {backgroundColor: theme.background}]}>
       <Header
         title={t('howToPlay.title')}
         showBack={true}
@@ -33,4 +32,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
 export default HowToPlayScreen;

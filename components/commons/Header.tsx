@@ -117,8 +117,7 @@ const Header = ({
               accessibilityLabel="ThemeButton"
               testID="ThemeButton"
               onPress={toggleTheme}
-              style={styles.iconButton}
-            >
+              style={styles.iconButton}>
               <MaterialCommunityIcons
                 name={mode === 'light' ? 'weather-night' : 'weather-sunny'}
                 size={24}
@@ -131,8 +130,7 @@ const Header = ({
               accessibilityLabel="SettingsButton"
               testID="SettingsButton"
               onPress={onSettings ? onSettings : defaultOnSettings}
-              style={styles.iconButton}
-            >
+              style={styles.iconButton}>
               <MaterialCommunityIcons
                 name="cog-outline"
                 size={24}
