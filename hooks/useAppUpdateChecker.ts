@@ -23,7 +23,7 @@ export const useAppUpdateChecker = () => {
 
   const checkVersion = async () => {
     try {
-      if (Platform.OS === 'web') {
+      if (__DEV__ || Platform.OS === 'web') {
         return;
       }
       const _storeUrl =

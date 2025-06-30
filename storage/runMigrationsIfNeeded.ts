@@ -1,6 +1,8 @@
 import {appStorage} from './appStorage';
+import {migrateGameLogsEntryV2} from './migrations/gameLogsEntryV2';
+import {updateTotalGames} from './migrations/updateTotalGames';
 
-export const CURRENT_MIGRATION_VERSION = 0;
+export const CURRENT_MIGRATION_VERSION = 2;
 
 export async function runMigrationsIfNeeded() {
   // statsMock.saveMockGameLogsV2();
@@ -18,13 +20,13 @@ export async function runMigrationsIfNeeded() {
   );
 
   // Các bước migrate theo version
-  // if (storedVersion < 1) {
-  //   await migrateGameLogsEntryV2();
-  // }
+  if (storedVersion < 1) {
+    await migrateGameLogsEntryV2();
+  }
 
-  // if (storedVersion < 2) {
-  //   await updateTotalGames();
-  // }
+  if (storedVersion < 2) {
+    await updateTotalGames();
+  }
 
   // Cập nhật version sau khi migrate xong
   appStorage.setMigrationVersion(CURRENT_MIGRATION_VERSION);
