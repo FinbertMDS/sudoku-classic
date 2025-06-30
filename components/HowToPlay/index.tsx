@@ -1,8 +1,7 @@
 import {Ionicons} from '@expo/vector-icons';
-import React, {useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  Dimensions,
   FlatList,
   Image,
   StyleSheet,
@@ -14,8 +13,6 @@ import {
 import {useTheme} from '../../context/ThemeContext';
 import {getTutorialImage} from '../../utils/tutorialImages';
 
-const SLIDE_WIDTH = Dimensions.get('window').width;
-
 type HowToPlayProps = {
   onClose: () => void;
 };
@@ -26,6 +23,13 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
   const [index, setIndex] = useState(0);
   const {mode, theme} = useTheme();
   const {t} = useTranslation();
+
+  const viewabilityConfig = useMemo(
+    () => ({
+      itemVisiblePercentThreshold: 50,
+    }),
+    [],
+  );
 
   const slides = [
     {
@@ -76,6 +80,8 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged.current}
+        viewabilityConfig={viewabilityConfig}
+        extraData={width}
         renderItem={({item}) => (
           <View style={[styles.slide, {width}]}>
             <Image
@@ -89,8 +95,8 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
           </View>
         )}
         getItemLayout={(_, i) => ({
-          length: SLIDE_WIDTH,
-          offset: SLIDE_WIDTH * i,
+          length: width,
+          offset: width * i,
           index: i,
         })}
       />
