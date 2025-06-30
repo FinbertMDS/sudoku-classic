@@ -3,10 +3,8 @@ import {appStorage} from './appStorage';
 export const CURRENT_MIGRATION_VERSION = 0;
 
 export async function runMigrationsIfNeeded() {
-  // if (IS_UI_TESTING) {
-  //   console.log('[MIGRATION] Mock game logs for UI testing');
-  //   statsMock.saveMockGameLogs();
-  // }
+  // statsMock.saveMockGameLogsV2();
+  // rankingMock.saveMockRanking();
 
   const storedVersion = appStorage.getMigrationVersion() ?? 0;
 
@@ -22,6 +20,10 @@ export async function runMigrationsIfNeeded() {
   // Các bước migrate theo version
   // if (storedVersion < 1) {
   //   await migrateGameLogsEntryV2();
+  // }
+
+  // if (storedVersion < 2) {
+  //   await updateTotalGames();
   // }
 
   // Cập nhật version sau khi migrate xong

@@ -12,6 +12,7 @@ import {PieChart} from 'react-native-chart-kit';
 import {AbstractChartConfig} from 'react-native-chart-kit/dist/AbstractChart';
 import {useTheme} from '../../context/ThemeContext';
 import {DailyStatsPieData} from '../../types';
+import EmptyContainer from '../commons/EmptyContainer';
 
 let screenWidth = Dimensions.get('window').width;
 if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
@@ -28,14 +29,7 @@ const GamePieChart = ({levelCounts, chartConfig}: GamePieChartProps) => {
   const {t} = useTranslation();
 
   if (levelCounts.length === 0) {
-    return (
-      <View style={[styles.container, {backgroundColor: theme.background}]}>
-        <Text style={[styles.title, {color: theme.text}]}>
-          {t('gamesDistributionByLevel')}
-        </Text>
-        <Text style={[{color: theme.text}]}>{t('noDataAvailable')}</Text>
-      </View>
-    );
+    return <EmptyContainer text={t('gamesDistributionByLevel')} />;
   }
 
   const chartWidth = screenWidth - 16;

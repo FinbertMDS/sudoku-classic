@@ -1,52 +1,46 @@
+// src/hooks/usePlayerProfile.ts
+
 import {useEffect, useState} from 'react';
-import {playerProfileStorage} from '../storage';
-import {PlayerProfile} from '../types/player';
+import {PlayerService} from '../services';
+import {PlayerProfile} from '../types';
 
 export const usePlayerProfile = () => {
   const [player, setPlayer] = useState<PlayerProfile | null>(null);
   const [allPlayers, setAllPlayers] = useState<PlayerProfile[]>([]);
 
   useEffect(() => {
-    const currentPlayer = playerProfileStorage.getCurrentPlayer();
-    setPlayer(currentPlayer);
-    const all = playerProfileStorage.getAllPlayers();
-    setAllPlayers(all);
+    reloadPlayer();
+    reloadAllPlayers();
   }, []);
 
-  const switchPlayer = (id: string) => {
-    playerProfileStorage.setCurrentPlayerId(id);
-    setPlayer(playerProfileStorage.getCurrentPlayer());
+  const switchPlayer = async (id: string) => {
+    await PlayerService.setCurrentPlayerId(id);
+    reloadPlayer();
   };
 
-  const deletePlayer = (id: string) => {
-    const all = playerProfileStorage.getAllPlayers();
-    const updated = all.filter((_player) => _player.id !== id);
-    playerProfileStorage.savePlayers(updated);
-    setAllPlayers(updated);
+  const deletePlayer = async (id: string) => {
+    await PlayerService.deletePlayer(id);
+    reloadAllPlayers();
   };
 
-  const createPlayer = (profile: PlayerProfile) => {
-    const all = playerProfileStorage.getAllPlayers();
-    const updated = [...all, profile];
-    playerProfileStorage.savePlayers(updated);
-    setAllPlayers(updated);
+  const createPlayer = async (profile: PlayerProfile) => {
+    await PlayerService.createPlayer(profile);
+    reloadAllPlayers();
   };
 
-  const updatePlayerName = (id: string, name: string) => {
-    const all = playerProfileStorage.getAllPlayers();
-    const updated = all.map((_player) =>
-      _player.id === id ? {..._player, name} : _player,
-    );
-    playerProfileStorage.savePlayers(updated);
-    setAllPlayers(updated);
+  const updatePlayerName = async (id: string, name: string) => {
+    await PlayerService.updatePlayerName(id, name);
+    reloadAllPlayers();
   };
 
-  const reloadPlayer = () => {
-    setPlayer(playerProfileStorage.getCurrentPlayer());
+  const reloadPlayer = async () => {
+    const _player = await PlayerService.getCurrentPlayer();
+    setPlayer(_player);
   };
 
-  const reloadAllPlayers = () => {
-    setAllPlayers(playerProfileStorage.getAllPlayers());
+  const reloadAllPlayers = async () => {
+    const all = await PlayerService.getAllPlayers();
+    setAllPlayers(all);
   };
 
   return {

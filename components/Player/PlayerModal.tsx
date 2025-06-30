@@ -4,11 +4,11 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {useTheme} from '../../context/ThemeContext';
@@ -82,13 +82,13 @@ const PlayerModal = ({
   }
 
   return (
-    <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{flex: 1}}>
       <KeyboardAvoidingView
         style={styles.keyboardAvoiding}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         {renderModal()}
       </KeyboardAvoidingView>
-    </Pressable>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 0, // luôn sát đáy màn hình
   },
   modal: {
     padding: 24,

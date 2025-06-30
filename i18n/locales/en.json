@@ -33,6 +33,7 @@
 
   "main": "Main",
   "statistics": "Statistics",
+  "leaderboard": "Leaderboard",
 
   "mistakeWarning": "Mistake Warning",
   "tooManyMistakes": "You've made more than {{max}} mistakes!",
@@ -159,5 +160,34 @@
   "completed": "Completed",
   "incomplete": "Incomplete",
   "startTime": "Start",
-  "endTime": "End  "
+  "endTime": "End  ",
+
+  "updateRequired": "Update Required",
+  "updateRequiredDescription": "You must update the app to continue.",
+  "updateNow": "Update Now",
+  "updateAvailable": "Update Available",
+  "updateAvailableDescription": "A newer version is available.\nWould you like to update?",
+  "later": "Later",
+  "update": "Update",
+
+  "playerLeaderboard": "Player",
+  "levelLeaderboard": "Level",
+  "performanceLeaderboard": "Performance",
+  "completionLeaderboard": "Completion",
+  "timeLeaderboard": "Time",
+  "streakLeaderboard": "Streak",
+
+  "playerNotes_noGames": "Has not played any games yet.",
+  "playerNotes_bestPerformance": "Perfect win rate.",
+  "playerNotes_stable": "Stable performance with 100% win rate.",
+  "playerNotes_manyGames": "High win rate across many games.",
+  "playerNotes_even": "Balanced performance.",
+  "playerNotes_allNotCompleted": "Has not completed any games.",
+  "playerNotes_strongAtHardLevels": "Wins often at harder levels.",
+  "playerNotes_generic": "Decent overall performance.",
+  "playerNotes_highlights_topRanked": "Top overall ranking by score.",
+  "playerNotes_highlights_bestPerformance": "Highest win rate.",
+  "playerNotes_highlights_fastest": "Fastest average time.",
+  "playerNotes_highlights_mostGames": "Most games played.",
+  "playerNotes_highlights_allNotCompleted": "Hasn't finished any game."
 }

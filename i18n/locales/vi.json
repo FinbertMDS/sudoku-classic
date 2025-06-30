@@ -33,6 +33,7 @@
 
   "main": "Chính",
   "statistics": "Thống kê",
+  "leaderboard": "Bảng xếp hạng",
 
   "mistakeWarning": "Cảnh báo lỗi",
   "tooManyMistakes": "Bạn đã mắc quá {{max}} lỗi!",
@@ -159,5 +160,34 @@
   "completed": "Hoàn thành",
   "incomplete": "Chưa hoàn thành",
   "startTime": "Bắt đầu ",
-  "endTime": "Kết thúc"
+  "endTime": "Kết thúc",
+
+  "updateRequired": "Cần cập nhật",
+  "updateRequiredDescription": "Bạn phải cập nhật ứng dụng để tiếp tục.",
+  "updateNow": "Cập nhật ngay",
+  "updateAvailable": "Cập nhật có sẵn",
+  "updateAvailableDescription": "Có phiên bản mới hơn.\nBạn có muốn cập nhật không?",
+  "later": "Sau",
+  "update": "Cập nhật",
+
+  "playerLeaderboard": "Người chơi",
+  "levelLeaderboard": "Mức độ",
+  "performanceLeaderboard": "Hiệu suất",
+  "completionLeaderboard": "Hoàn thành",
+  "timeLeaderboard": "Thời gian",
+  "streakLeaderboard": "Chuỗi",
+
+  "playerNotes_noGames": "Chưa chơi ván nào.",
+  "playerNotes_bestPerformance": "Tỷ lệ thắng hoàn hảo.",
+  "playerNotes_stable": "Hiệu suất ổn định với tỷ lệ thắng 100%.",
+  "playerNotes_manyGames": "Tỷ lệ thắng cao qua nhiều ván.",
+  "playerNotes_even": "Hiệu suất cân bằng.",
+  "playerNotes_allNotCompleted": "Chưa hoàn thành ván nào.",
+  "playerNotes_strongAtHardLevels": "Thường thắng ở các cấp độ khó.",
+  "playerNotes_generic": "Hiệu suất tổng thể khá tốt.",
+  "playerNotes_highlights_topRanked": "Xếp hạng tổng đứng đầu theo điểm.",
+  "playerNotes_highlights_bestPerformance": "Tỷ lệ thắng cao nhất.",
+  "playerNotes_highlights_fastest": "Thời gian trung bình nhanh nhất.",
+  "playerNotes_highlights_mostGames": "Số ván chơi nhiều nhất.",
+  "playerNotes_highlights_allNotCompleted": "Chưa hoàn thành ván nào."
 }

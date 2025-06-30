@@ -1,3 +1,5 @@
+import {LEVELS} from '../utils/buildConstants';
+
 export type Cell = {
   row: number;
   col: number;
@@ -6,7 +8,8 @@ export type Cell = {
 
 export type CellValue = number | null;
 
-export type Level = 'easy' | 'medium' | 'hard' | 'expert' | 'master';
+export type Level = (typeof LEVELS)[number];
+
 export type GameInfo = {
   id: string;
   initialBoard: CellValue[][];

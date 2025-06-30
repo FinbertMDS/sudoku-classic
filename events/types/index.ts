@@ -14,6 +14,7 @@ export type GameEndedCoreEvent = {
   timePlayed: number;
   mistakes: number;
   hintCount: number;
+  completed: boolean;
 };
 
 export type StatisticsUpdatedCoreEvent = {

@@ -1,5 +1,10 @@
 import {storage} from '.';
-import {DailyStats, GameLogEntryV2, GameStatsCache} from '../types';
+import {
+  DailyStats,
+  GameLogEntry,
+  GameLogEntryV2,
+  GameStatsCache,
+} from '../types';
 import {
   STORAGE_KEY_DAILY_STATS,
   STORAGE_KEY_GAME_LOGS,
@@ -9,13 +14,19 @@ import {
 } from '../utils/constants';
 import {getTodayDateString} from '../utils/dateUtil';
 
-const saveGameLogs = (logs: GameLogEntryV2[]) => {
+/**
+ * @deprecated
+ */
+const saveGameLogs = (logs: GameLogEntry[]) => {
   try {
     storage.set(STORAGE_KEY_GAME_LOGS, JSON.stringify(logs));
   } catch (_) {}
 };
 
-const getGameLogs = (): GameLogEntryV2[] => {
+/**
+ * @deprecated
+ */
+const getGameLogs = (): GameLogEntry[] => {
   try {
     const json = storage.getString(STORAGE_KEY_GAME_LOGS);
     return json ? JSON.parse(json) : [];
@@ -24,6 +35,9 @@ const getGameLogs = (): GameLogEntryV2[] => {
   }
 };
 
+/**
+ * @deprecated
+ */
 const clearGameLogs = () => {
   try {
     storage.delete(STORAGE_KEY_GAME_LOGS);
@@ -36,6 +50,12 @@ const saveGameLogsV2 = (logs: GameLogEntryV2[]) =>
 const getGameLogsV2 = (): GameLogEntryV2[] => {
   const json = storage.getString(STORAGE_KEY_GAME_LOGS);
   return json ? JSON.parse(json) : [];
+};
+
+const clearGameLogsV2 = () => {
+  try {
+    storage.delete(STORAGE_KEY_GAME_LOGS);
+  } catch (_) {}
 };
 
 const getGameLogsV2ByPlayerId = (playerId: string): GameLogEntryV2[] => {
@@ -137,7 +157,7 @@ const clearLastStatsCacheUpdateUserId = () => {
 const clearStatsData = () => {
   try {
     clearDailyStats();
-    clearGameLogs();
+    clearGameLogsV2();
     clearStatsCache();
     clearLastStatsCacheUpdate();
     clearLastStatsCacheUpdateUserId();
@@ -150,6 +170,7 @@ export const statsStorage = {
   clearGameLogs,
   saveGameLogsV2,
   getGameLogsV2,
+  clearGameLogsV2,
   getGameLogsV2ByPlayerId,
   deleteGameLogsV2ByPlayerId,
   saveStatsCache,

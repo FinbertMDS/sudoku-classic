@@ -33,6 +33,7 @@
 
   "main": "メイン",
   "statistics": "統計",
+  "leaderboard": "リーダーボード",
 
   "mistakeWarning": "ミス警告",
   "tooManyMistakes": "{{max}}回以上のミスがあります！",
@@ -159,5 +160,34 @@
   "completed": "完了",
   "incomplete": "未完了",
   "startTime": "開始",
-  "endTime": "終了"
+  "endTime": "終了",
+
+  "updateRequired": "更新が必要です",
+  "updateRequiredDescription": "アプリを更新して続けてください。",
+  "updateNow": "今すぐ更新",
+  "updateAvailable": "更新が利用可能です",
+  "updateAvailableDescription": "新しいバージョンが利用可能です。\n更新しますか？",
+  "later": "後で",
+  "update": "更新",
+
+  "playerLeaderboard": "プレイヤー",
+  "levelLeaderboard": "レベル",
+  "performanceLeaderboard": "パフォーマンス",
+  "completionLeaderboard": "完了",
+  "timeLeaderboard": "時間",
+  "streakLeaderboard": "ストリーク",
+
+  "playerNotes_noGames": "まだゲームをプレイしていません。",
+  "playerNotes_bestPerformance": "完全な勝率です。",
+  "playerNotes_stable": "100％の勝率で安定したパフォーマンス。",
+  "playerNotes_manyGames": "多くのゲームで高い勝率。",
+  "playerNotes_even": "バランスの取れたパフォーマンス。",
+  "playerNotes_allNotCompleted": "まだゲームを完了していません。",
+  "playerNotes_strongAtHardLevels": "難易度の高いレベルでよく勝ちます。",
+  "playerNotes_generic": "全体的にまずまずのパフォーマンス。",
+  "playerNotes_highlights_topRanked": "スコアによる総合ランキングトップ。",
+  "playerNotes_highlights_bestPerformance": "最高の勝率。",
+  "playerNotes_highlights_fastest": "最速の平均時間。",
+  "playerNotes_highlights_mostGames": "最も多くのゲームをプレイ。",
+  "playerNotes_highlights_allNotCompleted": "どのゲームも完了していません。"
 }

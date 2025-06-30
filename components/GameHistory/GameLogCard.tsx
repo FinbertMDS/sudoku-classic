@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     fontSize: 13,
-    marginTop: 2,
+    marginVertical: 3,
   },
   icon: {
     marginRight: 6,

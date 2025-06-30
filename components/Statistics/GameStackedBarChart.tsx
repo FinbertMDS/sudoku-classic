@@ -13,6 +13,7 @@ import {AbstractChartConfig} from 'react-native-chart-kit/dist/AbstractChart';
 import {useTheme} from '../../context/ThemeContext';
 import {DailyStatsStackedData} from '../../types';
 import {CHART2_WIDTH} from '../../utils/constants';
+import EmptyContainer from '../commons/EmptyContainer';
 
 let screenWidth = Dimensions.get('window').width;
 if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
@@ -32,14 +33,7 @@ const GameStackedBarChart = ({
   const {t} = useTranslation();
 
   if (!stackedData || stackedData.data.length === 0) {
-    return (
-      <View style={[styles.container, {backgroundColor: theme.background}]}>
-        <Text style={[styles.title, {color: theme.text}]}>
-          {t('gamesDistributionByLevel')}
-        </Text>
-        <Text style={[{color: theme.text}]}>{t('noDataAvailable')}</Text>
-      </View>
-    );
+    return <EmptyContainer text={t('gamesDistributionByLevel')} />;
   }
   const chartWidth = Math.max(
     stackedData.labels.length * CHART2_WIDTH,

@@ -7,7 +7,7 @@ type QuoteProps = {
   a: string;
 };
 
-export const QuoteBox = ({q, a}: QuoteProps) => {
+const QuoteBox = ({q, a}: QuoteProps) => {
   const {theme} = useTheme();
 
   return (
@@ -42,3 +42,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+export default QuoteBox;

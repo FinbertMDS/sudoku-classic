@@ -14,7 +14,7 @@ import {
 import {getTodayDateString, isInTimeRange} from '../utils/dateUtil';
 import {getStatsFromLogs} from '../utils/statsUtil';
 
-export const GameStatsManager = {
+export const StatsService = {
   async shouldUpdateStatsCache(): Promise<boolean> {
     const lastUpdateStr = statsStorage.getLastStatsCacheUpdate();
     const lastUpdateUserId = statsStorage.getLastStatsCacheUpdateUserId();
@@ -135,7 +135,17 @@ export const GameStatsManager = {
 
   async getLogs(): Promise<GameLogEntryV2[]> {
     try {
-      return statsStorage.getGameLogs();
+      return statsStorage.getGameLogsV2();
+    } catch (error) {
+      console.error('Error loading logs:', error);
+    }
+    return [];
+  },
+
+  async getLogsDone(): Promise<GameLogEntryV2[]> {
+    try {
+      const logs = await this.getLogs();
+      return logs.filter((log) => log.durationSeconds > 0);
     } catch (error) {
       console.error('Error loading logs:', error);
     }
@@ -171,7 +181,7 @@ export const GameStatsManager = {
         existing.unshift(log);
       }
 
-      statsStorage.saveGameLogs(existing);
+      statsStorage.saveGameLogsV2(existing);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -194,7 +204,7 @@ export const GameStatsManager = {
         updated = [...sortedLogs, ...existing];
       }
 
-      statsStorage.saveGameLogs(updated);
+      statsStorage.saveGameLogsV2(updated);
     } catch (error) {
       console.error('Error saving logs:', error);
     }
@@ -217,33 +227,34 @@ export const GameStatsManager = {
     return newEntry;
   },
 
-  async recordGameWin(payload: GameEndedCoreEvent) {
+  async recordGameEnd(payload: GameEndedCoreEvent) {
     // 👉 Record daily log
     const oldEntry = await this.getLog(payload.id);
     let newEntry: GameLogEntryV2;
     if (oldEntry) {
       newEntry = {
         ...oldEntry,
-        completed: true,
+        completed: payload.completed,
         endTime: new Date().toISOString(),
         durationSeconds: payload.timePlayed,
         mistakes: payload.mistakes,
         hintCount: payload.hintCount,
       };
+      await this.saveLog(newEntry, true);
     } else {
       newEntry = {
         id: uuid.v4().toString(),
         playerId: playerProfileStorage.getCurrentPlayerId(),
         level: payload.level,
-        completed: true,
+        completed: payload.completed,
         startTime: new Date().toISOString(),
         endTime: new Date().toISOString(),
         durationSeconds: payload.timePlayed,
         mistakes: payload.mistakes,
         hintCount: payload.hintCount,
       };
+      await this.saveLog(newEntry, false);
     }
-    await this.saveLog(newEntry, true);
     return newEntry;
   },
 

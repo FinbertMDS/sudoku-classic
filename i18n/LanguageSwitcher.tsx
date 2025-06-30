@@ -1,7 +1,7 @@
 // LanguageSwitcher.tsx
 
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useTheme} from '../context/ThemeContext';
@@ -24,14 +24,6 @@ export default function LanguageSwitcher() {
     }, []),
   );
 
-  useEffect(() => {
-    autoDetectLanguage().then((lang) => {
-      if (lang) {
-        setSelectedLang(lang);
-      }
-    });
-  }, []);
-
   const changeLanguage = async (code: string) => {
     await i18n.changeLanguage(code);
     appStorage.saveLangKeyPreferred(code);
@@ -48,9 +40,7 @@ export default function LanguageSwitcher() {
             key={lang.code}
             style={[
               styles.button,
-              selectedLang === lang.code && {
-                backgroundColor: theme.buttonBlue,
-              },
+              selectedLang === lang.code && {backgroundColor: theme.buttonBlue},
             ]}
             onPress={() => changeLanguage(lang.code)}>
             <Text

@@ -22,18 +22,20 @@ export function createEmptyStats(): GameStats {
   };
 }
 
+function createLevelMap<T>(defaultValue: () => T): Record<Level, T> {
+  return Object.fromEntries(
+    LEVELS.map((level) => [level, defaultValue()]),
+  ) as Record<Level, T>;
+}
+
 export function getStatsFromLogs(
   logs: GameLogEntryV2[],
   filter: TimeRange,
   userId: string,
 ): Record<Level, GameStats> {
-  const statsByLevel: Record<Level, GameStats> = {
-    easy: createEmptyStats(),
-    medium: createEmptyStats(),
-    hard: createEmptyStats(),
-    expert: createEmptyStats(),
-    master: createEmptyStats(),
-  };
+  const statsByLevel: Record<Level, GameStats> = createLevelMap(() =>
+    createEmptyStats(),
+  );
 
   const filtered = logs.filter(
     (log) => isInTimeRange(log.endTime, filter) && log.playerId === userId,
@@ -115,13 +117,7 @@ export function convertToPieData(
     return [];
   }
 
-  const levelMap: Record<Level, number> = {
-    easy: 0,
-    medium: 0,
-    hard: 0,
-    expert: 0,
-    master: 0,
-  };
+  const levelMap: Record<Level, number> = createLevelMap(() => 0);
 
   const filtered = logs.filter(
     (log) => log.completed && isInTimeRange(log.endTime, filter),
@@ -158,13 +154,10 @@ export function convertToStackedData(
   filtered.forEach((log) => {
     const date = format(parseISO(log.endTime), DAILY_STATS_DATE_FORMAT);
     if (!dateMap.has(date)) {
-      dateMap.set(date, {
-        easy: 0,
-        medium: 0,
-        hard: 0,
-        expert: 0,
-        master: 0,
-      });
+      dateMap.set(
+        date,
+        createLevelMap(() => 0),
+      );
     }
     dateMap.get(date)![log.level]++;
   });
@@ -179,4 +172,23 @@ export function convertToStackedData(
     data: sorted.map(([, counts]) => LEVELS.map((l) => counts[l])),
     barColors: LEVELS.map((level) => levelColors[level][scheme!]),
   };
+}
+
+export function getGameHistory(
+  logs: GameLogEntryV2[],
+  filter: TimeRange,
+): GameLogEntryV2[] {
+  if (logs.length === 0) {
+    return [];
+  }
+
+  const filtered = logs
+    .filter((log) => log.durationSeconds > 0)
+    .filter((log) => isInTimeRange(log.endTime, filter))
+    .sort(
+      (a, b) =>
+        new Date(b.startTime).getTime() - new Date(a.startTime).getTime(),
+    );
+
+  return filtered;
 }

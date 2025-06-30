@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   Modal,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {useTheme} from '../../context/ThemeContext';
@@ -40,7 +40,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
 
       {visible && (
         <Modal transparent onRequestClose={() => setVisible(false)}>
-          <Pressable onPress={() => setVisible(false)}>
+          <TouchableWithoutFeedback onPress={() => setVisible(false)}>
             <View style={styles.overlay}>
               <View
                 style={[
@@ -74,7 +74,7 @@ const NewGameMenu: React.FC<NewGameMenuProps> = ({handleNewGame}) => {
                 ))}
               </View>
             </View>
-          </Pressable>
+          </TouchableWithoutFeedback>
         </Modal>
       )}
     </>

@@ -59,4 +59,18 @@ export const autoDetectLanguage = async () => {
   } catch (_) {}
 };
 
+export const getLanguage = () => {
+  try {
+    const systemLang = getBestLanguage();
+    const oldLanguage = appStorage.getLangKeyDefault();
+
+    if (systemLang !== oldLanguage) {
+      return systemLang;
+    }
+
+    const preferedLanguage = appStorage.getLangKeyPreferred();
+    return preferedLanguage || systemLang || fallback.languageTag;
+  } catch (_) {}
+};
+
 export default i18n;

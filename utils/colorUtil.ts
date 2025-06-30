@@ -94,3 +94,8 @@ export function getLevelColorsBySchema(
 ): string[] {
   return LEVELS.map((level) => levelColors[level][scheme!]);
 }
+
+export const medalColors = {
+  light: ['#FFD700', '#C0C0C0', '#CD7F32'], // Gold, Silver, Bronze
+  dark: ['#FACC15', '#A1A1AA', '#92400E'], // vàng sáng, xám nhẹ, đồng tối
+};

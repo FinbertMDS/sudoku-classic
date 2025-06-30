@@ -63,7 +63,7 @@ export const darkTheme = {
   overlayColor: '#1A1A22',
   cellBorderColor: '#FFFFFF',
   settingItemBackground: '#2C2C2C',
-  buttonBlue: '#90CAF9',
+  buttonBlue: '#409CFF',
   selectedItemBackground: '#333333',
   itemBorderColor: '#2E2E2E',
   modalBg: '#2c2c2e',

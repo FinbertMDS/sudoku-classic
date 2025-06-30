@@ -1,8 +1,8 @@
 export async function migrateGameLogsEntryV2() {
   // console.log('[MIGRATION] Migrating game logs entry v2...');
   // await PlayerService.createDefaultPlayerIfNeeded();
-  // const rawLogs = statsStorage.getGameLogs();
-  // const migrated = rawLogs.map((entry) => {
+  // const rawLogs = statsStorage.getGameLogsV2();
+  // const migrated = rawLogs.map(entry => {
   //   if (
   //     entry.playerId === undefined ||
   //     entry.playerId === null ||
@@ -18,8 +18,8 @@ export async function migrateGameLogsEntryV2() {
   // statsStorage.saveGameLogsV2(migrated);
   // // update last stats cache update user id
   // const affectedRanges: TimeRange[] = ['today', 'week', 'month', 'year', 'all'];
-  // const allLogs = await GameStatsManager.getLogs();
-  // await GameStatsManager.updateStatsWithAllCache(
+  // const allLogs = await StatsService.getLogs();
+  // await StatsService.updateStatsWithAllCache(
   //   allLogs,
   //   affectedRanges,
   //   DEFAULT_PLAYER_ID,

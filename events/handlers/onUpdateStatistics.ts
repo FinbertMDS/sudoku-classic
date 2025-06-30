@@ -1,11 +1,13 @@
-import {GameStatsManager} from '../../services/GameStatsManager';
+// src/events/handlers/onUpdateStatistics.ts
+
+import {StatsService} from '../../services';
 import {playerProfileStorage} from '../../storage';
 import {StatisticsUpdatedCoreEvent} from '../types';
 
 export const handleUpdateStatistics = async (
   payload: StatisticsUpdatedCoreEvent,
 ) => {
-  const allLogs = await GameStatsManager.getLogs();
+  const allLogs = await StatsService.getLogs();
   // await GameStatsManager.updateStatsWithAllCache(allLogs, [
   //   'today',
   //   'week',
@@ -14,7 +16,7 @@ export const handleUpdateStatistics = async (
   //   'all',
   // ]);
   if (payload.logs.length > 0) {
-    await GameStatsManager.updateStatsWithCache(
+    await StatsService.updateStatsWithCache(
       allLogs,
       payload.logs,
       playerProfileStorage.getCurrentPlayerId(),

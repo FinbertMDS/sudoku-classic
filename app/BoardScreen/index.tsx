@@ -102,8 +102,8 @@ const BoardScreen = () => {
       setBoard(deepCloneBoard(initGame.initialBoard));
       setHistory([deepCloneBoard(initGame.initialBoard)]);
       setNotes(createEmptyGridNotes<string>());
-      setSolvedBoard(initGame.solvedBoard);
       setScore(initGame.savedScore);
+      setSolvedBoard(initGame.solvedBoard);
       setIsPlaying(true);
     } else {
       const initGame = await BoardService.loadInit();
@@ -115,8 +115,8 @@ const BoardScreen = () => {
         setBoard(deepCloneBoard(savedGame.savedBoard));
         setHistory(savedGame.savedHistory);
         setNotes(savedGame.savedNotes);
-        setSolvedBoard(initGame.solvedBoard);
         setScore(savedGame.savedScore);
+        setSolvedBoard(initGame.solvedBoard);
         setIsPlaying(true);
       }
     }
@@ -218,6 +218,14 @@ const BoardScreen = () => {
 
   const handleLimitMistakeReached = async () => {
     await handleResetGame();
+    eventBus.emit(CORE_EVENTS.gameEnded, {
+      id: id,
+      level: level,
+      timePlayed: secondsRef.current,
+      mistakes: totalMistakes,
+      hintCount: totalHintCountUsed,
+      completed: false,
+    } as GameEndedCoreEvent);
     goBack();
   };
 
@@ -251,6 +259,14 @@ const BoardScreen = () => {
   const secondsRef = useRef(0);
   const handleLimitTimeReached = async () => {
     await handleResetGame();
+    eventBus.emit(CORE_EVENTS.gameEnded, {
+      id: id,
+      level: level,
+      timePlayed: secondsRef.current,
+      mistakes: totalMistakes,
+      hintCount: totalHintCountUsed,
+      completed: false,
+    } as GameEndedCoreEvent);
     goBack();
   };
   // ===========================================================
@@ -395,6 +411,7 @@ const BoardScreen = () => {
               timePlayed: secondsRef.current,
               mistakes: totalMistakes,
               hintCount: _totalHintCountUsed,
+              completed: true,
             } as GameEndedCoreEvent);
             await BoardService.clear();
             goBack();
@@ -634,9 +651,9 @@ const BoardScreen = () => {
           ]}>
           <InfoPanel
             isPlaying={isPlaying}
+            score={score}
             level={level}
             mistakes={mistakes}
-            score={score}
             secondsRef={secondsRef}
             isPaused={isPaused}
             settings={settings}

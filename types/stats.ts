@@ -1,5 +1,8 @@
 import {Level} from './game';
 
+/**
+ * @deprecated
+ */
 export interface GameLogEntry {
   id: string; // unique ID (UUID)
   level: Level;

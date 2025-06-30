@@ -51,6 +51,12 @@ export type StatsTab = {
   testID: string;
 };
 
+export type LeaderboardTab = {
+  key: string;
+  label: string;
+  testID: string;
+};
+
 export type TimeFilter = 'all' | 'today' | 'week' | 'month' | 'year';
 
 export type DailyBackgrounds = {

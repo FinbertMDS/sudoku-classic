@@ -1,9 +1,14 @@
+import {useTheme} from '@/context/ThemeContext';
+import {Ionicons} from '@expo/vector-icons';
 import {Tabs} from 'expo-router';
 import React from 'react';
-
-import {IconSymbol} from '@/components/ui/IconSymbol';
-import {useTheme} from '@/context/ThemeContext';
 import {useTranslation} from 'react-i18next';
+
+const icons: any = {
+  index: 'home',
+  StatisticsScreen: 'bar-chart',
+  LeaderboardScreen: 'trophy',
+};
 
 export default function TabLayout() {
   const {theme} = useTheme();
@@ -11,7 +16,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      screenOptions={{
+      screenOptions={({route}) => ({
         tabBarStyle: {
           backgroundColor: theme.background,
           borderTopColor: theme.primary,
@@ -23,23 +28,28 @@ export default function TabLayout() {
           color: theme.text,
         },
         headerShown: false,
-      }}>
+        tabBarIcon: ({color, size}) => {
+          return (
+            <Ionicons name={icons[route.name]} size={size} color={color} />
+          );
+        },
+      })}>
       <Tabs.Screen
         name="index"
         options={{
           tabBarLabel: t('main'),
-          tabBarIcon: ({color}) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
         }}
       />
       <Tabs.Screen
         name="StatisticsScreen"
         options={{
           tabBarLabel: t('statistics'),
-          tabBarIcon: ({color}) => (
-            <IconSymbol size={28} name="chart.bar.fill" color={color} />
-          ),
+        }}
+      />
+      <Tabs.Screen
+        name="LeaderboardScreen"
+        options={{
+          tabBarLabel: t('leaderboard'),
         }}
       />
     </Tabs>

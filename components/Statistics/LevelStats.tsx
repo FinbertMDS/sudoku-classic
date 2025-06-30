@@ -4,7 +4,6 @@ import * as Device from 'expo-device';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  ActivityIndicator,
   Dimensions,
   Platform,
   ScrollView,
@@ -17,6 +16,7 @@ import {GameStats, Level} from '../../types';
 import {getLevelColor} from '../../utils/colorUtil';
 import {LEVELS} from '../../utils/constants';
 import {formatTime} from '../../utils/dateUtil';
+import LoadingContainer from '../commons/LoadingContainer';
 
 let SCREEN_WIDTH = Dimensions.get('window').width;
 if (Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET) {
@@ -32,13 +32,7 @@ const LevelStats = ({stats}: LevelStatsProps) => {
   const {t} = useTranslation();
 
   if (!stats) {
-    return (
-      <View
-        style={[styles.loadingContainer, {backgroundColor: theme.background}]}>
-        <ActivityIndicator size="large" color={theme.secondary} />
-        <Text style={styles.title}>{t('loading')}</Text>
-      </View>
-    );
+    return <LoadingContainer />;
   }
 
   return (
@@ -97,16 +91,6 @@ const LevelStats = ({stats}: LevelStatsProps) => {
 };
 
 const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold' as const,
-    marginBottom: 20,
-  },
   cardsContainer: {
     flex: 1,
     justifyContent: 'center' as const,
@@ -115,7 +99,6 @@ const styles = StyleSheet.create({
   },
   card: {
     width: SCREEN_WIDTH - 100,
-    maxWidth: SCREEN_WIDTH - 100,
     padding: 8,
     paddingRight: 16,
     marginBottom: 16,

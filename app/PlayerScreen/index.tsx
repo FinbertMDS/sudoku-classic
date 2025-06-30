@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  Alert,
   Modal,
   ScrollView,
   StyleSheet,
@@ -17,6 +16,7 @@ import PlayerModal from '../../components/Player/PlayerModal';
 import {useTheme} from '../../context/ThemeContext';
 import {CORE_EVENTS} from '../../events';
 import eventBus from '../../events/eventBus';
+import {useAlert} from '../../hooks/useAlert';
 import {usePlayerProfile} from '../../hooks/usePlayerProfile';
 import {PlayerService} from '../../services/PlayerService';
 import {PlayerProfile} from '../../types/player';
@@ -43,6 +43,8 @@ const PlayerScreen = () => {
 
   const selectedPlayer = allPlayers.find((p) => p.id === player?.id);
   const otherPlayers = allPlayers.filter((p) => p.id !== player?.id);
+
+  const {alert} = useAlert();
 
   const handleDefaultPlayerUpdateDone = () => {
     reloadPlayer();
@@ -102,17 +104,16 @@ const PlayerScreen = () => {
 
   const handleDelete = (id: string) => {
     if (!PlayerService.canDeletePlayer(id)) {
-      Alert.alert(t('cannotDeletePlayerTitle'), t('cannotDeletePlayerMessage'));
+      alert(t('cannotDeletePlayerTitle'), t('cannotDeletePlayerMessage'));
       return;
     }
-    Alert.alert(t('deletePlayerTitle'), t('deletePlayerMessage'), [
+    alert(t('deletePlayerTitle'), t('deletePlayerMessage'), [
       {text: t('cancelBtn'), style: 'cancel'},
       {
         text: t('deleteBtn'),
         style: 'destructive',
         onPress: () => {
           deletePlayer(id);
-          eventBus.emit(CORE_EVENTS.deletePlayer, id);
         },
       },
     ]);
@@ -201,7 +202,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   selectedPlayerContainer: {
-    paddingTop: 16,
     paddingHorizontal: 16,
   },
   contentContainer: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    paddingTop: 16,
+    paddingVertical: 8,
     paddingLeft: 16,
   },
   button: {

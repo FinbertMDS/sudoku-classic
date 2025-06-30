@@ -89,4 +89,5 @@ export const UNSPLASH_UTM = '?utm_source=sudoku-killer&utm_medium=referral';
 export const UNSPLASH_URL = 'https://unsplash.com/';
 
 export const DEFAULT_PLAYER_ID = '00000000-0000-4000-8000-000000000000'; // hoặc uuidv4() cố định
-export const DEFAULT_PLAYER_NAME = 'Player';
+
+export const MAX_PLAYER_RANKING_COUNT = 3;
