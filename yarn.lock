@@ -5872,13 +5872,6 @@ keyv@^4.5.4:
   dependencies:
     json-buffer "3.0.1"
 
-killer-sudoku-generator@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/killer-sudoku-generator/-/killer-sudoku-generator-1.1.2.tgz#700665708c03ce29d4bad852967571af0303afa2"
-  integrity sha512-X254q1DwhyLDizduFhBp/Wi/Ypo1go6QfCjpkYMQt3wzn+sEmb9ezN+e3xS+PswkkeXvS8zai9g4rTNVvQYKFA==
-  dependencies:
-    sudoku-gen "^1.0.0"
-
 kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -8217,12 +8210,7 @@ sudo-prompt@9.1.1:
   resolved "https://registry.yarnpkg.com/sudo-prompt/-/sudo-prompt-9.1.1.tgz#73853d729770392caec029e2470db9c221754db0"
   integrity sha512-es33J1g2HjMpyAhz8lOR+ICmXXAqTuKbuXuUWLhOLew20oN9oUCgCJx615U/v7aioZg7IX5lIh9x34vwneu4pA==
 
-sudoku-core@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/sudoku-core/-/sudoku-core-3.0.3.tgz#18561068415bb5a59443a480e2400219e64d4195"
-  integrity sha512-ZXL+odma0wGtgYXyXDR6+b4+lMiV85d3t7yyqgjlFgM8MaYIKlu8kSEEhcKxYIWd0FYBI41WBIYZLyZOC1Zscw==
-
-sudoku-gen@^1.0.0:
+sudoku-gen@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/sudoku-gen/-/sudoku-gen-1.0.2.tgz#17c5f3637047751121aec31647fcfcf9b7c223d4"
   integrity sha512-zQFQNbar9qGpbteAH7CQShGoR5lk7r4KYlt0Wsvts1eVMzLb2EZUovzc7gAmoHp+HmXGYadmqCyyXoY7QVEyhA==

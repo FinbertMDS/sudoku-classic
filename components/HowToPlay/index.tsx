@@ -83,7 +83,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
         viewabilityConfig={viewabilityConfig}
         extraData={width}
         renderItem={({item}) => (
-          <View style={[styles.slide, {width: width - 48}]}>
+          <View style={[styles.slide, {width: width}]}>
             <Image
               source={item.image}
               style={styles.image}

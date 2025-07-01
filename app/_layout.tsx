@@ -42,13 +42,6 @@ export default function RootLayout() {
         }}>
         <Stack.Screen name={SCREENS.HOME_TABS} />
         <Stack.Screen name={SCREENS.NOT_FOUND} />
-        <Stack.Screen name={SCREENS.BOARD} />
-        <Stack.Screen name={SCREENS.OPTIONS} />
-        <Stack.Screen name={SCREENS.SETTINGS} />
-        <Stack.Screen name={SCREENS.HOW_TO_PLAY} />
-        <Stack.Screen name={SCREENS.ABOUT_GAME} />
-        <Stack.Screen name={SCREENS.SK_WEBVIEW} />
-        <Stack.Screen name={SCREENS.PLAYERS} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

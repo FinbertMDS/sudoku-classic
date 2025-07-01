@@ -58,10 +58,6 @@ export const levelColors: Record<Level, {light: string; dark: string}> = {
     light: '#f87171', // red-400
     dark: '#ef4444', // red-500
   },
-  master: {
-    light: '#f472b6', // rose-400
-    dark: '#ec4899', // rose-500
-  },
 };
 
 export const getChartConfig = (mode: ColorSchemeName = 'light') => ({

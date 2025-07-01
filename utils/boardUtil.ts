@@ -1,5 +1,5 @@
 // boardUtil.ts
-import {Board, generate, solve} from 'sudoku-core';
+import {getSudoku} from 'sudoku-gen';
 import {Difficulty} from 'sudoku-gen/dist/types/difficulty.type';
 import {CellValue, InitGame, Level} from '../types';
 import {BOARD_SIZE} from './constants';
@@ -18,14 +18,6 @@ export function stringToGrid(input: string, columns = 9): CellValue[][] {
       .split('')
       .map((ch) => (ch === '-' ? null : parseInt(ch, 10)));
     grid.push(row);
-  }
-  return grid;
-}
-
-export function convertBoardToGrid(board: Board): CellValue[][] {
-  const grid: CellValue[][] = [];
-  for (let i = 0; i < BOARD_SIZE; i++) {
-    grid.push(board.slice(i * BOARD_SIZE, i * BOARD_SIZE + BOARD_SIZE));
   }
   return grid;
 }
@@ -51,10 +43,6 @@ export function createEmptyGridNotes<T>(): T[][][] {
   return Array.from({length: BOARD_SIZE}, () =>
     Array.from({length: BOARD_SIZE}, () => []),
   );
-}
-
-export function convertBoardToCore(board: CellValue[][]): Board {
-  return board.flat();
 }
 
 export function getCellFromIndex(index: number): {row: number; col: number} {
@@ -159,15 +147,14 @@ export function removeNoteFromPeers(
 }
 
 export const generateBoard = (level: Level, id: string) => {
-  const board = generate(level as Difficulty);
-  const solvedBoard = solve(board);
+  const board = getSudoku(level as Difficulty);
 
   const initGame = {
     id,
-    initialBoard: convertBoardToGrid(board),
-    solvedBoard: convertBoardToGrid(solvedBoard.board as Board),
+    initialBoard: stringToGrid(board.puzzle),
+    solvedBoard: stringToGrid(board.solution),
     savedLevel: level,
-    savedScore: solvedBoard.analysis?.score ?? 0,
+    savedScore: 0,
   } as InitGame;
 
   return initGame;

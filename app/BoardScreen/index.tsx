@@ -6,7 +6,6 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {hint} from 'sudoku-core';
 import ActionButtons from '../../components/Board/ActionButtons';
 import {BannerAdSafe} from '../../components/Board/BannerAdSafe';
 import Grid from '../../components/Board/Grid';
@@ -35,13 +34,11 @@ import {
 } from '../../types';
 import {
   checkBoardIsSolved,
-  convertBoardToCore,
   createEmptyGrid,
   createEmptyGridNotes,
   createEmptyGridNumber,
   deepCloneBoard,
   deepCloneNotes,
-  getCellFromIndex,
   removeNoteFromPeers,
 } from '../../utils/boardUtil';
 import {DEFAULT_SETTINGS, MAX_HINTS, MAX_MISTAKES} from '../../utils/constants';
@@ -423,22 +420,25 @@ const BoardScreen = () => {
   };
 
   const handleHint = () => {
+    if (!selectedCell) {
+      return;
+    }
+    const {row, col} = selectedCell;
+    if (
+      initialBoard[row][col] != null ||
+      board[row][col] === solvedBoard[row][col]
+    ) {
+      return;
+    }
     if (hintCount <= 0) {
       handleLimitHintReached(false);
       return;
     }
-    const hintBoard = hint(convertBoardToCore(board));
-
-    if (hintBoard.steps === undefined || hintBoard.steps.length === 0) {
-      return;
-    }
-
     decrementHintCount();
-    const solvedNum = hintBoard.steps[0].updates[0].filledValue;
-    const {row, col} = getCellFromIndex(hintBoard.steps[0].updates[0].index);
+    const solvedNum = solvedBoard[row][col];
     const newBoard = deepCloneBoard(board);
     newBoard[row][col] = solvedNum;
-    setSelectedCell({row, col, value: solvedNum});
+    setSelectedCell({...selectedCell, value: solvedNum});
     setBoard(newBoard);
     setNotes((prevNotes) =>
       removeNoteFromPeers(prevNotes, row, col, solvedNum),

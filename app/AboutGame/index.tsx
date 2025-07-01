@@ -111,7 +111,6 @@ const Item = ({
     onPress={onPress}
     style={[
       styles.item,
-      // eslint-disable-next-line react-native/no-inline-styles
       {
         backgroundColor: theme.background,
         borderBottomColor: isLast ? 'transparent' : '#ccc',
