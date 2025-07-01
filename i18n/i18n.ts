@@ -18,8 +18,7 @@ const resources = {
 
 const fallback = {languageTag: LANGUAGES[0].code};
 const getBestLanguage = () => {
-  const deviceLocale = Localization.locale; // ví dụ: 'en-US', 'vi-VN'
-  const deviceLanguage = deviceLocale.split('-')[0]; // lấy 'en', 'vi', 'ja'
+  const deviceLanguage = Localization.getLocales()[0].languageCode; // ví dụ: 'en', 'vi', 'ja'
 
   const matched = LANGUAGES.find((l) => l.code === deviceLanguage);
   return matched?.code || fallback.languageTag;
