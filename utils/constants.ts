@@ -15,6 +15,7 @@ export const SCREENS = {
 } as const;
 
 export const BOARD_SIZE = 9;
+export const CELL_SIZE = 40;
 
 export const ANIMATION_DURATION = 300; // in ms
 export const ANIMATION_TYPE = {

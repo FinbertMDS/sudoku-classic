@@ -1,13 +1,6 @@
 import * as Device from 'expo-device';
 import React, {useCallback, useEffect, useRef} from 'react';
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,6 +18,7 @@ import {
   ANIMATION_DURATION,
   ANIMATION_TYPE,
   BOARD_SIZE,
+  CELL_SIZE,
 } from '../../utils/constants';
 
 type GridProps = {
@@ -51,13 +45,9 @@ const Grid = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const colScales = Array.from({length: BOARD_SIZE}, () => useSharedValue(1));
 
-  const isTablet =
-    Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET;
+  const cellSize = CELL_SIZE;
 
-  const {height} = Dimensions.get('window');
-  const cellSize = isTablet && height > 950 ? 60 : 40;
-
-  const {cellText, noteText, noteWidth} = getFontSizesFromCellSize(cellSize);
+  const {cellText, noteText, noteWidth} = getFontSizesFromCellSize();
 
   const animatedStyles = useRef(
     Array.from({length: BOARD_SIZE}, (_, row) =>
@@ -291,6 +281,10 @@ const styles = StyleSheet.create({
   boardContainer: {
     width: '100%' as const,
     alignItems: 'center' as const,
+    marginTop:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 20
+        : 0,
     marginBottom: 20,
   },
   grid: {

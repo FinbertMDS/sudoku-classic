@@ -1,5 +1,12 @@
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {BarChart} from 'react-native-chart-kit';
 import {AbstractChartConfig} from 'react-native-chart-kit/dist/AbstractChart';
 import {useTheme} from '../../context/ThemeContext';
@@ -7,8 +14,6 @@ import {DailyStats} from '../../types';
 import {CHART_WIDTH} from '../../utils/constants';
 import {formatShortChartDate} from '../../utils/dateUtil';
 import EmptyContainer from '../commons/EmptyContainer';
-
-const screenWidth = Dimensions.get('window').width;
 
 type GameBarChartProps = {
   dailyStats: DailyStats[];
@@ -18,6 +23,8 @@ type GameBarChartProps = {
 const GameBarChart = ({dailyStats, chartConfig}: GameBarChartProps) => {
   const {theme} = useTheme();
   const {t} = useTranslation();
+  const {width: screenWidth} = useWindowDimensions();
+  const [containerWidth, setContainerWidth] = useState(screenWidth);
 
   if (dailyStats.length === 0) {
     return <EmptyContainer text={t('gamesPerDay')} />;
@@ -25,10 +32,11 @@ const GameBarChart = ({dailyStats, chartConfig}: GameBarChartProps) => {
 
   const labels = dailyStats.map((s) => formatShortChartDate(s.date));
   const data = dailyStats.map((s) => s.games);
-  const chartWidth = Math.max(dailyStats.length * CHART_WIDTH, screenWidth);
 
   return (
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
+    <View
+      style={[styles.container, {backgroundColor: theme.background}]}
+      onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
       <Text style={[styles.title, {color: theme.text}]}>
         {t('gamesPerDay')}
       </Text>
@@ -38,7 +46,7 @@ const GameBarChart = ({dailyStats, chartConfig}: GameBarChartProps) => {
             labels,
             datasets: [{data}],
           }}
-          width={chartWidth}
+          width={Math.max(dailyStats.length * CHART_WIDTH, containerWidth)}
           height={220}
           fromZero
           chartConfig={{

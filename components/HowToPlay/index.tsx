@@ -65,7 +65,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
 
   const onViewableItemsChanged = useRef(({viewableItems}: any) => {
     if (viewableItems.length > 0) {
-      setIndex(viewableItems[0].index);
+      setIndex(viewableItems[viewableItems.length - 1].index);
     }
   });
 
@@ -83,7 +83,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
         viewabilityConfig={viewabilityConfig}
         extraData={width}
         renderItem={({item}) => (
-          <View style={[styles.slide, {width}]}>
+          <View style={[styles.slide, {width: width - 48}]}>
             <Image
               source={item.image}
               style={styles.image}

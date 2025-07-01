@@ -130,7 +130,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     alignItems: 'center' as const,
-    marginTop: 20,
+    marginTop:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 0
+        : 20,
     marginBottom:
       Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
         ? 0
@@ -141,16 +144,10 @@ const styles = StyleSheet.create({
     minWidth: 70,
   },
   title: {
-    fontSize:
-      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
-        ? 20
-        : 14,
+    fontSize: 14,
   },
   value: {
-    fontSize:
-      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
-        ? 22
-        : 16,
+    fontSize: 16,
     fontWeight: 'bold' as const,
   },
 });

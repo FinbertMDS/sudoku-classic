@@ -115,12 +115,7 @@ const ActionButtons = ({
                   ? (btn.icon[1] as any)
                   : (btn.icon[0] as any)
               }
-              size={
-                Platform.OS !== 'web' &&
-                Device.deviceType === Device.DeviceType.TABLET
-                  ? 36
-                  : 24
-              }
+              size={24}
               color={
                 btn.icon.length > 0 && btn.iconChangeFlag
                   ? theme.buttonBlue
@@ -158,9 +153,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row' as const,
     justifyContent: 'space-around' as const,
     width: '100%' as const,
-    marginTop:
+    marginBottom:
       Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
-        ? 10
+        ? 0
         : 20,
   },
   actionButton: {
@@ -188,14 +183,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    fontSize:
-      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
-        ? 18
-        : 12,
-    marginTop:
-      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
-        ? 10
-        : 4,
+    fontSize: 12,
+    marginTop: 4,
   },
 });
 

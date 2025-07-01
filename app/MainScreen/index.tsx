@@ -2,12 +2,14 @@
 import {useAlert} from '@/hooks/useAlert';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import * as Device from 'expo-device';
 import {router} from 'expo-router';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ImageBackground,
   Linking,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -276,7 +278,10 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   footer: {
-    marginBottom: 96,
+    marginBottom:
+      Platform.OS !== 'web' && Device.deviceType === Device.DeviceType.TABLET
+        ? 32
+        : 96,
     paddingHorizontal: 20,
     alignItems: 'center',
   },

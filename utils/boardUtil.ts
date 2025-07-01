@@ -1,5 +1,4 @@
 // boardUtil.ts
-import * as Device from 'expo-device';
 import {Board, generate, solve} from 'sudoku-core';
 import {Difficulty} from 'sudoku-gen/dist/types/difficulty.type';
 import {CellValue, InitGame, Level} from '../types';
@@ -203,19 +202,11 @@ export const isColFilled = (
   return true; // Nếu tất cả ô trong cột đều khác 0, coi như đã filled
 };
 
-export function getFontSizesFromCellSize(cellSize: number) {
+export function getFontSizesFromCellSize() {
   return {
-    cellText:
-      Device.deviceType === Device.DeviceType.TABLET
-        ? Math.floor(cellSize / 1.5)
-        : 22, // ví dụ: 40 → 22
-    noteText:
-      Device.deviceType === Device.DeviceType.TABLET
-        ? Math.floor(cellSize / 4.25)
-        : 8, // ví dụ: 40 → 8
-    noteWidth:
-      Device.deviceType === Device.DeviceType.TABLET
-        ? Math.floor(cellSize / 4)
-        : 9, // ví dụ: 40 → 9
+    cellText: 22,
+    noteText: 8,
+    cageText: 9,
+    noteWidth: 9,
   };
 }

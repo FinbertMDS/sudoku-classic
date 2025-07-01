@@ -47,6 +47,8 @@ export const deleteItem = (key: string) => {
 
 export const storage = {
   getString: (_key: string) => getItem(_key),
+  getBoolean: (_key: string) => getItem(_key) as boolean,
+  getNumber: (_key: string) => getItem(_key) as number,
   set: (_key: string, _value: string) => saveItem(_key, _value),
   delete: (_key: string) => deleteItem(_key),
 };
