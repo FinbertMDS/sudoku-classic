@@ -1,0 +1,162 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+def copy_env(env_name)
+  puts "🛠 Copying .env.#{env_name} to .env"
+  sh("cp ../../.env.#{env_name} ../../.env")
+end
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  lane :bump_version_name do |options|
+    # Lấy version hiện tại từ build.gradle
+    current_version = android_get_version_name(
+      gradle_file: "app/build.gradle"
+    )
+    UI.message("Current versionName: #{current_version}")
+  
+    # Parse version thành 3 phần
+    segments = current_version.split('.').map(&:to_i)
+    type = options[:type] || 'patch'
+  
+    case type
+    when 'major'
+      segments[0] += 1
+      segments[1] = 0
+      segments[2] = 0
+    when 'minor'
+      segments[1] += 1
+      segments[2] = 0
+    when 'patch'
+      segments[2] += 1
+    else
+      UI.user_error!("Unknown version bump type: #{type}")
+    end
+  
+    new_version = segments.join('.')
+    UI.message("New versionName: #{new_version}")
+  
+    # Cập nhật versionName
+    android_set_version_name(
+      version_name: new_version,
+      gradle_file: "app/build.gradle"
+    )
+  
+    UI.success("Updated versionName to #{new_version}")
+  end
+  
+  desc "Submit a new internal"
+  lane :internal do
+    copy_env("production")
+    # bump_version_name(type: 'patch')
+    android_set_version_code
+    gradle(task: "bundleRelease")
+    
+    upload_to_play_store(
+      track: "internal",
+      aab: Actions.lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true,
+      release_status: "completed", # completed
+      rollout: "1",
+      json_key_data: ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON"],
+      package_name: ENV["APP_PACKAGE_NAME"]
+    )
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Increment version name"
+  lane :increment_vn do
+    bump_version_name(type: 'patch') # hoặc "minor", "major"
+  end
+
+  desc "Increment version name force"
+  lane :increment_vn_force do
+    bump_version_name(type: 'minor')
+  end
+
+  desc "Increment version code"
+  lane :increment_vc do
+    android_set_version_code
+  end
+  
+  desc "Submit a new internal by Github Actions"
+  lane :internal_github do
+    setup_ci(force: true)
+    # bump_version_name(type: 'patch')
+    # android_set_version_code
+    gradle(task: "bundleRelease")
+    
+    upload_to_play_store(
+      track: "internal",
+      aab: Actions.lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true,
+      release_status: "completed", # completed
+      rollout: "1",
+      json_key_data: ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON"],
+      package_name: ENV["APP_PACKAGE_NAME"]
+    )
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Submit a new alpha"
+  lane :alpha do
+    copy_env("production")
+    bump_version_name(type: 'patch')
+    android_set_version_code
+    gradle(task: "bundleRelease")
+    
+    upload_to_play_store(
+      track: "alpha",
+      aab: Actions.lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true,
+      release_status: "draft", # completed
+      # rollout: "1",
+      json_key_data: ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON"],
+      package_name: ENV["APP_PACKAGE_NAME"]
+    )
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  # desc "Deploy a new version to the Google Play"
+  # lane :deploy do
+  #   gradle(task: "clean assembleRelease")
+  #   upload_to_play_store
+  # end
+  # 
+end

@@ -1,0 +1,4 @@
+# Pluginfile
+plugins_path = './fastlane/plugins'
+
+gem 'fastlane-plugin-versioning_android'

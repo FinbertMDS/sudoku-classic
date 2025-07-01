@@ -1,0 +1,100 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+def copy_env(env_name)
+  puts "🛠 Copying .env.#{env_name} to .env"
+  sh("cp ../../.env.#{env_name} ../../.env")
+end
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Runs all the tests"
+  lane :tests do
+    run_tests(scheme: "SudokuKillerApp")
+  end
+
+  desc "Take screenshots"
+  lane :screenshots do
+    capture_screenshots
+  end
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    copy_env("production")
+    app_store_connect_api_key(
+      key_id: "SF87XC2GQA",
+      issuer_id: "a43e1ea3-3ccd-4012-96d8-a1d3504f23c1",
+      key_filepath: "./fastlane/AuthKey_SF87XC2GQA.p8",
+      in_house: false
+    )
+    # increment_version_number(
+    #   bump_type: "patch"
+    # )
+    increment_build_number(xcodeproj: "SudokuKillerApp.xcodeproj")
+    build_app(workspace: "SudokuKillerApp.xcworkspace", scheme: "SudokuKillerApp")
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Increment version number"
+  lane :increment_vn do
+    increment_version_number(
+      bump_type: "patch" # hoặc "minor", "major"
+    )
+  end
+
+  desc "Increment version number force"
+  lane :increment_vn_force do
+    increment_version_number(
+      bump_type: "minor"
+    )
+  end
+
+  desc "Increment build number"
+  lane :increment_bn do
+    increment_build_number(xcodeproj: "SudokuKillerApp.xcodeproj")
+  end
+
+  desc "Push a new beta build to TestFlight by Github Actions"
+  lane :beta_github do
+    setup_ci(force: true)
+    xcversion(version: "16.2")
+    xcode_select("/Applications/Xcode_16.2.app")
+
+    app_store_connect_api_key(
+      key_id: "SFP99U9WMY",
+      issuer_id: "a43e1ea3-3ccd-4012-96d8-a1d3504f23c1",
+      key_filepath: "./fastlane/AuthKey.p8",
+      in_house: false
+    )
+    # increment_version_number(
+    #   bump_type: "patch" # hoặc "minor", "major"
+    # )
+    # increment_build_number(xcodeproj: "SudokuKillerApp.xcodeproj")
+    match(type: "appstore", readonly: true)
+
+    build_app(
+      workspace: "SudokuKillerApp.xcworkspace",
+      scheme: "SudokuKillerApp",
+      export_team_id: "7UJG573Q5X",
+      export_method: "app-store",
+    )
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

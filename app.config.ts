@@ -14,6 +14,9 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.finbertngo.sudokuclassic',
+    config: {
+      googleMobileAdsAppId: process.env.AD_APP_ID_IOS,
+    },
   },
   android: {
     adaptiveIcon: {
@@ -22,6 +25,9 @@ export default ({config}: ConfigContext): ExpoConfig => ({
     },
     edgeToEdgeEnabled: true,
     package: 'com.finbertngo.sudokuclassic',
+    config: {
+      googleMobileAdsAppId: process.env.AD_APP_ID_ANDROID,
+    },
   },
   web: {
     bundler: 'metro',
@@ -77,5 +83,8 @@ export default ({config}: ConfigContext): ExpoConfig => ({
     AD_UNIT_BANNER_ANDROID: process.env.AD_UNIT_BANNER_ANDROID,
     AD_UNIT_INTERSTITIAL_ANDROID: process.env.AD_UNIT_INTERSTITIAL_ANDROID,
     AD_UNIT_REWARDED_ANDROID: process.env.AD_UNIT_REWARDED_ANDROID,
+    eas: {
+      projectId: 'c2f9c7ae-a02f-4fbb-a814-c23d60bfc51e',
+    },
   },
 });

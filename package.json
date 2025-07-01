@@ -3,13 +3,22 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "prebuild:android:force": "cd android && fastlane increment_vc && fastlane increment_vn_force",
+    "prebuild:android": "cd android && fastlane increment_vc",
+    "prebuild:ios:force": "cd ios && fastlane increment_bn && fastlane increment_vn_force",
+    "prebuild:ios": "cd ios && fastlane increment_bn",
+    "prebuild:force": "yarn prebuild:android:force && yarn prebuild:ios:force",
+    "prebuild": "yarn prebuild:android && yarn prebuild:ios",
+    "start": "cp .env.development .env && expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web",
+    "android": "cp .env.development .env && expo run:android",
+    "ios": "cp .env.development .env && expo run:ios",
+    "web": "cp .env.development .env && expo start --web",
     "lint": "expo lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:android": "cp .env.production .env && cd android && ./gradlew assembleRelease",
+    "build:aab": "cp .env.production .env && cd android && ./gradlew bundleRelease",
+    "build:ios": "cp .env.production .env && cd ios && xcodebuild -workspace sudokuclassic.xcworkspace -scheme sudokuclassic -configuration Release -sdk iphoneos -archivePath build/sudokuclassic.xcarchive archive && mkdir -p ~/Library/Developer/Xcode/Archives/$(date +%Y-%m-%d) && mv build/sudokuclassic.xcarchive ~/Library/Developer/Xcode/Archives/$(date +%Y-%m-%d)/sudokuclassic-$(date +%H-%M-%S).xcarchive"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
