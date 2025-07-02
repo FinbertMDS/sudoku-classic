@@ -15,6 +15,6 @@ username("ngovanhuy.cntt.bk@gmail.com")
 
 team_id("7UJG573Q5X")
 
-app_identifier("com.finbertngo.sudokukiller")
+app_identifier("com.finbertngo.sudokuclassic")
 
 verbose(true)

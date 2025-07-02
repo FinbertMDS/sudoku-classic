@@ -1,4 +1,4 @@
-app_identifier("com.finbertngo.sudokukiller") # The bundle identifier of your app
+app_identifier("com.finbertngo.sudokuclassic") # The bundle identifier of your app
 apple_id("ngovanhuy.cntt.bk@gmail.com") # Your Apple Developer Portal username
 
 itc_team_id("127842234") # App Store Connect Team ID
