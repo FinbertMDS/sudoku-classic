@@ -91,10 +91,9 @@
   "desc.autoRemoveNotes": "Remove a number from all notes when it's placed in a cell",
 
   "howToPlay.title": "How to Play",
-  "howToPlay.slide1": "The field is divided into irregularly shaped areas. These areas are called cages.",
-  "howToPlay.slide2": "The sum of the numbers in the cells of a cage needs to match the value in the upper left corner.",
-  "howToPlay.slide3": "The sum of all numbers in each block, row, or column always equals 45. Use subtraction to find the solution.",
-  "howToPlay.slide4": "Can't solve a level? Try a hint! They can help if you get stuck on a tricky bit!",
+  "howToPlay.slide1": "A sudoku puzzle begins with a grid in which some of the numbers are already in place. A puzzle is completed when each number from 1 to 9 appears only once in each of the 9 rows, columns, and blocks. Study the grid to find the numbers that might fit into each cell.",
+  "howToPlay.slide2": "Select a cell, then tap a number to fill in the cell",
+  "howToPlay.slide3": "Turn on Notes mode to add and remove notes",
   "common.skip": "Skip",
 
   "rateApp": "Rate this app",

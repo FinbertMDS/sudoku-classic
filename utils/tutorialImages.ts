@@ -13,10 +13,6 @@ export const tutorialImages = {
     light: require('../assets/tutorial/tutorial3.png'),
     dark: require('../assets/tutorial/tutorial3_dark.png'),
   },
-  slide4: {
-    light: require('../assets/tutorial/tutorial4.png'),
-    dark: require('../assets/tutorial/tutorial4_dark.png'),
-  },
 };
 
 export const getTutorialImage = (

@@ -67,7 +67,7 @@ platform :android do
   lane :internal do
     copy_env("production")
     # bump_version_name(type: 'patch')
-    android_set_version_code
+    # android_set_version_code
     gradle(task: "bundleRelease")
     
     upload_to_play_store(
@@ -78,8 +78,8 @@ platform :android do
       skip_upload_images: true,
       skip_upload_screenshots: true,
       skip_upload_changelogs: true,
-      release_status: "completed", # completed
-      rollout: "1",
+      release_status: "draft", # hoặc draft, completed
+      # rollout: "1",
       json_key_data: ENV["PLAY_STORE_SERVICE_ACCOUNT_JSON"],
       package_name: ENV["APP_PACKAGE_NAME"]
     )

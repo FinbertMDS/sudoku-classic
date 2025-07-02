@@ -91,10 +91,9 @@
   "desc.autoRemoveNotes": "Tự động xoá số khỏi ghi chú khi được đặt vào ô",
 
   "howToPlay.title": "Cách chơi",
-  "howToPlay.slide1": "Lưới được chia thành các vùng có hình dạng không đều. Những vùng này được gọi là các lồng (cages).",
-  "howToPlay.slide2": "Tổng các số trong một lồng phải bằng với giá trị ở góc trên bên trái của lồng đó.",
-  "howToPlay.slide3": "Tổng của tất cả các số trong mỗi khối, hàng hoặc cột luôn bằng 45. Hãy dùng phép trừ để tìm ra lời giải.",
-  "howToPlay.slide4": "Không thể giải được cấp độ? Hãy thử một gợi ý! Gợi ý có thể giúp bạn khi bị mắc kẹt ở phần khó.",
+  "howToPlay.slide1": "Một trò chơi sudoku bắt đầu với một lưới ô trong đó một số con số đã được điền sẵn. Trò chơi hoàn thành khi mỗi số từ 1 đến 9 chỉ xuất hiện một lần trong mỗi hàng, cột và khối 3x3. Hãy quan sát lưới để tìm ra con số phù hợp với từng ô.",
+  "howToPlay.slide2": "Chọn một ô, sau đó nhấn số để điền vào ô đó",
+  "howToPlay.slide3": "Bật chế độ Ghi chú để thêm hoặc xoá ghi chú",
   "common.skip": "Bỏ qua",
 
   "rateApp": "Đánh giá ứng dụng",

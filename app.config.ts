@@ -3,7 +3,7 @@ import {ConfigContext, ExpoConfig} from 'expo/config';
 
 export default ({config}: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'sudoku-classic',
+  name: 'Sudoku',
   slug: 'sudoku-classic',
   version: '0.0.1',
   orientation: 'portrait',
@@ -14,6 +14,9 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.finbertngo.sudokuclassic',
+    infoPlist: {
+      CFBundleDisplayName: 'Sudoku',
+    },
     config: {
       googleMobileAdsAppId: process.env.AD_APP_ID_IOS,
     },

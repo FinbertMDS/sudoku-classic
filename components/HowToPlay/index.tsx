@@ -70,8 +70,7 @@ const HowToPlay = ({onClose}: HowToPlayProps) => {
   });
 
   return (
-    <View
-      style={[styles.container, {backgroundColor: theme.backgroundSecondary}]}>
+    <View style={[styles.container, {backgroundColor: theme.howToPlayBg}]}>
       <FlatList
         ref={flatListRef}
         data={slides}
