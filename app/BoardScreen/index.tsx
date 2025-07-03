@@ -2,7 +2,7 @@ import {useAlert} from '@/hooks/useAlert';
 import {useSafeGoBack} from '@/hooks/useSafeGoBack';
 import {useFocusEffect} from '@react-navigation/native';
 import {router, useLocalSearchParams} from 'expo-router';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -48,13 +48,7 @@ const BoardScreen = () => {
   const {theme} = useTheme();
   const {t} = useTranslation();
   const rawParams = useLocalSearchParams();
-  const {id, level, type} = useMemo(() => {
-    return {
-      id: rawParams.id,
-      level: rawParams.level,
-      type: rawParams.type,
-    } as BoardParamProps;
-  }, [rawParams]);
+  const {id, level, type} = rawParams as BoardParamProps;
 
   const goBack = useSafeGoBack();
   const {alert} = useAlert();
