@@ -99,9 +99,9 @@ PODS:
   - Google-Mobile-Ads-SDK (12.4.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleUserMessagingPlatform (3.0.0)
-  - hermes-engine (0.79.4):
-    - hermes-engine/Pre-built (= 0.79.4)
-  - hermes-engine/Pre-built (0.79.4)
+  - hermes-engine (0.79.5):
+    - hermes-engine/Pre-built (= 0.79.5)
+  - hermes-engine/Pre-built (0.79.5)
   - libavif/core (0.11.1)
   - libavif/libdav1d (0.11.1):
     - libavif/core
@@ -2521,7 +2521,7 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   Google-Mobile-Ads-SDK: db00a3836f288f94e52114f312b56fe066699d82
   GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
-  hermes-engine: 8b5a5eb386b990287d072fd7b6f6ebd9544dd251
+  hermes-engine: f03b0e06d3882d71e67e45b073bb827da1a21aae
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
@@ -2603,6 +2603,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: bfcce202dba74007f8974ee9c5f903a9a286c445
 
-PODFILE CHECKSUM: 7a3264ba94939b273ee8c51d596cf2826d18203f
+PODFILE CHECKSUM: 0ad7f02cf5d1aaf427f02ca9b569e17ddba0e64c
 
 COCOAPODS: 1.16.2
