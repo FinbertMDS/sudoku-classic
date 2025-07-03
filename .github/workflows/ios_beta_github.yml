@@ -4,6 +4,25 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '.github/workflows/ios_beta_github.yml'
+      - 'ios/**'
+      - 'app.config.ts'
+      - 'app/**'
+      - 'assets/**'
+      - 'components/**'
+      - 'constants/**'
+      - 'contexts/**'
+      - 'events/**'
+      - 'hooks/**'
+      - 'ios/**'
+      - 'services/**'
+      - 'storage/**'
+      - 'theme/**'
+      - 'types/**'
+      - 'utils/**'
+      - 'app.config.ts'
+      - 'appConfig.ts'
 
 jobs:
   build-ios:

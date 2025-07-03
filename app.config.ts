@@ -11,7 +11,6 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   scheme: 'sudokuclassic',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
-  jsEngine: 'hermes',
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.finbertngo.sudokuclassic',
