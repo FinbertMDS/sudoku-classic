@@ -14,9 +14,6 @@ export default ({config}: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.finbertngo.sudokuclassic',
-    infoPlist: {
-      CFBundleDisplayName: 'Sudoku',
-    },
     config: {
       googleMobileAdsAppId: process.env.AD_APP_ID_IOS,
     },
