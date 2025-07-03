@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'src/**'
-      - 'android/**'
 
 jobs:
   build-ios:
@@ -33,7 +30,10 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/sudoku-key.keystore
           echo "${{ secrets.PLAY_STORE_KEY_BASE64 }}" | base64 --decode > android/fastlane/play-store-key.json
-
+          ls -lah android/app/sudoku-key.keystore
+          ls -lah android/fastlane/play-store-key.json
+          base64 -i android/app/sudoku-key.keystore
+          base64 -i android/fastlane/play-store-key.json
       - name: Install dependencies
         run: |
           yarn install
