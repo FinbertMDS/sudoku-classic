@@ -33,6 +33,7 @@ const EmptyContainer = ({text}: EmptyContainerProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 5,
     paddingLeft: 12,
     paddingRight: 12,
     justifyContent: 'center',

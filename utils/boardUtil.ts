@@ -154,7 +154,7 @@ export const generateBoard = (level: Level, id: string) => {
     initialBoard: stringToGrid(board.puzzle),
     solvedBoard: stringToGrid(board.solution),
     savedLevel: level,
-    savedScore: 0,
+    // savedScore: 0,
   } as InitGame;
 
   return initGame;

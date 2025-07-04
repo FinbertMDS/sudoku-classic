@@ -122,5 +122,3 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
-
-report.xml

@@ -18,13 +18,13 @@ export type GameInfo = {
 
 export type InitGame = GameInfo & {
   savedLevel: Level;
-  savedScore: number;
+  // savedScore: number;
 };
 
 export type SavedGame = {
   savedId: string;
   savedLevel: Level;
-  savedScore: number;
+  // savedScore: number;
   savedBoard: CellValue[][];
   savedHintCount: number;
   savedTotalHintCountUsed: number;
