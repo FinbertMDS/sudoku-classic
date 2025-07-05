@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'ios/**'
-      - 'app.config.ts'
       - 'app/**'
       - 'assets/**'
       - 'components/**'

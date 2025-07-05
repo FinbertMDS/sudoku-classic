@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 import {Platform} from 'react-native';
 
 export const appConfig = {
-  iosAppId: '1234567890',
+  iosAppId: '6748027534',
   androidPackageName: 'com.finbertngo.sudokuclassic',
   developerMail: 'finbertngo@gmail.com',
   version:
